@@ -67,4 +67,9 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("androidx.navigation:navigation-compose:2.7.7")
+
+    implementation("io.github.jan-tennert.supabase:gotrue-kt:2.1.5")
+    implementation("io.ktor:ktor-client-cio:2.3.8")
+
+
 }

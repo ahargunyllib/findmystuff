@@ -1,6 +1,5 @@
 package com.ahargunyllib.internraion.features.presentation.screen.auth
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,8 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -28,10 +25,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.ahargunyllib.internraion.features.data.network.SupabaseClient
+import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.ui.theme.InternraionTheme
 
 @Composable
 fun RegisterScreen(navController: NavController) {
+    val viewModel = RegisterViewModel(userRepository = UserRepository(supabaseClient = SupabaseClient))
+    val passwordVisible by rememberSaveable {
+        mutableStateOf(false)
+    }
+    val confirmPasswordVisible by rememberSaveable {
+        mutableStateOf(false)
+    }
+    val checkedState = remember {
+        mutableStateOf(false)
+    }
+
     InternraionTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -44,14 +54,11 @@ fun RegisterScreen(navController: NavController) {
                 }
                 Text(text = "Register")
 
-                var emailAdress by rememberSaveable {
-                    mutableStateOf("")
-                }
                 Column {
                     TextField(
-                        value = emailAdress,
+                        value = viewModel.emailState.value,
                         onValueChange = {
-                            emailAdress = it
+                            viewModel.emailState.value = it
                         },
                         label = {
                             Text(text = "Email Address")
@@ -60,14 +67,11 @@ fun RegisterScreen(navController: NavController) {
                 }
                 Spacer(modifier = Modifier.size(12.dp))
 
-                var username by rememberSaveable {
-                    mutableStateOf("")
-                }
                 Column {
                     TextField(
-                        value = username,
+                        value = viewModel.usernameState.value,
                         onValueChange = {
-                            username = it
+                            viewModel.usernameState.value = it
                         },
                         label = {
                             Text(text = "Username")
@@ -77,17 +81,11 @@ fun RegisterScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.size(12.dp))
 
-                var password by rememberSaveable {
-                    mutableStateOf("")
-                }
-                var passwordVisible by rememberSaveable {
-                    mutableStateOf(false)
-                }
                 Column {
                     TextField(
-                        value = password,
+                        value = viewModel.passwordState.value,
                         onValueChange = {
-                            password = it
+                            viewModel.passwordState.value = it
                         },
                         label = {
                             Text(text = "Password")
@@ -101,22 +99,16 @@ fun RegisterScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.size(12.dp))
 
-                var confirmPassword by rememberSaveable {
-                    mutableStateOf("")
-                }
-                var confirmPassVisible by rememberSaveable {
-                    mutableStateOf(false)
-                }
                 Column {
                     TextField(
-                        value = confirmPassword,
+                        value = viewModel.confirmPasswordState.value,
                         onValueChange = {
-                            confirmPassword = it
+                            viewModel.confirmPasswordState.value = it
                         },
                         label = {
                             Text(text = "Confirm Password")
                         },
-                        visualTransformation = if (confirmPassVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                        visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Password
                         )
@@ -125,15 +117,15 @@ fun RegisterScreen(navController: NavController) {
 
                 Text(text = "Sign up with")
 
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = {
+                    viewModel.signUpUser()
+                }) {
                     Text(text = "Sign up")
                 }
 
-                val checked = remember {
-                    mutableStateOf(false)
-                }
+
                 Row {
-                    Checkbox(checked = checked.value, onCheckedChange = { checked.value = it })
+                    Checkbox(checked = checkedState.value, onCheckedChange = { checkedState.value = it })
                     TextButton(onClick = { /*TODO*/ }) {
                         Text(text = "Terms and Conditions")
                     }

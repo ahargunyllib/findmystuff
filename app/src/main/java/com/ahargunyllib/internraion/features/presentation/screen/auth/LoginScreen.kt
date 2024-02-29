@@ -35,21 +35,26 @@ import com.ahargunyllib.internraion.ui.theme.InternraionTheme
 
 @Composable
 fun LoginScreen(navController: NavController) {
+    var username by rememberSaveable {
+        mutableStateOf("")
+    }
+    var password by rememberSaveable {
+        mutableStateOf("")
+    }
+    var passwordVisible by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     InternraionTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier.fillMaxSize()
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center
             ) {
                 Button(onClick = { navController.popBackStack() }) {
                     Text("Back")
                 }
-                Text(text = "Login")
 
-                var username by rememberSaveable {
-                    mutableStateOf("")
-                }
+                Text(text = "Login")
 
                 Column {
                     TextField(
@@ -62,14 +67,9 @@ fun LoginScreen(navController: NavController) {
                         }
                     )
                 }
+
                 Spacer(modifier = Modifier.size(12.dp))
 
-                var password by rememberSaveable {
-                    mutableStateOf("")
-                }
-                var passwordVisible by rememberSaveable {
-                    mutableStateOf(false)
-                }
                 Column {
                     TextField(
                         value = password,
@@ -91,6 +91,7 @@ fun LoginScreen(navController: NavController) {
                 Button(onClick = { /*TODO*/ }) {
                     Text(text = "Login")
                 }
+
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {

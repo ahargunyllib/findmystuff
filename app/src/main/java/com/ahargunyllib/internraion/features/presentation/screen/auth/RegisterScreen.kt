@@ -32,21 +32,37 @@ import com.ahargunyllib.internraion.ui.theme.InternraionTheme
 
 @Composable
 fun RegisterScreen(navController: NavController) {
+    var emailAdress by rememberSaveable {
+        mutableStateOf("")
+    }
+    var username by rememberSaveable {
+        mutableStateOf("")
+    }
+    var password by rememberSaveable {
+        mutableStateOf("")
+    }
+    var passwordVisible by rememberSaveable {
+        mutableStateOf(false)
+    }
+    var confirmPassword by rememberSaveable {
+        mutableStateOf("")
+    }
+    var confirmPassVisible by rememberSaveable {
+        mutableStateOf(false)
+    }
+    val checked = remember {
+        mutableStateOf(false)
+    }
+
     InternraionTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier.fillMaxSize(),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center
             ) {
                 Button(onClick = { navController.popBackStack() }) {
                     Text("Back")
                 }
                 Text(text = "Register")
-
-                var emailAdress by rememberSaveable {
-                    mutableStateOf("")
-                }
                 Column {
                     TextField(
                         value = emailAdress,
@@ -59,10 +75,6 @@ fun RegisterScreen(navController: NavController) {
                     )
                 }
                 Spacer(modifier = Modifier.size(12.dp))
-
-                var username by rememberSaveable {
-                    mutableStateOf("")
-                }
                 Column {
                     TextField(
                         value = username,
@@ -74,15 +86,7 @@ fun RegisterScreen(navController: NavController) {
                         }
                     )
                 }
-
                 Spacer(modifier = Modifier.size(12.dp))
-
-                var password by rememberSaveable {
-                    mutableStateOf("")
-                }
-                var passwordVisible by rememberSaveable {
-                    mutableStateOf(false)
-                }
                 Column {
                     TextField(
                         value = password,
@@ -98,15 +102,7 @@ fun RegisterScreen(navController: NavController) {
                         )
                     )
                 }
-
                 Spacer(modifier = Modifier.size(12.dp))
-
-                var confirmPassword by rememberSaveable {
-                    mutableStateOf("")
-                }
-                var confirmPassVisible by rememberSaveable {
-                    mutableStateOf(false)
-                }
                 Column {
                     TextField(
                         value = confirmPassword,
@@ -122,15 +118,9 @@ fun RegisterScreen(navController: NavController) {
                         )
                     )
                 }
-
                 Text(text = "Sign up with")
-
                 Button(onClick = { /*TODO*/ }) {
                     Text(text = "Sign up")
-                }
-
-                val checked = remember {
-                    mutableStateOf(false)
                 }
                 Row {
                     Checkbox(checked = checked.value, onCheckedChange = { checked.value = it })

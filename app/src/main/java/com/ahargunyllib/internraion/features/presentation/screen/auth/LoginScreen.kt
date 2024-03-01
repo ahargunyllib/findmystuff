@@ -1,8 +1,5 @@
 package com.ahargunyllib.internraion.features.presentation.screen.auth
 
-import android.graphics.Paint
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -19,29 +15,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.ahargunyllib.internraion.features.data.network.SupabaseClient
+import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.ui.theme.InternraionTheme
 
 @Composable
 fun LoginScreen(navController: NavController) {
-    var username by rememberSaveable {
-        mutableStateOf("")
-    }
-    var password by rememberSaveable {
-        mutableStateOf("")
-    }
-    var passwordVisible by rememberSaveable {
+    val viewModel = LoginViewModel(userRepository = UserRepository(supabaseClient = SupabaseClient))
+    val passwordVisible by rememberSaveable {
         mutableStateOf(false)
     }
 
@@ -49,32 +39,32 @@ fun LoginScreen(navController: NavController) {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(
                 modifier = Modifier.fillMaxSize()
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Center
             ) {
                 Button(onClick = { navController.popBackStack() }) {
                     Text("Back")
                 }
-
                 Text(text = "Login")
 
                 Column {
                     TextField(
-                        value = username,
+                        value = viewModel.emailState.value,
                         onValueChange = {
-                            username = it
+                            viewModel.emailState.value = it
                         },
                         label = {
-                            Text(text = "Username")
+                            Text(text = "Email")
                         }
                     )
                 }
-
                 Spacer(modifier = Modifier.size(12.dp))
 
                 Column {
                     TextField(
-                        value = password,
+                        value = viewModel.passwordState.value,
                         onValueChange = {
-                            password = it
+                            viewModel.passwordState.value = it
                         },
                         label = {
                             Text(text = "Password")
@@ -88,10 +78,9 @@ fun LoginScreen(navController: NavController) {
 
                 Text(text = "Forget Password?")
 
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = { viewModel.signInUser() }) {
                     Text(text = "Login")
                 }
-
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {

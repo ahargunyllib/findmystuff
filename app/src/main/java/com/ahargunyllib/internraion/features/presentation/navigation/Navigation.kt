@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ahargunyllib.internraion.features.presentation.screen.auth.LoginScreen
 import com.ahargunyllib.internraion.features.presentation.screen.auth.RegisterScreen
+import com.ahargunyllib.internraion.features.presentation.screen.maps.MapsScreen
 import com.ahargunyllib.internraion.features.presentation.screen.welcome.WelcomeScreen
 
 @Composable
@@ -21,6 +22,10 @@ fun Navigation() {
         }
         composable("login"){
             LoginScreen(navController = navController)
+        }
+
+        composable("maps"){
+            MapsScreen(navController = navController)
         }
     }
 }

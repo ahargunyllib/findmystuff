@@ -71,5 +71,9 @@ dependencies {
     implementation("io.github.jan-tennert.supabase:gotrue-kt:2.1.5")
     implementation("io.ktor:ktor-client-cio:2.3.8")
 
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
 
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation("androidx.compose.material:material-icons-extended:1.6.2")
+    implementation("com.google.maps.android:maps-compose:1.0.0")
 }

@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.features.presentation.screen.auth
+package com.ahargunyllib.internraion.features.presentation.screen.auth.signup
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

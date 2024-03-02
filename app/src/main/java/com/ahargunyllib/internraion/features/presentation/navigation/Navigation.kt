@@ -4,8 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ahargunyllib.internraion.features.presentation.screen.auth.LoginScreen
-import com.ahargunyllib.internraion.features.presentation.screen.auth.RegisterScreen
+import com.ahargunyllib.internraion.features.presentation.screen.auth.login.LoginScreen
+import com.ahargunyllib.internraion.features.presentation.screen.auth.signup.RegisterScreen
+import com.ahargunyllib.internraion.features.presentation.screen.home.HomeScreen
 import com.ahargunyllib.internraion.features.presentation.screen.maps.MapsScreen
 import com.ahargunyllib.internraion.features.presentation.screen.welcome.WelcomeScreen
 
@@ -26,6 +27,10 @@ fun Navigation() {
 
         composable("maps"){
             MapsScreen(navController = navController)
+        }
+
+        composable("home"){
+            HomeScreen(navController = navController)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.features.presentation.screen.auth
+package com.ahargunyllib.internraion.features.presentation.screen.auth.login
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -15,8 +14,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -30,29 +29,21 @@ import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.ui.theme.InternraionTheme
 
 @Composable
-fun RegisterScreen(navController: NavController) {
-    val viewModel = RegisterViewModel(userRepository = UserRepository(supabaseClient = SupabaseClient))
+fun LoginScreen(navController: NavController) {
+    val viewModel = LoginViewModel(userRepository = UserRepository(supabaseClient = SupabaseClient))
     val passwordVisible by rememberSaveable {
-        mutableStateOf(false)
-    }
-    val confirmPasswordVisible by rememberSaveable {
-        mutableStateOf(false)
-    }
-    val checkedState = remember {
         mutableStateOf(false)
     }
 
     InternraionTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(
-                modifier = Modifier.fillMaxSize(),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//                verticalArrangement = Arrangement.Center
+                modifier = Modifier.fillMaxSize()
             ) {
                 Button(onClick = { navController.popBackStack() }) {
                     Text("Back")
                 }
-                Text(text = "Register")
+                Text(text = "Login")
 
                 Column {
                     TextField(
@@ -61,24 +52,10 @@ fun RegisterScreen(navController: NavController) {
                             viewModel.emailState.value = it
                         },
                         label = {
-                            Text(text = "Email Address")
+                            Text(text = "Email")
                         }
                     )
                 }
-                Spacer(modifier = Modifier.size(12.dp))
-
-                Column {
-                    TextField(
-                        value = viewModel.usernameState.value,
-                        onValueChange = {
-                            viewModel.usernameState.value = it
-                        },
-                        label = {
-                            Text(text = "Username")
-                        }
-                    )
-                }
-
                 Spacer(modifier = Modifier.size(12.dp))
 
                 Column {
@@ -97,39 +74,23 @@ fun RegisterScreen(navController: NavController) {
                     )
                 }
 
-                Spacer(modifier = Modifier.size(12.dp))
-
-                Column {
-                    TextField(
-                        value = viewModel.confirmPasswordState.value,
-                        onValueChange = {
-                            viewModel.confirmPasswordState.value = it
-                        },
-                        label = {
-                            Text(text = "Confirm Password")
-                        },
-                        visualTransformation = if (confirmPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Password
-                        )
-                    )
-                }
-
-                Text(text = "Sign up with")
+                Text(text = "Forget Password?")
 
                 Button(onClick = {
-                    viewModel.signUpUser()
+//                    viewModel.signInUser()
+                    navController.navigate("home")
                 }) {
-                    Text(text = "Sign up")
+                    Text(text = "Login")
                 }
-
-
-                Row {
-                    Checkbox(checked = checkedState.value, onCheckedChange = { checkedState.value = it })
-                    TextButton(onClick = { /*TODO*/ }) {
-                        Text(text = "Terms and Conditions")
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(text = "Doesn't have an account?")
+                    TextButton(onClick = { navController.navigate("register") }) {
+                        Text(text = "Sign up")
                     }
                 }
+
             }
         }
     }
@@ -137,8 +98,8 @@ fun RegisterScreen(navController: NavController) {
 
 @Preview
 @Composable
-fun RegisterScreenPreview() {
+fun LoginScreenPreview() {
     InternraionTheme {
-        RegisterScreen(navController = rememberNavController())
+        LoginScreen(navController = rememberNavController())
     }
 }

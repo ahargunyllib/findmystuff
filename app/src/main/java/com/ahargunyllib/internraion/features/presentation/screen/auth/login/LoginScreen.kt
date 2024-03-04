@@ -27,6 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.ui.theme.InternraionTheme
+import com.ahargunyllib.internraion.util.Routes
 
 @Composable
 fun LoginScreen(navController: NavController) {
@@ -78,7 +79,7 @@ fun LoginScreen(navController: NavController) {
 
                 Button(onClick = {
 //                    viewModel.signInUser()
-                    navController.navigate("home")
+                    navController.navigate(Routes.HOME)
                 }) {
                     Text(text = "Login")
                 }
@@ -86,20 +87,12 @@ fun LoginScreen(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(text = "Doesn't have an account?")
-                    TextButton(onClick = { navController.navigate("register") }) {
+                    TextButton(onClick = { navController.navigate(Routes.REGISTER) }) {
                         Text(text = "Sign up")
                     }
                 }
 
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun LoginScreenPreview() {
-    InternraionTheme {
-        LoginScreen(navController = rememberNavController())
     }
 }

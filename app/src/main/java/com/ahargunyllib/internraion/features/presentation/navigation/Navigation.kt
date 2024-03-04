@@ -5,31 +5,38 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ahargunyllib.internraion.features.presentation.screen.auth.login.LoginScreen
-import com.ahargunyllib.internraion.features.presentation.screen.auth.signup.RegisterScreen
+import com.ahargunyllib.internraion.features.presentation.screen.auth.register.RegisterScreen
 import com.ahargunyllib.internraion.features.presentation.screen.home.HomeScreen
 import com.ahargunyllib.internraion.features.presentation.screen.maps.MapsScreen
+import com.ahargunyllib.internraion.features.presentation.screen.privacy_policy.PrivacyPolicyScreen
 import com.ahargunyllib.internraion.features.presentation.screen.welcome.WelcomeScreen
+import com.ahargunyllib.internraion.util.Routes
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "welcome") {
-        composable("welcome") {
+
+        composable(Routes.WELCOME) {
             WelcomeScreen(navController = navController)
         }
 
-        composable("register") {
+        composable(Routes.REGISTER) {
             RegisterScreen(navController = navController)
         }
-        composable("login"){
+        composable(Routes.LOGIN){
             LoginScreen(navController = navController)
         }
 
-        composable("maps"){
+        composable(Routes.PRIVACY_POLICY){
+            PrivacyPolicyScreen(navController = navController)
+        }
+
+        composable(Routes.MAPS){
             MapsScreen(navController = navController)
         }
 
-        composable("home"){
+        composable(Routes.HOME){
             HomeScreen(navController = navController)
         }
     }

@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.features.presentation.screen.auth.signup
+package com.ahargunyllib.internraion.features.presentation.screen.auth.register
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,9 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Screen
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -36,7 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.ui.theme.InternraionTheme
-import kotlinx.coroutines.launch
+import com.ahargunyllib.internraion.util.Routes
 
 @Composable
 fun RegisterScreen(navController: NavController) {
@@ -129,9 +125,9 @@ fun RegisterScreen(navController: NavController) {
                 Button(onClick = {
                     if (checkedState.value) {
 //                        viewModel.signUpUser()
-                        navController.navigate("login")
+                        navController.navigate(Routes.LOGIN)
                     } else {
-                        Toast.makeText(context, "accept terms dan condition", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "accept privacy and policy", Toast.LENGTH_SHORT).show()
                     }
                 }) {
                     Text(text = "Sign up")
@@ -143,8 +139,8 @@ fun RegisterScreen(navController: NavController) {
                         checked = checkedState.value,
                         onCheckedChange = { checkedState.value = it }
                     )
-                    TextButton(onClick = { /*TODO*/ }) {
-                        Text(text = "Terms and Conditions")
+                    TextButton(onClick = { navController.navigate(Routes.PRIVACY_POLICY) }) {
+                        Text(text = "Privacy and Policy")
                     }
                 }
 
@@ -153,11 +149,3 @@ fun RegisterScreen(navController: NavController) {
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-fun RegisterScreenPreview() {
-    InternraionTheme {
-        RegisterScreen(navController = rememberNavController())
-    }
-}

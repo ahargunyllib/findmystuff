@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.ahargunyllib.internraion.ui.theme.InternraionTheme
+import com.ahargunyllib.internraion.util.Routes
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
@@ -21,10 +22,10 @@ fun WelcomeScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Center
             ) {
                 Text("Welcome")
-                Button(onClick = { navController.navigate("register") }) {
+                Button(onClick = { navController.navigate(Routes.REGISTER) }) {
                     Text("Register")
                 }
-                Button(onClick = { navController.navigate("login") }) {
+                Button(onClick = { navController.navigate(Routes.LOGIN) }) {
                     Text("Login")
                 }
 

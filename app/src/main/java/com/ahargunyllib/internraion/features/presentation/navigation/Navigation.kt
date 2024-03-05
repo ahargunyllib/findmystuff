@@ -9,13 +9,14 @@ import com.ahargunyllib.internraion.features.presentation.screen.auth.register.R
 import com.ahargunyllib.internraion.features.presentation.screen.home.HomeScreen
 import com.ahargunyllib.internraion.features.presentation.screen.maps.MapsScreen
 import com.ahargunyllib.internraion.features.presentation.screen.privacy_policy.PrivacyPolicyScreen
+import com.ahargunyllib.internraion.features.presentation.screen.report.ReportScreen
 import com.ahargunyllib.internraion.features.presentation.screen.welcome.WelcomeScreen
 import com.ahargunyllib.internraion.util.Routes
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "welcome") {
+    NavHost(navController = navController, startDestination = Routes.WELCOME) {
 
         composable(Routes.WELCOME) {
             WelcomeScreen(navController = navController)
@@ -39,5 +40,11 @@ fun Navigation() {
         composable(Routes.HOME){
             HomeScreen(navController = navController)
         }
+
+        composable(Routes.REPORT){
+            ReportScreen(navController = navController)
+        }
+
+
     }
 }

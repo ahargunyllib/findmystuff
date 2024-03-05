@@ -43,10 +43,6 @@ fun RegisterScreen(navController: NavController) {
     val confirmPasswordVisible by rememberSaveable { mutableStateOf(false) }
     val checkedState = remember { mutableStateOf(false) }
 
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    val scope = rememberCoroutineScope()
-
     val context = LocalContext.current
 
     InternraionTheme {

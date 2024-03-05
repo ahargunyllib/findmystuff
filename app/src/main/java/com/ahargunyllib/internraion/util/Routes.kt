@@ -11,4 +11,6 @@ object Routes {
     const val MAPS = "maps"
 
     const val HOME = "home"
+
+    const val REPORT = "report"
 }

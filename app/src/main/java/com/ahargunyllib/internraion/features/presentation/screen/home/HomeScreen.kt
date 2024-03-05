@@ -16,6 +16,9 @@ fun HomeScreen(navController: NavController) {
             Button(onClick = { navController.navigate(Routes.MAPS) }) {
                 Text(text = "to maps")
             }
+            Button(onClick = { navController.navigate(Routes.REPORT) }) {
+                Text(text = "to report")
+            }
         }
     }
 }

@@ -1,4 +1,9 @@
 package com.ahargunyllib.internraion.features.presentation.screen.report
 
-class ReportViewModel {
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+
+class ReportViewModel(): ViewModel() {
+    val nameState = mutableStateOf("")
+    val noteState = mutableStateOf("")
 }

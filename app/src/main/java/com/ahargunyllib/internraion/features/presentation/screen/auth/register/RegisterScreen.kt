@@ -120,7 +120,7 @@ fun RegisterScreen(navController: NavController) {
 
                 Button(onClick = {
                     if (checkedState.value) {
-//                        viewModel.signUpUser()
+                        viewModel.signUpUser()
                         navController.navigate(Routes.LOGIN)
                     } else {
                         Toast.makeText(context, "accept privacy and policy", Toast.LENGTH_SHORT).show()

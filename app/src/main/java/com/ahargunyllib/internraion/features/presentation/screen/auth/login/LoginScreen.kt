@@ -78,7 +78,7 @@ fun LoginScreen(navController: NavController) {
                 Text(text = "Forget Password?")
 
                 Button(onClick = {
-//                    viewModel.signInUser()
+                    viewModel.signInUser()
                     navController.navigate(Routes.HOME)
                 }) {
                     Text(text = "Login")

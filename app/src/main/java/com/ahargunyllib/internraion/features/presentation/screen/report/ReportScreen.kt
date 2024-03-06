@@ -45,69 +45,7 @@ import java.util.Date
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReportScreen(navController: NavController) {
-
-    //TANGGAL
-    // Fetching the Local Context
-    val mContext = LocalContext.current
-
-    // Declaring integer values
-    // for year, month and day
-    val mYear: Int
-    val mMonth: Int
-    val mDay: Int
-
-    // Initializing a Calendar
-    val mCalendar = Calendar.getInstance()
-
-    // Fetching current year, month and day
-    mYear = mCalendar.get(Calendar.YEAR)
-    mMonth = mCalendar.get(Calendar.MONTH)
-    mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
-
-    mCalendar.time = Date()
-
-    // Declaring a string value to
-    // store date in string format
-    val mDate = remember { mutableStateOf("") }
-
-    // Declaring DatePickerDialog and setting
-    // initial values as current values (present year, month and day)
-    val mDatePickerDialog = DatePickerDialog(
-        mContext,
-        { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            mDate.value = "$mDayOfMonth/${mMonth + 1}/$mYear"
-        }, mYear, mMonth, mDay
-    )
-
-    //WAKTU
-    // Fetching local context
-//    val mContext = LocalContext.current
-
-    // Declaring and initializing a calendar
-//    val mCalendar = Calendar.getInstance()
-    val mHour = mCalendar[Calendar.HOUR_OF_DAY]
-    val mMinute = mCalendar[Calendar.MINUTE]
-
-    // Value for storing time as a string
-    val mTime = remember { mutableStateOf("") }
-
-    // Creating a TimePicker dialod
-    val mTimePickerDialog = TimePickerDialog(
-        mContext,
-        { _, mHour: Int, mMinute: Int ->
-            mTime.value = "$mHour:$mMinute"
-        }, mHour, mMinute, false
-    )
-
-    //BARANG HILANG
-    var barangHilang by rememberSaveable {
-        mutableStateOf("")
-    }
-
-    //CATATAN
-    var catatan by rememberSaveable {
-        mutableStateOf("")
-    }
+    val viewModel = ReportViewModel()
 
     InternraionTheme {
         Column(
@@ -134,60 +72,6 @@ fun ReportScreen(navController: NavController) {
             }
             Spacer(modifier = Modifier.size(30.dp))
 
-            // Tanggal
-            Row(
-                modifier = Modifier
-                    .background(Color.Gray)
-                    .size(width = 340.dp, height = 50.dp)
-                    .padding(start = 15.dp),
-
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Tanggal:", fontSize = 20.sp)
-
-                Text(text = "${mDate.value}", fontSize = 20.sp, color = Color.White)
-
-                Button(onClick = {
-                    mDatePickerDialog.show()
-                }, modifier = Modifier.offset(x = 50.dp)) {
-                    Image(imageVector = Icons.Default.CalendarMonth, contentDescription = null)
-                }
-
-            }
-            Spacer(modifier = Modifier.size(8.dp))
-
-            // Waktu
-            Row(
-                modifier = Modifier
-                    .background(Color.Gray)
-                    .size(width = 340.dp, height = 50.dp)
-                    .padding(start = 15.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Waktu:", fontSize = 20.sp)
-                Text(text = "${mTime.value}", fontSize = 20.sp, color = Color.White)
-                Button(
-                    onClick = { mTimePickerDialog.show() },
-                    modifier = Modifier.offset(x = 50.dp)
-                ) {
-                    Image(imageVector = Icons.Default.AccessTime, contentDescription = null)
-                }
-            }
-            Spacer(modifier = Modifier.size(8.dp))
-
-            // Lokasi
-            Row(
-                modifier = Modifier
-                    .background(Color.Gray)
-                    .size(width = 340.dp, height = 50.dp)
-                    .padding(start = 15.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Lokasi:", fontSize = 20.sp)
-                Image(imageVector = Icons.Default.LocationOn, contentDescription = null)
-            }
-            Spacer(modifier = Modifier.size(8.dp))
-
             // Barang Hilang
             Row(
                 modifier = Modifier
@@ -198,8 +82,8 @@ fun ReportScreen(navController: NavController) {
             ) {
                 Text(text = "Nama Barang:", fontSize = 20.sp)
                 TextField(
-                    value = barangHilang,
-                    onValueChange = { barangHilang = it },
+                    value = viewModel.nameState.value,
+                    onValueChange = { viewModel.nameState.value = it },
                     modifier = Modifier.background(Color.Transparent),
                     colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent)
                 )
@@ -216,8 +100,8 @@ fun ReportScreen(navController: NavController) {
             ) {
                 Text(text = "Catatan:", fontSize = 20.sp)
                 TextField(
-                    value = catatan,
-                    onValueChange = { catatan = it },
+                    value = viewModel.noteState.value,
+                    onValueChange = { viewModel.noteState.value = it },
                     modifier = Modifier.background(Color.Transparent),
                     colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent)
                 )

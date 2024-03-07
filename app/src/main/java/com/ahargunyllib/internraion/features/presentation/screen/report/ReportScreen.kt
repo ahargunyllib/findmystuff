@@ -3,15 +3,21 @@ package com.ahargunyllib.internraion.features.presentation.screen.report
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.widget.DatePicker
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
@@ -31,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.ahargunyllib.internraion.ui.theme.InternraionTheme
 import java.util.Calendar
 import java.util.Date
@@ -46,6 +54,10 @@ import java.util.Date
 @Composable
 fun ReportScreen(navController: NavController) {
     val viewModel = ReportViewModel()
+    val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia(),
+        onResult = { uri -> viewModel.selectedImageUriState.value = uri }
+    )
 
     InternraionTheme {
         Column(
@@ -63,12 +75,26 @@ fun ReportScreen(navController: NavController) {
             Text(text = "Report Screen", fontSize = 25.sp)
             Spacer(modifier = Modifier.size(30.dp))
 
-            Row(
-                modifier = Modifier
-                    .size(width = 350.dp, height = 200.dp)
-                    .background(Color.Gray, shape = RoundedCornerShape(12.dp))
+            LazyColumn(
+                modifier = Modifier.fillMaxWidth()
             ) {
-
+                item {
+                    Button(onClick = {
+                        singlePhotoPickerLauncher.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
+                    }) {
+                        Text (
+                            "Pilih Foto"
+                        )
+                    }
+                    AsyncImage(
+                        model = viewModel.selectedImageUriState.value,
+                        contentDescription = null,
+                        modifier = Modifier.size(width = 350.dp, height = 200.dp).background(Color.Gray, shape = RoundedCornerShape(12.dp)),
+                        contentScale = ContentScale.Crop
+                    )
+                }
             }
             Spacer(modifier = Modifier.size(30.dp))
 

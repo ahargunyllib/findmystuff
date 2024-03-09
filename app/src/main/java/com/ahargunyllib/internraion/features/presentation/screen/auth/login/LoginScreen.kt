@@ -20,14 +20,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.ui.theme.InternraionTheme
-import com.ahargunyllib.internraion.util.Routes
+import com.ahargunyllib.internraion.utils.Routes
 
 @Composable
 fun LoginScreen(navController: NavController) {

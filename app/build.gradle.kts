@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -68,10 +69,13 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("androidx.navigation:navigation-compose:2.7.7")
 
-    implementation("io.github.jan-tennert.supabase:gotrue-kt:2.1.5")
+    implementation("io.github.jan-tennert.supabase:gotrue-kt:2.2.1")
     implementation("io.ktor:ktor-client-cio:2.3.8")
+    implementation("io.github.jan-tennert.supabase:storage-kt:2.2.1")
+    implementation("io.github.jan-tennert.supabase:postgrest-kt:2.2.1")
 
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.android.gms:play-services-location:21.2.0")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.compose.material:material-icons-extended:1.6.3")

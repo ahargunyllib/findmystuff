@@ -1,10 +1,10 @@
 package com.ahargunyllib.internraion.features.data.repository.maps
 
-import com.ahargunyllib.internraion.features.domain.model.Spot
+import com.ahargunyllib.internraion.features.domain.model.Report
 import kotlinx.coroutines.flow.Flow
 
 interface IMapsRepository {
-    suspend fun insertSpot(spot: Spot)
-    suspend fun deleteSpot(spot: Spot)
-    fun getSpots(): Flow<List<Spot>>
+    suspend fun insertSpot(report: Report)
+    suspend fun deleteSpot(report: Report)
+    fun getSpots(): Flow<List<Report>>
 }

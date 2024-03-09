@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.ahargunyllib.internraion.ui.theme.InternraionTheme
-import com.ahargunyllib.internraion.util.Routes
+import com.ahargunyllib.internraion.utils.Routes
 
 @Composable
 fun WelcomeScreen(navController: NavController) {

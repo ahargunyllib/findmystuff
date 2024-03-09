@@ -1,28 +1,18 @@
 package com.ahargunyllib.internraion.features.presentation.screen.report
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.widget.DatePicker
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccessTime
-import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -30,10 +20,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,16 +30,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import com.ahargunyllib.internraion.features.data.network.SupabaseClient
+import com.ahargunyllib.internraion.features.data.repository.report.ReportRepository
 import com.ahargunyllib.internraion.ui.theme.InternraionTheme
-import java.util.Calendar
-import java.util.Date
+import com.ahargunyllib.internraion.utils.Routes
+import com.ahargunyllib.internraion.utils.uriToByteArray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReportScreen(navController: NavController) {
-    val viewModel = ReportViewModel()
+fun ReportScreen(navController: NavController, latitude: Number, longitude: Number) {
+    val viewModel = ReportViewModel(reportRepository = ReportRepository(supabaseClient = SupabaseClient))
+
+    val context = LocalContext.current
+
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri -> viewModel.selectedImageUriState.value = uri }
@@ -134,9 +124,22 @@ fun ReportScreen(navController: NavController) {
             }
 
             Spacer(modifier = Modifier.size(20.dp))
+            Button(onClick = { navController.navigate(Routes.LOCATION_PICKER) }) {
+                Text(text = "to location picker")
+            }
+            Text(
+                text = "Latitude: ${latitude}, Longitude: $longitude",
+                modifier = Modifier.padding(16.dp)
+            )
 
             // Upload Button
-            Button(onClick = { /*TODO*/ }) {
+            Button(onClick = {
+//                val imageByteArray = viewModel.selectedImageUriState.value?.uriToByteArray(context)
+//                imageByteArray?.let {
+//                    viewModel.uploadFile(viewModel.nameState.value,it)
+//                }
+                viewModel.createReport()
+            }) {
                 Text(
                     text = "Upload",
                     fontSize = 25.sp,
@@ -152,6 +155,6 @@ fun ReportScreen(navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun ReportScreenPreview() {
-    ReportScreen(navController = rememberNavController())
+//    ReportScreen(navController = rememberNavController())
 
 }

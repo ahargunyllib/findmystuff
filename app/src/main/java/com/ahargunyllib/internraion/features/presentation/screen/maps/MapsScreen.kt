@@ -11,11 +11,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.maps.MapsRepository
-import com.ahargunyllib.internraion.features.domain.model.Spot
+import com.ahargunyllib.internraion.features.domain.model.Report
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -31,7 +30,6 @@ fun MapsScreen(navController: NavController) {
     val uiSettings = remember {
         MapUiSettings(zoomControlsEnabled = false)
     }
-    val spot: Spot = Spot(-7.954314480411371, 112.61395779611101)
 
     Scaffold(
         floatingActionButton = {
@@ -59,8 +57,8 @@ fun MapsScreen(navController: NavController) {
             ))
         ) {
             Marker(
-                position = LatLng(spot.lat, spot.lng),
-                title = "cw billy",
+                position = LatLng(-7.954314480411371, 112.61395779611101),
+                title = "dummy",
                 snippet = "Long click to delete",
                 onClick = {
                     it.showInfoWindow()

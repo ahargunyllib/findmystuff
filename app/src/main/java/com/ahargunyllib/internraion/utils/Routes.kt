@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.util
+package com.ahargunyllib.internraion.utils
 
 object Routes {
     const val WELCOME = "welcome"
@@ -13,4 +13,5 @@ object Routes {
     const val HOME = "home"
 
     const val REPORT = "report"
+    const val LOCATION_PICKER = "location_picker"
 }

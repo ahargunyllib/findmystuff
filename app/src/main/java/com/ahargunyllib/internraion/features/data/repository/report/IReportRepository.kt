@@ -9,4 +9,5 @@ interface IReportRepository {
         onImageUrlRetrieved: (url: String) -> Unit,
     )
     suspend fun createReport(report: Report)
+
 }

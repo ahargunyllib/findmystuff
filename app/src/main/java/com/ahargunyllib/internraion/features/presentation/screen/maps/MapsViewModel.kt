@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.ahargunyllib.internraion.features.data.repository.maps.MapsRepository
+import com.ahargunyllib.internraion.features.data.repository.report.ReportRepository
 import com.google.android.gms.maps.model.MapStyleOptions
 
 class MapsViewModel(private val mapsRepository: MapsRepository) : ViewModel(){
@@ -24,5 +25,6 @@ class MapsViewModel(private val mapsRepository: MapsRepository) : ViewModel(){
             }
         }
     }
+
 
 }

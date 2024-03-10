@@ -1,6 +1,8 @@
 package com.ahargunyllib.internraion.features.presentation.screen.report
 
+import android.content.ContentValues.TAG
 import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -30,20 +32,18 @@ class ReportViewModel(private val reportRepository: ReportRepository): ViewModel
         }
     }
 
-    fun createReport() {
+    fun createReport(latitude: Double, longitude: Double) {
         viewModelScope.launch {
             try {
                 _userState.value = UserState.Loading
                 reportRepository.createReport(
                     Report(
-                        reportId = 1,
-                        name = "dummy",
-                        note = "dummy",
+                        name = nameState.value,
+                        note = noteState.value,
                         userId = 1,
-                        imageUrl = "dummy",
                         fee = 0.0,
-                        latitude = 0.0,
-                        longitude = 0.0,
+                        latitude = latitude,
+                        longitude = longitude,
                     )
                 )
                 _userState.value = UserState.Success("Report created successfully!")

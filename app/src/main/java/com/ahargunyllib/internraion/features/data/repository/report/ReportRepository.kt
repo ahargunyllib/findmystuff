@@ -1,5 +1,7 @@
 package com.ahargunyllib.internraion.features.data.repository.report
 
+import android.content.ContentValues
+import android.util.Log
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.domain.model.Report
 import io.github.jan.supabase.postgrest.postgrest
@@ -25,6 +27,8 @@ class ReportRepository (
     }
 
     override suspend fun createReport(report: Report) {
-        supabaseClient.client.postgrest["reports"].insert(report)
+        supabaseClient.client.postgrest.from("reports").insert(report)
     }
+
+
 }

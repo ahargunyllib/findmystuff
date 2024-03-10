@@ -54,8 +54,8 @@ fun Navigation() {
                     type = NavType.FloatType
                 },
             )){
-            val latitude = it.arguments?.getFloat("latitude") ?: 0.0
-            val longitude = it.arguments?.getFloat("longitude") ?: 0.0
+            val latitude = it.arguments?.getDouble("latitude") ?: 0.0
+            val longitude = it.arguments?.getDouble("longitude") ?: 0.0
             ReportScreen(navController = navController, latitude = latitude, longitude = longitude)
         }
         composable(Routes.LOCATION_PICKER){

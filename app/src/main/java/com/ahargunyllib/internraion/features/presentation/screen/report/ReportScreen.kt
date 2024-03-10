@@ -39,7 +39,7 @@ import com.ahargunyllib.internraion.utils.uriToByteArray
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ReportScreen(navController: NavController, latitude: Number, longitude: Number) {
+fun ReportScreen(navController: NavController, latitude: Double, longitude: Double) {
     val viewModel = ReportViewModel(reportRepository = ReportRepository(supabaseClient = SupabaseClient))
 
     val context = LocalContext.current
@@ -134,11 +134,12 @@ fun ReportScreen(navController: NavController, latitude: Number, longitude: Numb
 
             // Upload Button
             Button(onClick = {
-//                val imageByteArray = viewModel.selectedImageUriState.value?.uriToByteArray(context)
-//                imageByteArray?.let {
-//                    viewModel.uploadFile(viewModel.nameState.value,it)
-//                }
-                viewModel.createReport()
+                val imageByteArray = viewModel.selectedImageUriState.value?.uriToByteArray(context)
+                imageByteArray?.let {
+                    viewModel.uploadFile(viewModel.nameState.value,it)
+                }
+                viewModel.createReport(latitude, longitude)
+                navController.navigate(Routes.HOME)
             }) {
                 Text(
                     text = "Upload",

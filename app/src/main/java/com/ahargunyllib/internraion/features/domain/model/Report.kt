@@ -9,8 +9,6 @@ data class Report(
     val reportId: Int? = null,
     val name: String = "",
     val note: String = "",
-    @SerialName("image_url")
-    val imageUrl: String = "",
     @SerialName("user_id")
     val userId: Int? = null,
     val fee: Double,

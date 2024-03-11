@@ -1,28 +1,45 @@
 package com.ahargunyllib.internraion.features.data.repository.user
 
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
+import com.ahargunyllib.internraion.features.data.utils.Response
 import io.github.jan.supabase.gotrue.auth
 import io.github.jan.supabase.gotrue.providers.builtin.Email
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.flow
 
-class UserRepository (
+class UserRepository(
     private val supabaseClient: SupabaseClient
-): IUserRepository {
+) : IUserRepository {
     override suspend fun signUpUser(
         email: String,
         password: String,
-    ){
-        supabaseClient.client.auth.signUpWith(Email){
-            this.email = email
-            this.password = password
+    ): Flow<Response> = channelFlow<Response> {
+        try {
+            send(Response.Loading)
+            supabaseClient.client.auth.signUpWith(Email) {
+                this.email = email
+                this.password = password
+            }
+            send(Response.Success("User signed"))
+        } catch (e: Exception) {
+            send(Response.Error(e.message ?: ""))
         }
     }
 
-    override suspend fun signInUser(email: String, password: String) {
-        supabaseClient.client.auth.signInWith(Email){
-            this.email = email
-            this.password = password
+    override suspend fun signInUser(email: String, password: String): Flow<Response> =
+        channelFlow<Response> {
+            try {
+                send(Response.Loading)
+                supabaseClient.client.auth.signInWith(Email) {
+                    this.email = email
+                    this.password = password
+                }
+                send(Response.Success("User logged in"))
+            } catch (e: Exception) {
+                send(Response.Error(e.message ?: ""))
+            }
         }
-    }
 
     override suspend fun signOutUser() {
         supabaseClient.client.auth.signOut()

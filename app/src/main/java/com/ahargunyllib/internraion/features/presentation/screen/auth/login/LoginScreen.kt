@@ -1,5 +1,7 @@
 package com.ahargunyllib.internraion.features.presentation.screen.auth.login
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,6 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -43,6 +47,7 @@ import androidx.navigation.NavController
 import com.ahargunyllib.internraion.R
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
+import com.ahargunyllib.internraion.features.data.utils.Response
 import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.ui.theme.White
@@ -56,6 +61,22 @@ fun LoginScreen(navController: NavController) {
         mutableStateOf(false)
     }
     val context = LocalContext.current
+    val state = viewModel.state.collectAsState()
+
+    when (state.value) {
+        is Response.Loading -> {}
+
+        is Response.Success -> {
+            navController.navigate(Routes.HOME){
+                popUpTo(0)
+            }
+        }
+
+        is Response.Error -> {
+            Toast.makeText(context, (state.value as Response.Error).message, Toast.LENGTH_SHORT)
+                .show()
+        }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -71,7 +92,7 @@ fun LoginScreen(navController: NavController) {
                 modifier = Modifier
                     .size(45.dp)
                     .padding(start = 10.dp, top = 15.dp)
-                    .clickable { navController.popBackStack() },
+                    .clickable { navController.navigate(Routes.WELCOME) },
                 tint = Green
             )
 
@@ -142,7 +163,6 @@ fun LoginScreen(navController: NavController) {
                     Button(
                         onClick = {
                             viewModel.signInUser(context = context)
-                            navController.navigate(Routes.HOME)
                         },
                         modifier = Modifier
                             .width(245.dp)
@@ -182,7 +202,6 @@ fun LoginScreen(navController: NavController) {
                             Text(text = "Sign up", style = Type.textMedium(), color = Yellow)
                         }
                     }
-
 
 
                 }

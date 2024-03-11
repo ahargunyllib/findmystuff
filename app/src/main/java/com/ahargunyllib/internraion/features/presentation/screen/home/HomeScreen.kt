@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.ahargunyllib.internraion.features.presentation.navigation.BottomNavigationBar
 import com.ahargunyllib.internraion.utils.Routes
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -29,7 +30,7 @@ fun HomeScreen(navController: NavController) {
         }
     }
     Scaffold(
-//        bottomBar = { BottomNavigationBar(navController = navController) }
+        bottomBar = { BottomNavigationBar(navController = navController) }
     ) {
         Row {
             Text(text = "Home Screen")

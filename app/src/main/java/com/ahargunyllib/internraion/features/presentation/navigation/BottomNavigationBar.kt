@@ -61,9 +61,7 @@ fun BottomNavigationBar(navController: NavController) {
         IconButton(
             onClick = {
                 selected.value = Icons.Default.LocationOn
-                navController.navigate(Routes.MAPS) {
-                    popUpTo(0)
-                }
+                navController.navigate(Routes.MAPS)
             },
             modifier = Modifier.weight(1f)
         ) {
@@ -86,7 +84,7 @@ fun BottomNavigationBar(navController: NavController) {
                 contentDescription = null,
                 modifier = Modifier
                     .size(26.dp)
-                    .clickable { navController.navigate(Routes.REPORT) },
+                    .clickable { navController.navigate("${Routes.REPORT}/0.0/0.0") },
                 tint = if (selected.value == Icons.Default.ReportProblem) White else Color.DarkGray
             )
         }
@@ -94,9 +92,7 @@ fun BottomNavigationBar(navController: NavController) {
         IconButton(
             onClick = {
                 selected.value = Icons.Default.ChatBubble
-                navController.navigate(Routes.COMING_SOON) {
-                    popUpTo(0)
-                }
+                navController.navigate(Routes.COMING_SOON)
             },
             modifier = Modifier.weight(1f)
         ) {
@@ -111,9 +107,7 @@ fun BottomNavigationBar(navController: NavController) {
         IconButton(
             onClick = {
                 selected.value = Icons.Default.GifBox
-                navController.navigate(Routes.COMING_SOON) {
-                    popUpTo(0)
-                }
+                navController.navigate(Routes.COMING_SOON)
             },
             modifier = Modifier.weight(1f)
         ) {

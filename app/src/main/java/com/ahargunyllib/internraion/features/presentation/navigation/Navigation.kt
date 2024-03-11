@@ -12,6 +12,7 @@ import com.ahargunyllib.internraion.features.presentation.screen.home.HomeScreen
 import com.ahargunyllib.internraion.features.presentation.screen.location_picker.LocationPickerScreen
 import com.ahargunyllib.internraion.features.presentation.screen.maps.MapsScreen
 import com.ahargunyllib.internraion.features.presentation.screen.privacy_policy.PrivacyPolicyScreen
+import com.ahargunyllib.internraion.features.presentation.screen.profile.ProfileScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report.ReportScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report_detail.ReportDetailScreen
 import com.ahargunyllib.internraion.features.presentation.screen.success_sign_up.SuccessSignUpScreen
@@ -77,6 +78,10 @@ fun Navigation() {
         ) {
             val reportId = it.arguments?.getInt("reportId") ?: 0
             ReportDetailScreen(navController = navController, reportId = reportId)
+        }
+
+        composable(Routes.PROFILE) {
+            ProfileScreen(navController = navController)
         }
     }
 

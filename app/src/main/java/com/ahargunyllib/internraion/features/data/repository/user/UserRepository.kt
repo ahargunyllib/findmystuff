@@ -27,4 +27,8 @@ class UserRepository (
     override suspend fun signOutUser() {
         supabaseClient.client.auth.signOut()
     }
+
+    override suspend fun getAccessToken(): String? {
+        return supabaseClient.client.auth.currentAccessTokenOrNull()
+    }
 }

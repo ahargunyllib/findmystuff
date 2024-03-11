@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -54,6 +55,7 @@ fun LoginScreen(navController: NavController) {
     val passwordVisible by rememberSaveable {
         mutableStateOf(false)
     }
+    val context = LocalContext.current
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -139,7 +141,7 @@ fun LoginScreen(navController: NavController) {
 
                     Button(
                         onClick = {
-                            viewModel.signInUser()
+                            viewModel.signInUser(context = context)
                             navController.navigate(Routes.HOME)
                         },
                         modifier = Modifier

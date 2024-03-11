@@ -17,5 +17,8 @@ fun HomeScreen(navController: NavController) {
         Button(onClick = { navController.navigate("${Routes.REPORT}/0.0/0.0") }) {
             Text(text = "to report")
         }
+        Button(onClick = { navController.navigate(Routes.PROFILE) }) {
+            Text(text = "to profile")
+        }
     }
 }

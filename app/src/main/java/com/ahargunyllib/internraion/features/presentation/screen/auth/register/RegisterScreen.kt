@@ -161,7 +161,7 @@ fun RegisterScreen(navController: NavController) {
 
                     OutlinedButton(
                         onClick = {
-                            viewModel.signUpUser()
+                            viewModel.signUpUser(context = context)
                             navController.navigate(Routes.SUCCESS_SIGN_UP)
                         },
                         modifier = Modifier

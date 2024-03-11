@@ -10,6 +10,7 @@ import com.ahargunyllib.internraion.features.presentation.screen.home.HomeScreen
 import com.ahargunyllib.internraion.features.presentation.screen.maps.MapsScreen
 import com.ahargunyllib.internraion.features.presentation.screen.privacy_policy.PrivacyPolicyScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report.ReportScreen
+import com.ahargunyllib.internraion.features.presentation.screen.success_sign_up.SuccessSignUpScreen
 import com.ahargunyllib.internraion.features.presentation.screen.welcome.WelcomeScreen
 import com.ahargunyllib.internraion.util.Routes
 
@@ -24,6 +25,9 @@ fun Navigation() {
 
         composable(Routes.REGISTER) {
             RegisterScreen(navController = navController)
+        }
+        composable(Routes.SUCCESS_SIGN_UP){
+            SuccessSignUpScreen(navController = navController)
         }
         composable(Routes.LOGIN){
             LoginScreen(navController = navController)
@@ -44,6 +48,8 @@ fun Navigation() {
         composable(Routes.REPORT){
             ReportScreen(navController = navController)
         }
+
+
 
 
     }

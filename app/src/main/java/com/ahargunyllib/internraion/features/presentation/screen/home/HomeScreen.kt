@@ -5,20 +5,17 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.ahargunyllib.internraion.ui.theme.InternraionTheme
 import com.ahargunyllib.internraion.utils.Routes
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    InternraionTheme {
-        Row {
-            Text(text = "Home Screen")
-            Button(onClick = { navController.navigate(Routes.MAPS) }) {
-                Text(text = "to maps")
-            }
-            Button(onClick = { navController.navigate("${Routes.REPORT}/0.0/0.0") }) {
-                Text(text = "to report")
-            }
+    Row {
+        Text(text = "Home Screen")
+        Button(onClick = { navController.navigate(Routes.MAPS) }) {
+            Text(text = "to maps")
+        }
+        Button(onClick = { navController.navigate("${Routes.REPORT}/0.0/0.0") }) {
+            Text(text = "to report")
         }
     }
 }

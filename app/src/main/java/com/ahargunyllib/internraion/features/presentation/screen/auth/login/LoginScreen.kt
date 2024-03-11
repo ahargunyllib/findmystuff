@@ -46,7 +46,7 @@ import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.ui.theme.White
 import com.ahargunyllib.internraion.ui.theme.Yellow
-import com.ahargunyllib.internraion.util.Routes
+import com.ahargunyllib.internraion.utils.Routes
 
 @Composable
 fun LoginScreen(navController: NavController) {

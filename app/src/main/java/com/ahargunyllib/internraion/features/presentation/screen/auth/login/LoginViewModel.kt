@@ -1,6 +1,7 @@
 package com.ahargunyllib.internraion.features.presentation.screen.auth.login
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +19,7 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
             val accessToken = userRepository.getAccessToken()
             val sharedPref = SharedPreferenceHelper(context)
             sharedPref.saveStringData("accessToken",accessToken)
+            Log.i("login", "signInUser: user log in")
         }
     }
 }

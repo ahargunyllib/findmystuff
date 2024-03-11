@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ahargunyllib.internraion.features.presentation.screen.auth.login.LoginScreen
 import com.ahargunyllib.internraion.features.presentation.screen.auth.register.RegisterScreen
+import com.ahargunyllib.internraion.features.presentation.screen.coming_soon.ComingSoonScreen
 import com.ahargunyllib.internraion.features.presentation.screen.home.HomeScreen
 import com.ahargunyllib.internraion.features.presentation.screen.location_picker.LocationPickerScreen
 import com.ahargunyllib.internraion.features.presentation.screen.maps.MapsScreen
@@ -22,7 +23,7 @@ import com.ahargunyllib.internraion.utils.Routes
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Routes.WELCOME) {
+    NavHost(navController = navController, startDestination = Routes.HOME) {
 
         composable(Routes.WELCOME) {
             WelcomeScreen(navController = navController)
@@ -48,6 +49,10 @@ fun Navigation() {
 
         composable(Routes.HOME) {
             HomeScreen(navController = navController)
+        }
+        
+        composable(Routes.COMING_SOON){
+            ComingSoonScreen(navController = navController)
         }
 
         composable(

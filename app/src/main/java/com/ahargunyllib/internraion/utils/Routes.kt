@@ -16,6 +16,8 @@ object Routes {
     const val REPORT = "report"
     const val LOCATION_PICKER = "location_picker"
 
+    const val COMING_SOON = "coming_soon"
+
     const val REPORT_DETAIL = "report_detail"
     const val PROFILE = "profile"
 }

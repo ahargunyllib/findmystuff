@@ -11,9 +11,9 @@ data class Report(
     val note: String = "",
     @SerialName("user_id")
     val userId: Int? = null,
-    val fee: Double,
-    val latitude: Double,
-    val longitude: Double,
+    val fee: Double = 0.0,
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
     @SerialName("created_at")
     val createdAt: String? = null
 )

@@ -9,19 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.ahargunyllib.internraion.ui.theme.InternraionTheme
 
 @Composable
 fun PrivacyPolicyScreen(navController: NavController) {
-    InternraionTheme {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Button(onClick = { navController.popBackStack() }) {
-                Text(text = "Back")
-            }
-            Text(text = "Privacy and Policy")
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = { navController.popBackStack() }) {
+            Text(text = "Back")
         }
+        Text(text = "Privacy and Policy")
     }
+
 }

@@ -4,6 +4,7 @@ object Routes {
     const val WELCOME = "welcome"
 
     const val REGISTER = "register"
+    const val SUCCESS_SIGN_UP = "success_sign_up"
     const val LOGIN = "login"
 
     const val PRIVACY_POLICY = "privacy_policy"

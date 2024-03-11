@@ -2,33 +2,57 @@ package com.ahargunyllib.internraion.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.ahargunyllib.internraion.R
 
-// Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+
+object Type{
+    fun displayLarge() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_bold)),
+        fontSize = 57.sp,
+        lineHeight = 64.sp
     )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
+
+    fun displayMedium() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 45.sp,
+        lineHeight = 52.sp
     )
-    */
-)
+
+    fun displaySmall() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_light)),
+        fontSize = 36.sp,
+        lineHeight = 44.sp
+    )
+
+    fun textLarge() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_bold)),
+        fontSize = 20.sp,
+//        lineHeight = 64.sp
+    )
+
+    fun textMedium() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 15.sp,
+//        lineHeight = 52.sp
+    )
+
+    fun textSmall() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_light)),
+        fontSize = 12.sp,
+//        lineHeight = 44.sp
+    )
+
+    fun successSigningText() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 35.sp,
+        fontWeight = FontWeight(600),
+        color = Green
+//        lineHeight = 100.sp
+    )
+
+
+}

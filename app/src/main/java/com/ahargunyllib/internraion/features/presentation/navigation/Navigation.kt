@@ -13,6 +13,7 @@ import com.ahargunyllib.internraion.features.presentation.screen.location_picker
 import com.ahargunyllib.internraion.features.presentation.screen.maps.MapsScreen
 import com.ahargunyllib.internraion.features.presentation.screen.privacy_policy.PrivacyPolicyScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report.ReportScreen
+import com.ahargunyllib.internraion.features.presentation.screen.report_detail.ReportDetailScreen
 import com.ahargunyllib.internraion.features.presentation.screen.success_sign_up.SuccessSignUpScreen
 import com.ahargunyllib.internraion.features.presentation.screen.welcome.WelcomeScreen
 import com.ahargunyllib.internraion.utils.Routes
@@ -29,22 +30,22 @@ fun Navigation() {
         composable(Routes.REGISTER) {
             RegisterScreen(navController = navController)
         }
-        composable(Routes.SUCCESS_SIGN_UP){
+        composable(Routes.SUCCESS_SIGN_UP) {
             SuccessSignUpScreen(navController = navController)
         }
-        composable(Routes.LOGIN){
+        composable(Routes.LOGIN) {
             LoginScreen(navController = navController)
         }
 
-        composable(Routes.PRIVACY_POLICY){
+        composable(Routes.PRIVACY_POLICY) {
             PrivacyPolicyScreen(navController = navController)
         }
 
-        composable(Routes.MAPS){
+        composable(Routes.MAPS) {
             MapsScreen(navController = navController)
         }
 
-        composable(Routes.HOME){
+        composable(Routes.HOME) {
             HomeScreen(navController = navController)
         }
 
@@ -57,16 +58,26 @@ fun Navigation() {
                 navArgument("longitude") {
                     type = NavType.FloatType
                 },
-            )){
-            val latitude = it.arguments?.getDouble("latitude") ?: 0.0
-            val longitude = it.arguments?.getDouble("longitude") ?: 0.0
-            ReportScreen(navController = navController, latitude = latitude, longitude = longitude)
+            )
+        ) {
+            val latitude = it.arguments?.getFloat("latitude") ?: 0.0
+            val longitude = it.arguments?.getFloat("longitude") ?: 0.0
+            ReportScreen(navController = navController, latitude = latitude.toDouble(), longitude = longitude.toDouble())
         }
-        composable(Routes.LOCATION_PICKER){
+        composable(Routes.LOCATION_PICKER) {
             LocationPickerScreen(navController = navController)
         }
 
-
-
+        composable(
+            route = "${Routes.REPORT_DETAIL}/{reportId}",
+            arguments = listOf(
+                navArgument("reportId") {
+                    type = NavType.IntType
+                })
+        ) {
+            val reportId = it.arguments?.getInt("reportId") ?: 0
+            ReportDetailScreen(navController = navController, reportId = reportId)
+        }
     }
+
 }

@@ -15,9 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.utils.Routes
@@ -41,8 +44,9 @@ fun SuccessSignUpScreen(navController: NavController) {
             Text(
                 text = "Akun Anda telah berhasil dibuat.",
                 style = Type.successSigningText(),
-                fontSize = 23.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 21.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
             )
             
             Spacer(modifier = Modifier.size(75.dp))
@@ -68,4 +72,10 @@ fun SuccessSignUpScreen(navController: NavController) {
 
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun SuccesSignUpPreview() {
+    SuccessSignUpScreen(navController = rememberNavController())
 }

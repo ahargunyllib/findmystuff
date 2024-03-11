@@ -1,6 +1,5 @@
 package com.ahargunyllib.internraion.ui.theme
 
-import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -48,7 +47,7 @@ object Type{
 
     fun successSigningText() = TextStyle(
         fontFamily = FontFamily(Font(R.font.poppins_medium)),
-        fontSize = 35.sp,
+        fontSize = 33.sp,
         fontWeight = FontWeight(600),
         color = Green
 //        lineHeight = 100.sp

@@ -18,14 +18,6 @@ class ReportRepository (
         supabaseClient.client.storage.from("images").upload("$fileName.jpg", byteArray, true)
     }
 
-    override suspend fun readFile(
-        fileName: String,
-        onImageUrlRetrieved: (url: String) -> Unit,
-    ) {
-        val url = supabaseClient.client.storage.from("images").createSignedUrl(fileName, 60.minutes)
-        onImageUrlRetrieved(url)
-    }
-
     override suspend fun createReport(report: Report) {
         supabaseClient.client.postgrest.from("reports").insert(report)
     }

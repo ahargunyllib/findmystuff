@@ -4,5 +4,5 @@ import com.ahargunyllib.internraion.features.domain.model.Report
 import kotlinx.coroutines.flow.Flow
 
 interface IMapsRepository {
-    suspend fun getReports()
+    suspend fun getReports(): List<Report>
 }

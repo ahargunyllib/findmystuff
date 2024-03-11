@@ -6,7 +6,7 @@ import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.flow.Flow
 
 class MapsRepository(private val supabaseClient: SupabaseClient): IMapsRepository{
-    override suspend fun getReports() {
-        supabaseClient.client.postgrest.from("reports").select().decodeList<Report>()
+    override suspend fun getReports(): List<Report> {
+        return supabaseClient.client.postgrest.from("reports").select().decodeList<Report>()
     }
 }

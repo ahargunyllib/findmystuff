@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.maps.MapsRepository
 import com.ahargunyllib.internraion.features.domain.model.Report
+import com.ahargunyllib.internraion.utils.Routes
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -56,18 +57,17 @@ fun MapsScreen(navController: NavController) {
                 0f
             ))
         ) {
-            Marker(
-                position = LatLng(-7.954314480411371, 112.61395779611101),
-                title = "dummy",
-                snippet = "Long click to delete",
-                onClick = {
-                    it.showInfoWindow()
-                    true
-                },
-                icon = BitmapDescriptorFactory.defaultMarker(
-                    BitmapDescriptorFactory.HUE_GREEN
+            viewModel.reports.forEach { report ->
+                Marker(
+                    position = LatLng(report.latitude, report.longitude),
+                    title = report.name,
+                    onClick = {
+                        navController.navigate("${Routes.REPORT_DETAIL}/${report.reportId}")
+                        true
+                    }
                 )
-            )
+
+            }
         }
     }
 }

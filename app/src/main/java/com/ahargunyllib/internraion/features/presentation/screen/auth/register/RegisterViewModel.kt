@@ -24,7 +24,7 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
 
     fun signUpUser(){
         viewModelScope.launch{
-            userRepository.signUpUser(email = emailState.value, password =  passwordState.value).collect {
+            userRepository.signUpUser(email = emailState.value, password = passwordState.value, fullName = usernameState.value).collect {
                 _state.value = it
             }
         }

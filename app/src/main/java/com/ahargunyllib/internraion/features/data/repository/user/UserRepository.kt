@@ -2,10 +2,12 @@ package com.ahargunyllib.internraion.features.data.repository.user
 
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.utils.Response
+import com.ahargunyllib.internraion.features.domain.model.User
 import io.github.jan.supabase.gotrue.auth
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.gotrue.user.UserInfo
 import io.github.jan.supabase.gotrue.user.UserSession
+import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.flow
@@ -16,6 +18,7 @@ class UserRepository(
     override suspend fun signUpUser(
         email: String,
         password: String,
+        fullName: String,
     ): Flow<Response> = channelFlow<Response> {
         try {
             send(Response.Loading)
@@ -23,6 +26,7 @@ class UserRepository(
                 this.email = email
                 this.password = password
             }
+            supabaseClient.client.postgrest.from("users").insert(User(fullName = fullName, email = email))
             send(Response.Success("User signed"))
         } catch (e: Exception) {
             send(Response.Error(e.message ?: ""))

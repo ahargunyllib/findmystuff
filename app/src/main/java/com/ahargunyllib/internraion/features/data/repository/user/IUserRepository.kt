@@ -6,7 +6,7 @@ import io.github.jan.supabase.gotrue.user.UserSession
 import kotlinx.coroutines.flow.Flow
 
 interface IUserRepository {
-    suspend fun signUpUser(email: String, password: String): Flow<Response>
+    suspend fun signUpUser(email: String, password: String, fullName: String): Flow<Response>
     suspend fun signInUser(email: String, password: String): Flow<Response>
     suspend fun signOutUser()
 

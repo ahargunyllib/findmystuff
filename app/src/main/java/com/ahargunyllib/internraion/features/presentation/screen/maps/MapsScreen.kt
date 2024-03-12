@@ -1,6 +1,7 @@
 package com.ahargunyllib.internraion.features.presentation.screen.maps
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ToggleOff
@@ -57,6 +58,7 @@ fun MapsScreen(navController: NavController) {
                 0f
             ))
         ) {
+            Log.i("SCREEN", "MapsScreen: ${viewModel.reports}")
             viewModel.reports.forEach { report ->
                 Marker(
                     position = LatLng(report.latitude, report.longitude),

@@ -22,16 +22,10 @@ class RegisterViewModel(private val userRepository: UserRepository) : ViewModel(
     private val _state = MutableStateFlow<Response>(Response.Loading)
     val state = _state.asStateFlow()
 
-    fun signUpUser(context: Context){
+    fun signUpUser(){
         viewModelScope.launch{
             userRepository.signUpUser(email = emailState.value, password =  passwordState.value).collect {
                 _state.value = it
-            }
-
-            if (state.value is Response.Success) {
-                val accessToken = userRepository.getAccessToken()
-                val sharedPref = SharedPreferenceHelper(context)
-                sharedPref.saveStringData("accessToken", accessToken)
             }
         }
     }

@@ -27,8 +27,10 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
             }
             if (state.value is Response.Success) {
                 val accessToken = userRepository.getAccessToken()
+                val refreshToken = userRepository.getRefreshToken()
                 val sharedPref = SharedPreferenceHelper(context)
                 sharedPref.saveStringData("accessToken", accessToken)
+                sharedPref.saveStringData("refreshToken", refreshToken)
             }
         }
     }

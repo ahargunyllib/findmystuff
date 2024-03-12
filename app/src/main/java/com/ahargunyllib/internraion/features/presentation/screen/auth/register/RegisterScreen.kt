@@ -180,7 +180,7 @@ fun RegisterScreen(navController: NavController) {
 
                     OutlinedButton(
                         onClick = {
-                            viewModel.signUpUser(context = context)
+                            viewModel.signUpUser()
                         },
                         modifier = Modifier
                             .width(245.dp)

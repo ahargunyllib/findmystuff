@@ -1,5 +1,6 @@
 package com.ahargunyllib.internraion.features.presentation.screen.maps
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -22,6 +23,7 @@ class MapsViewModel(private val mapsRepository: MapsRepository) : ViewModel(){
     private fun getReports(){
         viewModelScope.launch {
             reports = mapsRepository.getReports()
+            Log.i("VIEW MODEL", "getReports: $reports")
         }
     }
     fun onEvent(event: MapEvent){

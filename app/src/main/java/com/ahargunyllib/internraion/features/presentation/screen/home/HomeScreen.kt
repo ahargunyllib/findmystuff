@@ -10,13 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.ahargunyllib.internraion.features.data.network.SupabaseClient
+import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.features.presentation.navigation.BottomNavigationBar
 import com.ahargunyllib.internraion.utils.Routes
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen(navController: NavController) {
-    val viewModel = HomeViewModel()
+    val viewModel = HomeViewModel(userRepository = UserRepository(supabaseClient = SupabaseClient))
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {

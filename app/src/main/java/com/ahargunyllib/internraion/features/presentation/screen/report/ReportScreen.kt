@@ -136,11 +136,7 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
 
             // Upload Button
             Button(onClick = {
-                val imageByteArray = viewModel.selectedImageUriState.value?.uriToByteArray(context)
-                imageByteArray?.let {
-                    viewModel.uploadFile(viewModel.nameState.value,it)
-                }
-                viewModel.createReport(latitude, longitude)
+                viewModel.createReport(context, latitude, longitude)
                 navController.navigate(Routes.HOME)
             }) {
                 Text(

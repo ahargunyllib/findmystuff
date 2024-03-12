@@ -1,6 +1,6 @@
 package com.ahargunyllib.internraion.features.presentation.screen.report
 
-import android.content.ContentValues.TAG
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.State
@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.ahargunyllib.internraion.features.data.model.UserState
 import com.ahargunyllib.internraion.features.data.repository.report.ReportRepository
 import com.ahargunyllib.internraion.features.domain.model.Report
+import com.ahargunyllib.internraion.utils.uriToByteArray
 import kotlinx.coroutines.launch
 
 class ReportViewModel(private val reportRepository: ReportRepository): ViewModel() {
@@ -32,22 +33,30 @@ class ReportViewModel(private val reportRepository: ReportRepository): ViewModel
         }
     }
 
-    fun createReport(latitude: Double, longitude: Double) {
+    fun createReport(context: Context, latitude: Double, longitude: Double) {
         viewModelScope.launch {
             try {
-                _userState.value = UserState.Loading
+                val userId = reportRepository.getCurrentUserId()
+
                 reportRepository.createReport(
                     Report(
                         name = nameState.value,
                         note = noteState.value,
-                        userId = 1,
-                        fee = 0.0,
+                        userId = userId,
+                        fee = 20.0,
                         latitude = latitude,
                         longitude = longitude,
                     )
                 )
-                _userState.value = UserState.Success("Report created successfully!")
+                val reportId = reportRepository.getReportId(nameState.value).toString()
+
+                val imageByteArray = selectedImageUriState.value?.uriToByteArray(context)
+                imageByteArray?.let {
+                    uploadFile(reportId, it)
+                }
+
             } catch(e: Exception) {
+                Log.i("CREATE REPORT FAILED", "createReport: ${e.message}")
                 _userState.value = UserState.Error("Error: ${e.message}")
             }
         }

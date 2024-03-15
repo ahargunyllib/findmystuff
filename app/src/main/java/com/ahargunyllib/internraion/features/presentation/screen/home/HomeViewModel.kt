@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.utils.SharedPreferenceHelper
+import io.github.jan.supabase.gotrue.user.UserInfo
 import io.github.jan.supabase.gotrue.user.UserSession
 import kotlinx.coroutines.launch
 
@@ -23,19 +24,21 @@ class HomeViewModel(private val userRepository: UserRepository): ViewModel() {
 
             if (accessToken.isNullOrEmpty() ||  refreshToken.isNullOrEmpty()) isUserLoggedIn = false
             else {
-                isUserLoggedIn = true
+                isUserLoggedIn = try {
+                    val user = userRepository.retrieveUser(accessToken)
+                    val userSession = UserSession(accessToken = accessToken, refreshToken = refreshToken, expiresIn = 60, tokenType = "Bearer", user = user)
+                    userRepository.importSession(userSession)
 
-                val user = userRepository.retrieveUser(accessToken)
-                var userSession = UserSession(accessToken = accessToken, refreshToken = refreshToken, expiresIn = 60, tokenType = "Bearer", user = user)
-                userRepository.importSession(userSession)
+                    accessToken = userRepository.getAccessToken()
+                    refreshToken = userRepository.getRefreshToken()
 
-                userSession = userRepository.getUserSession()!!
-
-                accessToken = userRepository.getAccessToken()
-                refreshToken = userRepository.getRefreshToken()
-
-                sharedPref.saveStringData("accessToken", accessToken)
-                sharedPref.saveStringData("refreshToken", refreshToken)
+                    sharedPref.saveStringData("accessToken", accessToken)
+                    sharedPref.saveStringData("refreshToken", refreshToken)
+                    true
+                } catch (e: Exception){
+                    Log.i("home view model", "isUserLoggedIn: $e")
+                    false
+                }
             }
         }
     }

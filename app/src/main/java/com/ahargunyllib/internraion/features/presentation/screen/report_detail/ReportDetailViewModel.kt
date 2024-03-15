@@ -12,15 +12,10 @@ import com.ahargunyllib.internraion.features.domain.model.Report
 import kotlinx.coroutines.launch
 
 class ReportDetailViewModel(private val reportDetailRepository: ReportDetailRepository, reportId: Int) : ViewModel() {
-    var report by mutableStateOf<Report>(Report(name = "ub", note = "ub" ))
+    var report by mutableStateOf<Report?>(null)
     var imageUrl by mutableStateOf("")
 
-    init {
-//        getReport(reportId)
-//        readFile()
-    }
-
-    private fun getReport(reportId: Int) {
+    fun getReport(reportId: Int) {
         viewModelScope.launch {
             report = reportDetailRepository.getReport(reportId)
             Log.i("viewmodel", "getReport: $report")
@@ -29,7 +24,7 @@ class ReportDetailViewModel(private val reportDetailRepository: ReportDetailRepo
 
     private fun readFile(){
         viewModelScope.launch {
-            reportDetailRepository.readFile(fileName = report.name){
+            reportDetailRepository.readFile(fileName = report!!.name){
                 imageUrl = "https://nsqyxpffpobtghztwlpq.supabase.co/storage/v1/$it"
             }
         }

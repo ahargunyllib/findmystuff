@@ -20,4 +20,6 @@ object Routes {
 
     const val REPORT_DETAIL = "report_detail"
     const val PROFILE = "profile"
+
+    const val CHAT_ROOM = "chat_room"
 }

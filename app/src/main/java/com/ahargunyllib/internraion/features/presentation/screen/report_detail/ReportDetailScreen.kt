@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.report_detail.ReportDetailRepository
+import com.ahargunyllib.internraion.utils.Routes
 
 @Composable
 fun ReportDetailScreen(navController: NavController, reportId: Int) {
@@ -25,10 +27,15 @@ fun ReportDetailScreen(navController: NavController, reportId: Int) {
         reportId = reportId
     )
 
-    Log.i("screen", "ReportDetailScreen: ${viewModel.report}")
     Column {
-        Text(text = viewModel.report.name)
-        Text(text = viewModel.report.note)
+        Button(onClick = { viewModel.getReport(reportId) }) {
+            Text("FETCH")
+        }
+        Log.i("screen", "ReportDetailScreen: ${viewModel.report}")
+        if (viewModel.report != null){
+            Text(text = viewModel.report!!.name)
+            Text(text = viewModel.report!!.note)
+        }
 //        AsyncImage(
 //            model = viewModel.imageUrl,
 //            contentDescription = null,
@@ -37,6 +44,10 @@ fun ReportDetailScreen(navController: NavController, reportId: Int) {
 //                .background(Color.Gray, shape = RoundedCornerShape(12.dp)),
 //            contentScale = ContentScale.Crop
 //        )
+        Button(onClick = { navController.navigate("${Routes.CHAT_ROOM}/$reportId") }) {
+            Text("Chat")
+
+        }
     }
 
 }

@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ahargunyllib.internraion.features.presentation.screen.auth.login.LoginScreen
 import com.ahargunyllib.internraion.features.presentation.screen.auth.register.RegisterScreen
+import com.ahargunyllib.internraion.features.presentation.screen.chat_room.ChatRoomScreen
 import com.ahargunyllib.internraion.features.presentation.screen.coming_soon.ComingSoonScreen
 import com.ahargunyllib.internraion.features.presentation.screen.home.HomeScreen
 import com.ahargunyllib.internraion.features.presentation.screen.location_picker.LocationPickerScreen
@@ -88,6 +89,19 @@ fun Navigation() {
         composable(Routes.PROFILE) {
             ProfileScreen(navController = navController)
         }
+
+        composable(
+            route = "${Routes.CHAT_ROOM}/{chatRoomId}",
+            arguments = listOf(
+                navArgument("chatRoomId") {
+                    type = NavType.StringType
+                })
+
+        ) {
+            val chatRoomId = it.arguments?.getString("chatRoomId") ?: ""
+            ChatRoomScreen(navController = navController, chatRoomId = chatRoomId)
+        }
+
     }
 
 }

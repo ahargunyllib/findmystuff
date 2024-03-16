@@ -82,4 +82,6 @@ dependencies {
     implementation("com.google.maps.android:maps-compose:1.0.0")
 
     implementation("io.coil-kt:coil-compose:2.1.0")
+
+    implementation ("androidx.core:core-splashscreen:1.0.1")
 }

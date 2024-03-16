@@ -21,8 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.ahargunyllib.internraion.R
 import com.ahargunyllib.internraion.ui.theme.White
 import com.ahargunyllib.internraion.utils.Routes
 
@@ -51,8 +53,8 @@ fun BottomNavigationBar(navController: NavController) {
             modifier = Modifier.weight(1f)
         ) {
             Icon(
-                Icons.Default.Home,
-                contentDescription = null,
+                painter = painterResource(id = R.drawable.ic_bottombar_home),
+                contentDescription = "",
                 modifier = Modifier.size(26.dp),
                 tint = if (selected.value == Icons.Default.Home) White else Color.DarkGray
             )
@@ -66,7 +68,7 @@ fun BottomNavigationBar(navController: NavController) {
             modifier = Modifier.weight(1f)
         ) {
             Icon(
-                Icons.Default.LocationOn,
+                painter = painterResource(id = R.drawable.ic_bottombar_map),
                 contentDescription = null,
                 modifier = Modifier.size(26.dp),
                 tint = if (selected.value == Icons.Default.LocationOn) White else Color.DarkGray
@@ -80,7 +82,7 @@ fun BottomNavigationBar(navController: NavController) {
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                Icons.Default.ReportProblem,
+                painter = painterResource(id = R.drawable.ic_bottombar_lapor),
                 contentDescription = null,
                 modifier = Modifier
                     .size(26.dp)
@@ -97,7 +99,7 @@ fun BottomNavigationBar(navController: NavController) {
             modifier = Modifier.weight(1f)
         ) {
             Icon(
-                Icons.Default.ChatBubble,
+                painter = painterResource(id = R.drawable.ic_bottombar_chat),
                 contentDescription = null,
                 modifier = Modifier.size(26.dp),
                 tint = if (selected.value == Icons.Default.ChatBubble) White else Color.DarkGray
@@ -112,7 +114,7 @@ fun BottomNavigationBar(navController: NavController) {
             modifier = Modifier.weight(1f)
         ) {
             Icon(
-                Icons.Default.GifBox,
+                painter = painterResource(id = R.drawable.ic_bottombar_status),
                 contentDescription = null,
                 modifier = Modifier.size(26.dp),
                 tint = if (selected.value == Icons.Default.GifBox) White else Color.DarkGray

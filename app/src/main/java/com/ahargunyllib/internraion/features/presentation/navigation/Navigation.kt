@@ -17,6 +17,7 @@ import com.ahargunyllib.internraion.features.presentation.screen.privacy_policy.
 import com.ahargunyllib.internraion.features.presentation.screen.profile.ProfileScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report.ReportScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report_detail.ReportDetailScreen
+import com.ahargunyllib.internraion.features.presentation.screen.splash.SplashScreen
 import com.ahargunyllib.internraion.features.presentation.screen.success_sign_up.SuccessSignUpScreen
 import com.ahargunyllib.internraion.features.presentation.screen.welcome.WelcomeScreen
 import com.ahargunyllib.internraion.utils.Routes
@@ -25,6 +26,10 @@ import com.ahargunyllib.internraion.utils.Routes
 fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Routes.HOME) {
+
+        composable(Routes.SPLASH_SCREEN){
+            SplashScreen(navController = navController)
+        }
 
         composable(Routes.WELCOME) {
             WelcomeScreen(navController = navController)

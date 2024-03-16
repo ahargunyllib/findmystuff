@@ -4,6 +4,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.ahargunyllib.internraion.R
 
@@ -52,6 +53,50 @@ object Type{
         color = Green
 //        lineHeight = 100.sp
     )
+
+    fun authenticationText() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 15.sp,
+        fontWeight = FontWeight(700),
+        color = Grey,
+        textAlign = TextAlign.Center
+    )
+
+    fun homeUsername() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 17.sp,
+        fontWeight = FontWeight(600),
+        color = Black,
+    )
+    fun homeCaption() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 10.sp,
+        fontWeight = FontWeight(400),
+        color = Grey,
+    )
+
+    fun homeSeeMore() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 9.sp,
+        fontWeight = FontWeight(500),
+        color = Black,
+    )
+
+    fun reportSystem() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 15.sp,
+        fontWeight = FontWeight(700),
+        color = Black,
+    )
+
+    fun reportDetail() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 17.sp,
+        fontWeight = FontWeight(600),
+        color = White,
+    )
+
+
 
 
 }

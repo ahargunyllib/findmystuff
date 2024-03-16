@@ -1,6 +1,8 @@
 package com.ahargunyllib.internraion.utils
 
 object Routes {
+
+    const val SPLASH_SCREEN = "splash_screen"
     const val WELCOME = "welcome"
 
     const val REGISTER = "register"

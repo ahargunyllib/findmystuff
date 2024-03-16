@@ -5,44 +5,53 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.ahargunyllib.internraion.R
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.report.ReportRepository
+import com.ahargunyllib.internraion.ui.theme.Green
+import com.ahargunyllib.internraion.ui.theme.Type
+import com.ahargunyllib.internraion.ui.theme.Yellow
 import com.ahargunyllib.internraion.utils.Routes
-import com.ahargunyllib.internraion.utils.uriToByteArray
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReportScreen(navController: NavController, latitude: Double, longitude: Double) {
-    val viewModel = ReportViewModel(reportRepository = ReportRepository(supabaseClient = SupabaseClient))
+    val viewModel =
+        ReportViewModel(reportRepository = ReportRepository(supabaseClient = SupabaseClient))
 
     val context = LocalContext.current
 
@@ -53,52 +62,95 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
 
     Scaffold {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
+
         ) {
+//            Button(
+//                onClick = { navController.popBackStack() },
+//                modifier = Modifier.align(Alignment.Start)
+//            ) {
+//                Text("Back")
+//            }
+            AsyncImage(
+                modifier = Modifier
+                    .width(288.dp)
+                    .height(103.dp)
+                    .padding(top = 7.dp),
+                model = R.drawable.iv_report_logo,
+                contentDescription = null
+            )
 
-            Button(
-                onClick = { navController.popBackStack() },
-                modifier = Modifier.align(Alignment.Start)
-            ) {
-                Text("Back")
-            }
-
-            Text(text = "Report Screen", fontSize = 25.sp)
             Spacer(modifier = Modifier.size(30.dp))
 
             LazyColumn(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 item {
-                    Button(onClick = {
-                        singlePhotoPickerLauncher.launch(
-                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                        )
-                    }) {
-                        Text (
-                            "Pilih Foto"
-                        )
-                    }
                     AsyncImage(
                         model = viewModel.selectedImageUriState.value,
                         contentDescription = null,
-                        modifier = Modifier.size(width = 350.dp, height = 200.dp).background(Color.Gray, shape = RoundedCornerShape(12.dp)),
+                        modifier = Modifier
+                            .size(width = 340.dp, height = 200.dp)
+                            .background(Yellow)
+                            .clickable {
+                                singlePhotoPickerLauncher.launch(
+                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                )
+                            },
                         contentScale = ContentScale.Crop
                     )
                 }
             }
-            Spacer(modifier = Modifier.size(30.dp))
+            Spacer(modifier = Modifier.size(15.dp))
 
-            // Barang Hilang
+            // Lokasi
             Row(
                 modifier = Modifier
-                    .background(Color.Gray)
+                    .clip(shape = RoundedCornerShape(50))
+                    .border(width = 3.dp, color = Green)
+                    .background(Yellow)
                     .size(width = 340.dp, height = 50.dp)
                     .padding(start = 15.dp, end = 15.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Nama Barang:", fontSize = 20.sp)
+                Text(
+                    modifier = Modifier.padding(start = 10.dp),
+                    text = "Lokasi:",
+                    style = Type.reportSystem()
+                )
+                TextButton(onClick = { navController.navigate(Routes.LOCATION_PICKER) }) {
+                    AsyncImage(
+                        modifier = Modifier
+                            .padding(start = 20.dp, end = 3.dp)
+                            .size(20.dp),
+                        model = R.drawable.ic_report_iconlocation,
+                        contentDescription = null
+                    )
+                    Text(text = "Masukkan lokasinya", style = Type.reportDetail())
+                }
+            }
+            Spacer(modifier = Modifier.size(8.dp))
+
+            // Nama Barang
+            Row(
+                modifier = Modifier
+                    .clip(shape = RoundedCornerShape(50))
+                    .border(width = 3.dp, color = Green)
+                    .background(Yellow)
+                    .size(width = 340.dp, height = 50.dp)
+                    .padding(start = 15.dp, end = 15.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    modifier = Modifier.padding(start = 10.dp),
+                    text = "Nama Barang:",
+                    style = Type.reportSystem()
+                )
                 TextField(
                     value = viewModel.nameState.value,
                     onValueChange = { viewModel.nameState.value = it },
@@ -108,52 +160,88 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
             }
             Spacer(modifier = Modifier.size(8.dp))
 
-            // Catatan
+            // Bayaran
             Row(
                 modifier = Modifier
-                    .background(Color.Gray)
+                    .clip(shape = RoundedCornerShape(50))
+                    .border(width = 3.dp, color = Green)
+                    .background(Yellow)
                     .size(width = 340.dp, height = 50.dp)
-                    .padding(start = 15.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(start = 15.dp, end = 15.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Catatan:", fontSize = 20.sp)
-                TextField(
-                    value = viewModel.noteState.value,
-                    onValueChange = { viewModel.noteState.value = it },
-                    modifier = Modifier.background(Color.Transparent),
-                    colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent)
+                Text(
+                    modifier = Modifier.padding(start = 10.dp),
+                    text = "Bayaran:",
+                    style = Type.reportSystem()
                 )
+//                TextField(
+//                    value = viewModel.nameState.value,
+//                    onValueChange = { viewModel.nameState.value = it },
+//                    modifier = Modifier.background(Color.Transparent),
+//                    colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent)
+//                )
+            }
+            Spacer(modifier = Modifier.size(8.dp))
+
+            // Note
+            Row(
+                modifier = Modifier
+                    .clip(shape = RoundedCornerShape(20.dp))
+                    .border(width = 3.dp, color = Green)
+                    .background(Yellow)
+                    .size(width = 340.dp, height = 150.dp)
+                    .padding(start = 15.dp, end = 15.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    Text(
+                        modifier = Modifier.padding(start = 10.dp, top = 15.dp),
+                        text = "Catatan:",
+                        style = Type.reportSystem()
+                    )
+                    TextField(
+                        value = viewModel.noteState.value,
+                        textStyle = Type.reportDetail(),
+                        onValueChange = { viewModel.noteState.value = it },
+                        modifier = Modifier
+                            .background(Color.Transparent)
+                            .padding(start = 10.dp),
+                        colors = TextFieldDefaults.textFieldColors(
+                            containerColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            disabledIndicatorColor = Color.Transparent
+                        )
+                    )
+
+                }
             }
 
             Spacer(modifier = Modifier.size(20.dp))
-            Button(onClick = { navController.navigate(Routes.LOCATION_PICKER) }) {
-                Text(text = "to location picker")
-            }
-            Text(
-                text = "Latitude: ${latitude}, Longitude: $longitude",
-                modifier = Modifier.padding(16.dp)
-            )
 
             // Upload Button
-            Button(onClick = {
-                viewModel.createReport(context, latitude, longitude)
-                navController.navigate(Routes.HOME)
-            }) {
+            Button(
+                onClick = {
+                    viewModel.createReport(context, latitude, longitude)
+                    navController.navigate(Routes.HOME)
+                },
+                modifier = Modifier
+                    .width(245.dp)
+                    .height(54.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Green)
+            ) {
                 Text(
                     text = "Upload",
-                    fontSize = 25.sp,
-                    fontWeight = FontWeight.Normal,
-                    modifier = Modifier.padding(start = 50.dp, end = 50.dp)
+                    fontSize = 23.sp,
+                    style = Type.displayLarge()
                 )
             }
 
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ReportScreenPreview() {
-//    ReportScreen(navController = rememberNavController())
-
 }

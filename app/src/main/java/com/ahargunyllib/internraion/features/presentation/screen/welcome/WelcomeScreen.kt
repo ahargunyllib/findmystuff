@@ -59,7 +59,7 @@ fun WelcomeScreen(navController: NavController) {
             colors = ButtonDefaults.buttonColors(containerColor = Green)
         ) {
             Text(
-                text = "Log in",
+                text = "Masuk",
                 fontSize = 23.sp,
                 style = Type.displayLarge()
             )
@@ -78,7 +78,7 @@ fun WelcomeScreen(navController: NavController) {
             border = BorderStroke(width = 1.dp, color = Green)
         ) {
             Text(
-                text = "Sign up",
+                text = "Daftar",
                 fontSize = 23.sp,
                 style = Type.displayLarge(),
                 color = Green

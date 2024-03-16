@@ -280,7 +280,7 @@ fun RegisterScreen(navController: NavController) {
                         border = BorderStroke(width = 1.dp, color = Green)
                     ) {
                         Text(
-                            text = "Sign up",
+                            text = "Daftar",
                             fontSize = 23.sp,
                             style = Type.displayLarge(),
                             color = Green

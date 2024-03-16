@@ -218,7 +218,7 @@ fun LoginScreen(navController: NavController) {
                         colors = ButtonDefaults.buttonColors(containerColor = Green)
                     ) {
                         Text(
-                            text = "Log in",
+                            text = "Masuk",
                             fontSize = 23.sp,
                             style = Type.displayLarge()
                         )

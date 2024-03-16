@@ -8,27 +8,44 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ahargunyllib.internraion.features.data.repository.report.ReportRepository
 import com.ahargunyllib.internraion.features.data.repository.report_detail.ReportDetailRepository
+import com.ahargunyllib.internraion.features.data.utils.ReportResponse
+import com.ahargunyllib.internraion.features.data.utils.Response
 import com.ahargunyllib.internraion.features.domain.model.Report
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ReportDetailViewModel(private val reportDetailRepository: ReportDetailRepository, reportId: Int) : ViewModel() {
-    var report by mutableStateOf<Report?>(null)
+class ReportDetailViewModel(private val reportDetailRepository: ReportDetailRepository, private val reportId: Int) : ViewModel() {
     var imageUrl by mutableStateOf("")
 
-    fun getReport(reportId: Int) {
+    private val _state = MutableStateFlow<ReportResponse>(ReportResponse.Loading)
+    val state = _state.asStateFlow()
+
+    init {
+        getReport(reportId)
+        Log.i("REPORT VIEW MODEL", "getting report: ${state.value}")
+    }
+
+    private fun getReport(reportId: Int) {
         viewModelScope.launch {
-            report = reportDetailRepository.getReport(reportId)
-            Log.i("viewmodel", "getReport: $report")
+            reportDetailRepository.getReport(reportId).collect {
+                _state.value = it
+                Log.i("REPORT DETAIL VM", "getReport: ${it}")
+                if (it is ReportResponse.Success) {
+                    val report = it.data
+                    readFile(report.name)
+                }
+            }
         }
     }
 
-    private fun readFile(){
+    private fun readFile(fileName: String){
         viewModelScope.launch {
-            reportDetailRepository.readFile(fileName = report!!.name){
+            reportDetailRepository.readFile(fileName = fileName){
                 imageUrl = "https://nsqyxpffpobtghztwlpq.supabase.co/storage/v1/$it"
             }
         }
-        Log.i("viewmodel", "readFile: $imageUrl")
+        Log.i("REPORT DETAIL VM", "readFile: $imageUrl")
     }
 
 

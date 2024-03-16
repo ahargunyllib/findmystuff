@@ -8,35 +8,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ahargunyllib.internraion.features.data.repository.maps.MapsRepository
 import com.ahargunyllib.internraion.features.data.repository.report.ReportRepository
+import com.ahargunyllib.internraion.features.data.utils.ReportResponse
+import com.ahargunyllib.internraion.features.data.utils.ReportsResponse
 import com.ahargunyllib.internraion.features.domain.model.Report
 import com.google.android.gms.maps.model.MapStyleOptions
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MapsViewModel(private val mapsRepository: MapsRepository) : ViewModel(){
-    var state by mutableStateOf(MapState())
-    var reports by mutableStateOf<List<Report>>(emptyList())
+    private val _state = MutableStateFlow<ReportsResponse>(ReportsResponse.Loading)
+    val state = _state.asStateFlow()
 
     init {
         getReports()
+        Log.i("MAPS VIEW MODEL", "getting reports: ${state.value}")
     }
 
     private fun getReports(){
         viewModelScope.launch {
-            reports = mapsRepository.getReports()
-            Log.i("VIEW MODEL", "getReports: $reports")
-        }
-    }
-    fun onEvent(event: MapEvent){
-        when(event){
-            is MapEvent.ToggleFalloutMap -> {
-                state = state.copy(
-                    properties = state.properties.copy(
-                        mapStyleOptions = if(state.isFalloutMap) {
-                            null
-                        } else MapStyleOptions(MapStyle.json),
-                    ),
-                    isFalloutMap = !state.isFalloutMap
-                )
+            mapsRepository.getReports().collect {
+                _state.value = it
+                Log.i("MAPS VIEW MODEL", "getReports: ")
             }
         }
     }

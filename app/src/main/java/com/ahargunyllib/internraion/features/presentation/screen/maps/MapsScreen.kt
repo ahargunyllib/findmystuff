@@ -22,6 +22,7 @@ import com.ahargunyllib.internraion.features.data.repository.maps.MapsRepository
 import com.ahargunyllib.internraion.features.data.utils.ReportResponse
 import com.ahargunyllib.internraion.features.data.utils.ReportsResponse
 import com.ahargunyllib.internraion.features.domain.model.Report
+import com.ahargunyllib.internraion.features.presentation.navigation.BottomNavigationBar
 import com.ahargunyllib.internraion.utils.Routes
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
@@ -41,7 +42,9 @@ fun MapsScreen(navController: NavController) {
     val state = viewModel.state.collectAsState()
     val context = LocalContext.current
 
-    Scaffold {
+    Scaffold(
+        bottomBar = { BottomNavigationBar(navController = navController) }
+    ) {
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
             uiSettings = uiSettings,

@@ -2,10 +2,14 @@ package com.ahargunyllib.internraion.features.presentation.screen.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -13,6 +17,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -22,9 +29,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -35,6 +46,7 @@ import com.ahargunyllib.internraion.features.data.utils.Response
 import com.ahargunyllib.internraion.features.presentation.navigation.BottomNavigationBar
 import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Type
+import com.ahargunyllib.internraion.ui.theme.Yellow
 import com.ahargunyllib.internraion.utils.Routes
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -66,6 +78,37 @@ fun HomeScreen(navController: NavController) {
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .shadow(elevation = 4.dp)
+                    .background(Color.White),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                IconButton(onClick = { navController.navigate(Routes.COMING_SOON) }) {
+                    Icon(
+                        Icons.Default.Notifications,
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(36.dp),
+                        tint = Yellow
+                    )
+                }
+                Text(text = "HALAMAN", style = Type.textMedium(), modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f), textAlign = TextAlign.Center)
+                IconButton(onClick = { navController.navigate(Routes.COMING_SOON) }) {
+                    Icon(
+                        Icons.Default.Person,
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(36.dp),
+                        tint = Yellow
+                    )
+                }
+
+            }
 
             Column(
                 modifier = Modifier.padding(top = 15.dp, bottom = 15.dp, end = 43.dp, start = 43.dp)

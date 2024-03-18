@@ -1,10 +1,12 @@
 package com.ahargunyllib.internraion.features.presentation.navigation
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChatBubble
 import androidx.compose.material.icons.filled.GifBox
@@ -19,13 +21,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ahargunyllib.internraion.R
+import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.White
+import com.ahargunyllib.internraion.ui.theme.Yellow
 import com.ahargunyllib.internraion.utils.Routes
 
 
@@ -35,17 +40,17 @@ fun BottomNavigationBar(navController: NavController) {
 
     val context = LocalContext.current.applicationContext
     val selected = remember {
-        mutableStateOf(Icons.Default.Home)
+        mutableStateOf(navController.currentDestination?.route)
     }
 
     BottomAppBar(
         containerColor = White,
-
-    ) {
+        modifier = Modifier.shadow(elevation = 16.dp)
+        ) {
         // Home
         IconButton(
             onClick = {
-                selected.value = Icons.Default.Home
+                selected.value = Routes.HOME
                 navController.navigate(Routes.HOME) {
                     popUpTo(0)
                 }
@@ -55,14 +60,19 @@ fun BottomNavigationBar(navController: NavController) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_bottombar_home),
                 contentDescription = "",
-                modifier = Modifier.size(26.dp),
-                tint = if (selected.value == Icons.Default.Home) White else Color.DarkGray
+                modifier = if (selected.value != Routes.HOME) Modifier.size(48.dp) else Modifier
+                    .size(
+                        48.dp
+                    )
+                    .background(color = Yellow, shape = RoundedCornerShape(100))
+                    .padding(2.dp),
+                tint = Green,
             )
         }
-        // Locatiion
+        // Location
         IconButton(
             onClick = {
-                selected.value = Icons.Default.LocationOn
+                selected.value = Routes.MAPS
                 navController.navigate(Routes.MAPS)
             },
             modifier = Modifier.weight(1f)
@@ -70,30 +80,40 @@ fun BottomNavigationBar(navController: NavController) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_bottombar_map),
                 contentDescription = null,
-                modifier = Modifier.size(26.dp),
-                tint = if (selected.value == Icons.Default.LocationOn) White else Color.DarkGray
+                modifier = if (selected.value != Routes.MAPS) Modifier.size(48.dp) else Modifier
+                    .size(
+                        48.dp
+                    )
+                    .background(color = Yellow, shape = RoundedCornerShape(100))
+                    .padding(2.dp),
+                tint = Green
             )
         }
-        // Report
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
+
+        // REPORT
+        IconButton(
+            onClick = {
+                selected.value = "${Routes.REPORT}/0.0/0.0"
+                navController.navigate("${Routes.REPORT}/0.0/0.0")
+            },
+            modifier = Modifier.weight(1f)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_bottombar_lapor),
                 contentDescription = null,
-                modifier = Modifier
-                    .size(26.dp)
-                    .clickable { navController.navigate("${Routes.REPORT}/0.0/0.0") },
-                tint = if (selected.value == Icons.Default.ReportProblem) White else Color.DarkGray
+                modifier = if (selected.value != "${Routes.REPORT}/0.0/0.0") Modifier.size(48.dp) else Modifier
+                    .size(
+                        48.dp
+                    )
+                    .background(color = Yellow, shape = RoundedCornerShape(100))
+                    .padding(2.dp),
+                tint = Green
             )
         }
         // Chat
         IconButton(
             onClick = {
-                selected.value = Icons.Default.ChatBubble
+                selected.value = Routes.COMING_SOON
                 navController.navigate(Routes.COMING_SOON)
             },
             modifier = Modifier.weight(1f)
@@ -101,14 +121,19 @@ fun BottomNavigationBar(navController: NavController) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_bottombar_chat),
                 contentDescription = null,
-                modifier = Modifier.size(26.dp),
-                tint = if (selected.value == Icons.Default.ChatBubble) White else Color.DarkGray
+                modifier = if (selected.value != Routes.COMING_SOON) Modifier.size(48.dp) else Modifier
+                    .size(
+                        48.dp
+                    )
+                    .background(color = Yellow, shape = RoundedCornerShape(100))
+                    .padding(2.dp),
+                tint = Green
             )
         }
         // Status
         IconButton(
             onClick = {
-                selected.value = Icons.Default.GifBox
+                selected.value = Routes.COMING_SOON
                 navController.navigate(Routes.COMING_SOON)
             },
             modifier = Modifier.weight(1f)
@@ -116,8 +141,13 @@ fun BottomNavigationBar(navController: NavController) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_bottombar_status),
                 contentDescription = null,
-                modifier = Modifier.size(26.dp),
-                tint = if (selected.value == Icons.Default.GifBox) White else Color.DarkGray
+                modifier = if (selected.value != Routes.COMING_SOON) Modifier.size(48.dp) else Modifier
+                    .size(
+                        48.dp
+                    )
+                    .background(color = Yellow, shape = RoundedCornerShape(100))
+                    .padding(2.dp),
+                tint = Green
             )
         }
 

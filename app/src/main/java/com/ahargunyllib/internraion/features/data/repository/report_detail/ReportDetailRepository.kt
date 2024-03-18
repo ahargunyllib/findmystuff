@@ -3,8 +3,11 @@ package com.ahargunyllib.internraion.features.data.repository.report_detail
 import android.util.Log
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.utils.ReportResponse
+import com.ahargunyllib.internraion.features.data.utils.Response
+import com.ahargunyllib.internraion.features.domain.model.ChatRoom
 import com.ahargunyllib.internraion.features.domain.model.Report
 import com.ahargunyllib.internraion.features.domain.model.User
+import io.github.jan.supabase.gotrue.auth
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.storage.storage
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +36,40 @@ class ReportDetailRepository(private val supabaseClient: SupabaseClient): IRepor
             emit(ReportResponse.Success(report, user, url))
         } catch (e: Exception) {
             emit(ReportResponse.Error(e.message ?: ""))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun createChatRoom(reportId: Int): Flow<Response> = flow {
+        emit(Response.Loading)
+        try {
+            val currentUserEmail = supabaseClient.client.auth.currentUserOrNull()?.email
+            val currentUser = supabaseClient.client.postgrest.from("users").select{
+                filter {
+                    eq("email", currentUserEmail!!)
+                }
+            }.decodeSingle<User>()
+
+            val report = supabaseClient.client.postgrest.from("reports").select {
+                filter {
+                    eq("report_id", reportId)
+                }
+            }.decodeSingle<Report>()
+
+            val victimId = report.userId
+
+            val chatRoom = ChatRoom(reportId = reportId, founderId = currentUser.userId, victimId = victimId)
+            supabaseClient.client.postgrest.from("chat_room").insert(chatRoom)
+
+            val chatRoomId = supabaseClient.client.postgrest.from("chat_room").select {
+                filter {
+                    eq("report_id", reportId)
+                    eq("founder_id", currentUser.userId!!)
+                }
+            }.decodeSingle<ChatRoom>().chatRoomId
+
+            emit(Response.Success("$chatRoomId"))
+        } catch (e: Exception) {
+            emit(Response.Error(e.message ?: ""))
         }
     }.flowOn(Dispatchers.IO)
 }

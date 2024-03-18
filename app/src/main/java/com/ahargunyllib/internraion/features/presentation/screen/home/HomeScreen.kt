@@ -3,9 +3,11 @@ package com.ahargunyllib.internraion.features.presentation.screen.home
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -34,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -71,13 +75,7 @@ fun HomeScreen(navController: NavController) {
 
 
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController) }
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-        ) {
+        topBar = {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -95,10 +93,12 @@ fun HomeScreen(navController: NavController) {
                         tint = Yellow
                     )
                 }
-                Text(text = "HALAMAN", style = Type.textMedium(), modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f), textAlign = TextAlign.Center)
-                IconButton(onClick = { navController.navigate(Routes.COMING_SOON) }) {
+                Text(
+                    text = "HALAMAN", style = Type.textMedium(), modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f), textAlign = TextAlign.Center
+                )
+                IconButton(onClick = { navController.navigate(Routes.PROFILE) }) {
                     Icon(
                         Icons.Default.Person,
                         contentDescription = "",
@@ -109,76 +109,71 @@ fun HomeScreen(navController: NavController) {
                 }
 
             }
-
-            Column(
-                modifier = Modifier.padding(top = 15.dp, bottom = 15.dp, end = 43.dp, start = 43.dp)
-            ) {
-                Row {
-                    Image(
-                        painter = painterResource(id = R.drawable.iv_homepp_example),
+        },
+        bottomBar = { BottomNavigationBar(navController = navController) }
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 32.dp, top = 64.dp, bottom = 96.dp, end = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            items(5) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        AsyncImage(
+                            model = R.drawable.dummy_avatar,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(width = 64.dp, height = 64.dp)
+                                .clip(shape = RoundedCornerShape(100))
+                                .background(Color.Gray, shape = RoundedCornerShape(64.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.size(width = 8.dp, height = 8.dp))
+                        Column {
+                            Text(text = "user.fullName", style = Type.textMedium())
+                            Text(text = "report.name", style = Type.textSmall())
+                            Text(text = "report.note", style = Type.textSmall())
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    AsyncImage(
+                        model = "imageUrl",
                         contentDescription = null,
                         modifier = Modifier
-                            .padding(end = 10.dp)
-                            .size(40.dp)
-                            .clip(shape = RoundedCornerShape(100))
+                            .border(
+                                width = 1.dp,
+                                color = Color(0xFF6C6C6C),
+                                shape = RoundedCornerShape(size = 16.dp)
+                            )
+                            .clip(shape = RoundedCornerShape(16.dp))
+                            .height(200.dp),
+                        contentScale = ContentScale.Crop
                     )
-                    Column {
-                        Text(text = "Rain Khaleed", style = Type.homeUsername())
-                        Text(text = "Nama Barang: Tumbler Hijau", style = Type.homeCaption())
-                        Text(
-                            text = "Deskripsi: Terakhir kali saya memakai....",
-                            style = Type.homeCaption()
-                        )
-                    }
-                }
-                Image(
-                    painter = painterResource(id = R.drawable.iv_homestuff_example),
-                    contentDescription = null,
-                    Modifier
-                        .width(273.dp)
-                        .height(119.dp)
-                )
-                Row {
+                    Spacer(modifier = Modifier.height(16.dp))
                     Button(
                         onClick = { /*TODO*/ },
                         colors = ButtonDefaults.buttonColors(containerColor = Green),
-                        modifier = Modifier
-                            .width(63.dp)
-                            .height(30.dp)
                     ) {
                         Text(text = "See more", style = Type.homeSeeMore())
+                        Spacer(modifier = Modifier.size(8.dp))
                         Icon(
                             painter = painterResource(id = R.drawable.ic_home_seemore),
                             contentDescription = null,
-                            modifier = Modifier.size(5.dp)
-                        )
-                    }
-                    IconButton(onClick = { /*TODO*/ }) {
-                        AsyncImage(
-                            model = R.drawable.ic_home_message_notif,
-                            contentDescription = null,
-                            modifier = Modifier.size(24.dp)
+                            tint = Color.Black
                         )
                     }
                 }
-            }
-
-            Spacer(modifier = Modifier.size(50.dp))
-
-            Row {
-                Text(text = "Home Screen")
-                Button(onClick = { navController.navigate(Routes.MAPS) }) {
-                    Text(text = "to maps")
-                }
-                Button(onClick = { navController.navigate("${Routes.REPORT}/0.0/0.0") }) {
-                    Text(text = "to report")
-                }
-                Button(onClick = { navController.navigate(Routes.PROFILE) }) {
-                    Text(text = "to profile")
-                }
+                Spacer(modifier = Modifier.height(32.dp))
             }
         }
-
     }
 }
 

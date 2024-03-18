@@ -99,7 +99,7 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
                     contentDescription = "",
                     modifier = Modifier
                         .size(24.dp)
-                        .clickable { navController.navigate(Routes.WELCOME) },
+                        .clickable { navController.popBackStack() },
                     tint = Green
                 )
                 Text(text = "LAPOR", style = Type.textMedium(), modifier = Modifier

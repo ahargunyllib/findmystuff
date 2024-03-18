@@ -6,18 +6,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ahargunyllib.internraion.features.data.repository.report.ReportRepository
 import com.ahargunyllib.internraion.features.data.repository.report_detail.ReportDetailRepository
 import com.ahargunyllib.internraion.features.data.utils.ReportResponse
-import com.ahargunyllib.internraion.features.data.utils.Response
-import com.ahargunyllib.internraion.features.domain.model.Report
+import com.ahargunyllib.internraion.features.domain.model.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ReportDetailViewModel(private val reportDetailRepository: ReportDetailRepository, private val reportId: Int) : ViewModel() {
-    var imageUrl by mutableStateOf("")
-
     private val _state = MutableStateFlow<ReportResponse>(ReportResponse.Loading)
     val state = _state.asStateFlow()
 
@@ -31,22 +27,7 @@ class ReportDetailViewModel(private val reportDetailRepository: ReportDetailRepo
             reportDetailRepository.getReport(reportId).collect {
                 _state.value = it
                 Log.i("REPORT DETAIL VM", "getReport: ${it}")
-                if (it is ReportResponse.Success) {
-                    val report = it.data
-                    readFile(report.name)
-                }
             }
         }
     }
-
-    private fun readFile(fileName: String){
-        viewModelScope.launch {
-            reportDetailRepository.readFile(fileName = fileName){
-                imageUrl = "https://nsqyxpffpobtghztwlpq.supabase.co/storage/v1/$it"
-            }
-        }
-        Log.i("REPORT DETAIL VM", "readFile: $imageUrl")
-    }
-
-
 }

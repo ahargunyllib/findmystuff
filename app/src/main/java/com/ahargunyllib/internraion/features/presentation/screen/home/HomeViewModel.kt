@@ -9,6 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
+import com.ahargunyllib.internraion.features.data.utils.ReportItemResponse
 import com.ahargunyllib.internraion.features.data.utils.Response
 import com.ahargunyllib.internraion.utils.SharedPreferenceHelper
 import io.github.jan.supabase.gotrue.user.UserInfo
@@ -21,6 +22,14 @@ class HomeViewModel(private val userRepository: UserRepository): ViewModel() {
     private val _state = MutableStateFlow<Response>(Response.Loading)
     val state = _state.asStateFlow()
 
+    private val _reportItemsState = MutableStateFlow<ReportItemResponse>(ReportItemResponse.Loading)
+    val reportItemState = _reportItemsState.asStateFlow()
+
+    init {
+        getReportItems()
+        Log.i("HOME VIEW MODEL", "getting reportItems: ${reportItemState.value}")
+    }
+
     fun isUserLoggedIn(){
         viewModelScope.launch {
             userRepository.isUserLoggedIn().collect {
@@ -28,4 +37,15 @@ class HomeViewModel(private val userRepository: UserRepository): ViewModel() {
             }
         }
     }
+
+     private fun getReportItems(){
+        viewModelScope.launch {
+            userRepository.getReportItems().collect() {
+                _reportItemsState.value = it
+                Log.i("HOME VIEW MODEL", "getReports: ")
+            }
+        }
+    }
+
+
 }

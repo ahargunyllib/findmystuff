@@ -100,7 +100,7 @@ fun ChatRoomScreen(navController: NavController, chatRoomId: String) {
                     contentDescription = "",
                     modifier = Modifier
                         .size(24.dp)
-                        .clickable { navController.navigate(Routes.WELCOME) },
+                        .clickable { navController.popBackStack() },
                     tint = Green
                 )
                 Text(text = "PESAN", style = Type.textMedium(), modifier = Modifier

@@ -24,4 +24,6 @@ object Routes {
     const val PROFILE = "profile"
 
     const val CHAT_ROOM = "chat_room"
+
+    const val CHAT_LIST = "chat_list"
 }

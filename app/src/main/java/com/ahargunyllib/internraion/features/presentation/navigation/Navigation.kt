@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ahargunyllib.internraion.features.presentation.screen.auth.login.LoginScreen
 import com.ahargunyllib.internraion.features.presentation.screen.auth.register.RegisterScreen
+import com.ahargunyllib.internraion.features.presentation.screen.chat_list.ChatListScreen
 import com.ahargunyllib.internraion.features.presentation.screen.chat_room.ChatRoomScreen
 import com.ahargunyllib.internraion.features.presentation.screen.coming_soon.ComingSoonScreen
 import com.ahargunyllib.internraion.features.presentation.screen.home.HomeScreen
@@ -107,6 +108,8 @@ fun Navigation() {
             ChatRoomScreen(navController = navController, chatRoomId = chatRoomId)
         }
 
+        composable(Routes.CHAT_LIST) {
+            ChatListScreen(navController = navController)
+        }
     }
-
 }

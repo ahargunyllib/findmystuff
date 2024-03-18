@@ -113,15 +113,15 @@ fun BottomNavigationBar(navController: NavController) {
         // Chat
         IconButton(
             onClick = {
-                selected.value = Routes.COMING_SOON
-                navController.navigate(Routes.COMING_SOON)
+                selected.value = Routes.CHAT_LIST
+                navController.navigate(Routes.CHAT_LIST)
             },
             modifier = Modifier.weight(1f)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_bottombar_chat),
                 contentDescription = null,
-                modifier = if (selected.value != Routes.COMING_SOON) Modifier.size(48.dp) else Modifier
+                modifier = if (selected.value != Routes.CHAT_LIST) Modifier.size(48.dp) else Modifier
                     .size(
                         48.dp
                     )

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -66,6 +67,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.ahargunyllib.internraion.R
+import com.ahargunyllib.internraion.features.data.network.SupabaseClient
+import com.ahargunyllib.internraion.features.data.repository.chat_list.ChatListRepository
 import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.ui.theme.White
@@ -76,18 +79,21 @@ import com.ahargunyllib.internraion.utils.Routes
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChatRoomScreen(navController: NavController, chatRoomId: String) {
-    var message by remember { mutableStateOf(TextFieldValue()) }
+    val viewModel = ChatRoomViewModel(
+        chatListRepository = ChatListRepository(supabaseClient = SupabaseClient),
+        chatRoomId
+    )
+    val userState = viewModel.userState.collectAsState()
+    val messagesState = viewModel.messagesState.collectAsState()
+    
+    LaunchedEffect(Unit) {
+        viewModel.realtimeDB(this)
+    }
 
     Scaffold(
         modifier = Modifier
-            .fillMaxSize()
-            .background(color = Color.Blue),
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
+            .fillMaxSize(),
+        topBar = {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -103,9 +109,11 @@ fun ChatRoomScreen(navController: NavController, chatRoomId: String) {
                         .clickable { navController.popBackStack() },
                     tint = Green
                 )
-                Text(text = "PESAN", style = Type.textMedium(), modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f), textAlign = TextAlign.Center)
+                Text(
+                    text = "PESAN", style = Type.textMedium(), modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f), textAlign = TextAlign.Center
+                )
                 IconButton(onClick = { navController.navigate(Routes.COMING_SOON) }) {
                     Icon(
                         Icons.Default.Person,
@@ -117,6 +125,79 @@ fun ChatRoomScreen(navController: NavController, chatRoomId: String) {
                 }
 
             }
+
+        },
+        bottomBar = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.White)
+                    .shadow(elevation = 1.dp)
+                    .padding(vertical = 16.dp, horizontal = 8.dp),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                IconButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .background(color = Yellow, shape = RoundedCornerShape(64.dp))
+                ) {
+                    Icon(Icons.Filled.Add, contentDescription = "")
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                IconButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .background(color = Yellow, shape = RoundedCornerShape(64.dp))
+                ) {
+                    Icon(Icons.Filled.AddCard, contentDescription = "Send")
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                IconButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .background(color = Yellow, shape = RoundedCornerShape(64.dp))
+                ) {
+                    Icon(Icons.Filled.Call, contentDescription = "Send")
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                TextField(
+                    value = viewModel.m.value,
+                    onValueChange = { viewModel.m.value = it },
+                    modifier = Modifier
+                        .weight(1f),
+                    shape = RoundedCornerShape(64.dp),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = Yellow,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                    trailingIcon = {
+                        IconButton(
+                            onClick = {
+                                viewModel.sendMessage()
+                                viewModel.m.value = ""
+                                      },
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                        ) {
+                            Icon(Icons.Outlined.Send, contentDescription = "Send")
+                        }
+                    },
+                )
+            }
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Spacer(modifier = Modifier.height(64.dp))
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -126,131 +207,66 @@ fun ChatRoomScreen(navController: NavController, chatRoomId: String) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 AsyncImage(
-                    model = /*TODO*/"",
+                    model = R.drawable.dummy_avatar,
                     contentDescription = null,
                     modifier = Modifier
                         .size(width = 64.dp, height = 64.dp)
-                        .background(Color.Gray, shape = RoundedCornerShape(64.dp)),
+                        .clip(shape = RoundedCornerShape(100))
+                        .background(
+                            Color.Gray, shape = RoundedCornerShape(64.dp)
+                        ),
                     contentScale = ContentScale.Crop
                 )
                 Spacer(modifier = Modifier.size(width = 8.dp, height = 8.dp))
                 Column {
-                    Text(text = "Nama", style = Type.textMedium())
-                    Text(text = "Email", style = Type.textSmall())
-                    Text(text = "Lokasi", style = Type.textSmall())
+                    Text(text = userState.value.fullName, style = Type.textMedium())
+                    Text(text = userState.value.email, style = Type.textSmall())
+                    Text(text = "Lokasi TBD", style = Type.textSmall())
                 }
             }
-            Column(
-                modifier = Modifier.fillMaxHeight(),
-                verticalArrangement = Arrangement.SpaceBetween
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp)
             ) {
-                Column {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .align(Alignment.End)
-                                .clip(
-                                    RoundedCornerShape(
-                                        topStart = 48f,
-                                        topEnd = 48f,
-                                        bottomStart = 48f,
-                                        bottomEnd = 0f
-                                    )
-                                )
-                                .background(Color.LightGray)
-                                .padding(16.dp)
-                        ) {
-                            Text(text = "Hi")
-                        }
-                    }
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .align(Alignment.Start)
-                                .clip(
-                                    RoundedCornerShape(
-                                        topStart = 48f,
-                                        topEnd = 48f,
-                                        bottomStart = 0f,
-                                        bottomEnd = 48f
-                                    )
-                                )
-                                .background(Color.LightGray)
-                                .padding(16.dp)
-                        ) {
-                            Text(text = "Hi")
-                        }
-                    }
+                messagesState.value.forEach { m ->
+                    item { BubbleChat(message = m.message!!, isMe = m.senderId != userState.value.userId)}
                 }
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .shadow(elevation = 1.dp)
-                        .padding(vertical = 16.dp, horizontal = 8.dp),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    IconButton(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .background(color = Yellow, shape = RoundedCornerShape(64.dp))
-                    ) {
-                        Icon(Icons.Filled.Add, contentDescription = "")
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    IconButton(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .background(color = Yellow, shape = RoundedCornerShape(64.dp))
-                    ) {
-                        Icon(Icons.Filled.AddCard, contentDescription = "Send")
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    IconButton(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .background(color = Yellow, shape = RoundedCornerShape(64.dp))
-                    ) {
-                        Icon(Icons.Filled.Call, contentDescription = "Send")
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
-                    TextField(
-                        value = message,
-                        onValueChange = { message = it },
-                        modifier = Modifier
-                            .weight(1f),
-                        shape = RoundedCornerShape(64.dp),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = Yellow,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                            disabledIndicatorColor = Color.Transparent
-                        ),
-                        trailingIcon = {
-                            IconButton(
-                                onClick = { /*TODO*/ },
-                                modifier = Modifier
-                                    .align(Alignment.CenterVertically)
-                            ) {
-                                Icon(Icons.Outlined.Send, contentDescription = "Send")
-                            }
-                        },
-                    )
+                item { BubbleChat(message = "Hi", isMe = true) }
+                item { BubbleChat(message = "Hi juga", isMe = false) }
+                item { BubbleChat(message = "Kamu nemuinnya dimana dah", isMe = false) }
+                item { BubbleChat(message = "Aku nemuinnya di kamar mandi nih", isMe = true) }
+                items(10){
+                    BubbleChat(message = "Oke makasih", isMe = true)
                 }
+                item {Spacer(modifier = Modifier.height(96.dp))}
             }
         }
     }
 }
 
+@Composable
+fun BubbleChat(message: String, isMe: Boolean) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .align(if (isMe) Alignment.End else Alignment.Start)
+                .clip(
+                    RoundedCornerShape(
+                        topStart = 48f,
+                        topEnd = 48f,
+                        bottomStart = if (isMe) 48f else 0f,
+                        bottomEnd = if (isMe) 0f else 48f
+                    )
+                )
+                .background(Color.LightGray)
+                .padding(16.dp)
+        ) {
+            Text(text = message)
+        }
+    }
+}

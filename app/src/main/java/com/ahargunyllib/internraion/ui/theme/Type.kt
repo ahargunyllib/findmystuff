@@ -96,6 +96,55 @@ object Type{
         color = White,
     )
 
+    fun notifFirst() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_medium)),
+        fontSize = 14.sp,
+        textAlign = TextAlign.Justify,
+        fontWeight = FontWeight(400),
+        color = Black,
+    )
+
+    fun notifSecond() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_medium)),
+        fontSize = 12.sp,
+        fontWeight = FontWeight(400),
+        color = Grey,
+    )
+
+    fun statusBold() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_regular)),
+        fontSize = 15.sp,
+        fontWeight = FontWeight(700),
+        color = Black,
+    )
+
+    fun statusRegular() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_regular)),
+        fontSize = 15.sp,
+        fontWeight = FontWeight(400),
+        color = Black,
+    )
+
+    fun profileName() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_bold)),
+        fontSize = 17.sp,
+        fontWeight = FontWeight(600),
+        color = Black,
+    )
+
+    fun profileStatus() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+        fontSize = 12.sp,
+        fontWeight = FontWeight(400),
+        color = Black,
+    )
+
+    fun profilOption() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_regular)),
+        fontSize = 12.sp,
+        fontWeight = FontWeight(400),
+        color = Black,
+    )
 
 
 

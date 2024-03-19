@@ -153,9 +153,8 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
             // Lokasi
             Row(
                 modifier = Modifier
-                    .clip(shape = RoundedCornerShape(50))
-                    .border(width = 3.dp, color = Green)
-                    .background(Yellow)
+                    .background(Yellow, shape = RoundedCornerShape(50), )
+                    .border(width = 3.dp, color = Green, shape = RoundedCornerShape(50))
                     .size(width = 340.dp, height = 50.dp)
                     .padding(start = 15.dp, end = 15.dp),
                 verticalAlignment = Alignment.CenterVertically,

@@ -179,6 +179,7 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
             }
             Spacer(modifier = Modifier.size(16.dp))
 
+
             TextField(value = if (latitude == 0.0 || longitude == 0.0) "Tentukan Lokasi" else "TBD", onValueChange = {}, modifier = Modifier.fillMaxWidth()
                 .border(
                     width = 1.dp,

@@ -21,9 +21,14 @@ object Routes {
     const val COMING_SOON = "coming_soon"
 
     const val REPORT_DETAIL = "report_detail"
+
     const val PROFILE = "profile"
 
     const val CHAT_ROOM = "chat_room"
 
     const val CHAT_LIST = "chat_list"
+
+    const val NOTIFICATION = "notification"
+
+    const val STATUS = "status"
 }

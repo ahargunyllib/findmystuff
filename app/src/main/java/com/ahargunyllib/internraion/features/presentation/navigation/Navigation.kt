@@ -9,18 +9,18 @@ import androidx.navigation.navArgument
 import com.ahargunyllib.internraion.features.presentation.screen.auth.login.LoginScreen
 import com.ahargunyllib.internraion.features.presentation.screen.auth.register.RegisterScreen
 import com.ahargunyllib.internraion.features.presentation.screen.chat_list.ChatListScreen
-import com.ahargunyllib.internraion.features.presentation.screen.chat_room.ChatRoomScreen
+import com.ahargunyllib.internraion.features.presentation.screen.chat_list.chat_room.ChatRoomScreen
 import com.ahargunyllib.internraion.features.presentation.screen.coming_soon.ComingSoonScreen
 import com.ahargunyllib.internraion.features.presentation.screen.home.HomeScreen
-import com.ahargunyllib.internraion.features.presentation.screen.location_picker.LocationPickerScreen
+import com.ahargunyllib.internraion.features.presentation.screen.report.location_picker.LocationPickerScreen
 import com.ahargunyllib.internraion.features.presentation.screen.maps.MapsScreen
-import com.ahargunyllib.internraion.features.presentation.screen.privacy_policy.PrivacyPolicyScreen
+import com.ahargunyllib.internraion.features.presentation.screen.auth.privacy_policy.PrivacyPolicyScreen
 import com.ahargunyllib.internraion.features.presentation.screen.profile.ProfileScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report.ReportScreen
-import com.ahargunyllib.internraion.features.presentation.screen.report_detail.ReportDetailScreen
-import com.ahargunyllib.internraion.features.presentation.screen.splash.SplashScreen
-import com.ahargunyllib.internraion.features.presentation.screen.success_sign_up.SuccessSignUpScreen
-import com.ahargunyllib.internraion.features.presentation.screen.welcome.WelcomeScreen
+import com.ahargunyllib.internraion.features.presentation.screen.report.report_detail.ReportDetailScreen
+import com.ahargunyllib.internraion.features.presentation.screen.auth.splash.SplashScreen
+import com.ahargunyllib.internraion.features.presentation.screen.auth.SuccessSignUpScreen
+import com.ahargunyllib.internraion.features.presentation.screen.auth.WelcomeScreen
 import com.ahargunyllib.internraion.utils.Routes
 
 @Composable

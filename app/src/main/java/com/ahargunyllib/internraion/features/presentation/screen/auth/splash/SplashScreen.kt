@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.features.presentation.screen.splash
+package com.ahargunyllib.internraion.features.presentation.screen.auth.splash
 
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable

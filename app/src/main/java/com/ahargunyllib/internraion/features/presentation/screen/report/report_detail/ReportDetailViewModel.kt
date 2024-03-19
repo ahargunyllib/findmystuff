@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.features.presentation.screen.report_detail
+package com.ahargunyllib.internraion.features.presentation.screen.report.report_detail
 
 import android.util.Log
 import androidx.compose.runtime.getValue

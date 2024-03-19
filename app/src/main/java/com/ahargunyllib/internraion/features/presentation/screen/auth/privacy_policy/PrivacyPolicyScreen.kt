@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.features.presentation.screen.privacy_policy
+package com.ahargunyllib.internraion.features.presentation.screen.auth.privacy_policy
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

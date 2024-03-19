@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.features.presentation.screen.success_sign_up
+package com.ahargunyllib.internraion.features.presentation.screen.auth
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

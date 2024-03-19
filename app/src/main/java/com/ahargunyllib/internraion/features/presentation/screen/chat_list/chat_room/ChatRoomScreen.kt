@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.features.presentation.screen.chat_room
+package com.ahargunyllib.internraion.features.presentation.screen.chat_list.chat_room
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.features.presentation.screen.welcome
+package com.ahargunyllib.internraion.features.presentation.screen.auth
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image

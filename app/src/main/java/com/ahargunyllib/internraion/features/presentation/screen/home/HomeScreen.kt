@@ -119,98 +119,78 @@ fun HomeScreen(navController: NavController) {
 
         }
     }, bottomBar = { BottomNavigationBar(navController = navController) }) {
-        when (reportItemsState.value) {
-            is ReportItemResponse.Error -> {
-                val error = (reportItemsState.value as ReportItemResponse.Error).message
-                Toast.makeText(
-                    context,
-                    error,
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
-                Log.i("REPORT ITEMS RESPONSE ERROR", "HomeScreen: ERROR")
-            }
-
-            is ReportItemResponse.Loading -> {
-                CircularProgressIndicator(color = Color.Black)
-                Log.i("REPORT ITEMS RESPONSE LOADING", "HomeScreen: LOADING")
-            }
-            is ReportItemResponse.Success -> {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(start = 32.dp, top = 64.dp, bottom = 96.dp, end = 32.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    (reportItemsState.value as ReportItemResponse.Success).reportItems.forEach { reportItem ->
-                        item {
-                            Column(
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Row(
-                                    horizontalArrangement = Arrangement.Start,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    AsyncImage(
-                                        model = R.drawable.dummy_avatar,
-                                        contentDescription = null,
-                                        modifier = Modifier
-                                            .size(width = 64.dp, height = 64.dp)
-                                            .clip(shape = RoundedCornerShape(100))
-                                            .background(
-                                                Color.Gray, shape = RoundedCornerShape(64.dp)
-                                            ),
-                                        contentScale = ContentScale.Crop
-                                    )
-                                    Spacer(modifier = Modifier.size(width = 8.dp, height = 8.dp))
-                                    Column {
-                                        Text(
-                                            text = reportItem.user.fullName,
-                                            style = Type.textMedium()
-                                        )
-                                        Text(
-                                            text = reportItem.report.name, style = Type.textSmall()
-                                        )
-                                        Text(
-                                            text = reportItem.report.note,
-                                            style = Type.textSmall(),
-                                            maxLines = 1
-                                        )
-                                    }
-                                }
-                                Spacer(modifier = Modifier.height(16.dp))
-                                AsyncImage(
-                                    model = reportItem.imageUrl,
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .border(
-                                            width = 1.dp,
-                                            color = Color(0xFF6C6C6C),
-                                            shape = RoundedCornerShape(size = 16.dp)
-                                        )
-                                        .clip(shape = RoundedCornerShape(16.dp))
-                                        .height(200.dp),
-                                    contentScale = ContentScale.Crop
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(start = 32.dp, top = 64.dp, bottom = 96.dp, end = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            reportItemsState.value.forEach { reportItem ->
+                item {
+                    Column(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            AsyncImage(
+                                model = R.drawable.dummy_avatar,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(width = 64.dp, height = 64.dp)
+                                    .clip(shape = RoundedCornerShape(100))
+                                    .background(
+                                        Color.Gray, shape = RoundedCornerShape(64.dp)
+                                    ),
+                                contentScale = ContentScale.Crop
+                            )
+                            Spacer(modifier = Modifier.size(width = 8.dp, height = 8.dp))
+                            Column {
+                                Text(
+                                    text = reportItem.user.fullName,
+                                    style = Type.textMedium()
                                 )
-                                Spacer(modifier = Modifier.height(16.dp))
-                                Button(
-                                    onClick = { navController.navigate("${Routes.REPORT_DETAIL}/${reportItem.report.reportId}") },
-                                    colors = ButtonDefaults.buttonColors(containerColor = Green),
-                                ) {
-                                    Text(text = "See more", style = Type.homeSeeMore())
-                                    Spacer(modifier = Modifier.size(8.dp))
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.ic_home_seemore),
-                                        contentDescription = null,
-                                        tint = Color.Black
-                                    )
-                                }
+                                Text(
+                                    text = reportItem.report.name, style = Type.textSmall()
+                                )
+                                Text(
+                                    text = reportItem.report.note,
+                                    style = Type.textSmall(),
+                                    maxLines = 1
+                                )
                             }
-                            Spacer(modifier = Modifier.height(32.dp))
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+                        AsyncImage(
+                            model = reportItem.imageUrl,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .border(
+                                    width = 1.dp,
+                                    color = Color(0xFF6C6C6C),
+                                    shape = RoundedCornerShape(size = 16.dp)
+                                )
+                                .clip(shape = RoundedCornerShape(16.dp))
+                                .height(200.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(
+                            onClick = { navController.navigate("${Routes.REPORT_DETAIL}/${reportItem.report.reportId}") },
+                            colors = ButtonDefaults.buttonColors(containerColor = Green),
+                        ) {
+                            Text(text = "See more", style = Type.homeSeeMore())
+                            Spacer(modifier = Modifier.size(8.dp))
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_home_seemore),
+                                contentDescription = null,
+                                tint = Color.Black
+                            )
                         }
                     }
+                    Spacer(modifier = Modifier.height(32.dp))
                 }
-                Log.i("REPORT ITEMS RESPONSE SUCCESS", "HomeScreen: SUCCESS")
             }
         }
 

@@ -133,15 +133,15 @@ fun BottomNavigationBar(navController: NavController) {
         // Status
         IconButton(
             onClick = {
-                selected.value = Routes.COMING_SOON
-                navController.navigate(Routes.COMING_SOON)
+                selected.value = Routes.STATUS
+                navController.navigate(Routes.STATUS)
             },
             modifier = Modifier.weight(1f)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_bottombar_status),
                 contentDescription = null,
-                modifier = if (selected.value != Routes.COMING_SOON) Modifier.size(48.dp) else Modifier
+                modifier = if (selected.value != Routes.STATUS) Modifier.size(48.dp) else Modifier
                     .size(
                         48.dp
                     )

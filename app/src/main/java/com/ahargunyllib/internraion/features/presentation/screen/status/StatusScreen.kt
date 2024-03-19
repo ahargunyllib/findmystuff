@@ -49,7 +49,7 @@ fun StatusScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                IconButton(onClick = { navController.navigate(Routes.COMING_SOON) }) {
+                IconButton(onClick = { navController.navigate(Routes.NOTIFICATION) }) {
                     Icon(
                         Icons.Default.Notifications,
                         contentDescription = "",

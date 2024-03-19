@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -20,6 +21,7 @@ class ReportViewModel(private val reportRepository: ReportRepository): ViewModel
     val nameState = mutableStateOf("")
     val noteState = mutableStateOf("")
     val selectedImageUriState = mutableStateOf<Uri?>(null)
+    val feeState = mutableStateOf("")
 
     private fun uploadFile(fileName: String, byteArray: ByteArray) {
         viewModelScope.launch {
@@ -43,16 +45,15 @@ class ReportViewModel(private val reportRepository: ReportRepository): ViewModel
                         name = nameState.value,
                         note = noteState.value,
                         userId = userId,
-                        fee = 20.0,
+                        fee = feeState.value.toDouble(),
                         latitude = latitude,
                         longitude = longitude,
                     )
                 )
-                val reportId = reportRepository.getReportId(nameState.value).toString()
 
                 val imageByteArray = selectedImageUriState.value?.uriToByteArray(context)
                 imageByteArray?.let {
-                    uploadFile(reportId, it)
+                    uploadFile(nameState.value, it)
                 }
 
             } catch(e: Exception) {

@@ -58,7 +58,7 @@ fun LocationPickerScreen(navController: NavController) {
                     contentDescription = "",
                     modifier = Modifier
                         .size(24.dp)
-                        .clickable { navController.navigate(Routes.WELCOME) },
+                        .clickable { navController.popBackStack() },
                     tint = Green
                 )
                 Text(text = "PILIH LOKASI", style = Type.textMedium(), modifier = Modifier
@@ -89,7 +89,9 @@ fun LocationPickerScreen(navController: NavController) {
             ){
                 Button(
                     onClick = {
-                        navController.navigate("${Routes.REPORT}/${viewModel.cameraPositionState.value.position.target.latitude}/${viewModel.cameraPositionState.value.position.target.longitude}")
+                        navController.navigate("${Routes.REPORT}/${viewModel.cameraPositionState.value.position.target.latitude}/${viewModel.cameraPositionState.value.position.target.longitude}") {
+                            popUpTo(0)
+                        }
                     },
                     modifier = Modifier
                         .height(64.dp),

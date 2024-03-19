@@ -55,6 +55,19 @@ class ReportDetailRepository(private val supabaseClient: SupabaseClient): IRepor
                 }
             }.decodeSingle<Report>()
 
+            // Cek apakah udah pernah buat chat room di report id tersebut
+            val chatRoomExists = supabaseClient.client.postgrest.from("chat_room").select {
+                filter {
+                    eq("report_id", reportId)
+                    eq("founder_id", currentUser.userId!!)
+                }
+            }.decodeSingleOrNull<ChatRoom>()
+            if (chatRoomExists != null){
+                emit(Response.Error("Udah pernah buat chat room nih! ${chatRoomExists.chatRoomId}"))
+                return@flow
+            }
+
+
             val victimId = report.userId
 
             val chatRoom = ChatRoom(reportId = reportId, founderId = currentUser.userId, victimId = victimId)

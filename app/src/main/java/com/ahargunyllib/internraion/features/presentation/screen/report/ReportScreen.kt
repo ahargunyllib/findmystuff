@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
@@ -53,6 +54,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -216,7 +219,9 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
                     Text("Nama Barang: ", modifier= Modifier.padding(start = 16.dp), style = Type.reportSystem())
                 },
                 textStyle = Type.reportSystem(),
-
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences
+                )
             )
             Spacer(modifier = Modifier.size(8.dp))
 
@@ -232,7 +237,7 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
                     Text("Bayaran: ", modifier= Modifier.padding(start = 16.dp), style = Type.reportSystem())
                 },
                 textStyle = Type.reportSystem(),
-
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                 )
             Spacer(modifier = Modifier.size(8.dp))
 
@@ -248,7 +253,9 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
                     Text("Deskripsi: ", modifier= Modifier.padding(start = 16.dp), style = Type.reportSystem())
                 },
                 textStyle = Type.reportSystem(),
-
+                keyboardOptions = KeyboardOptions(
+                    capitalization = KeyboardCapitalization.Sentences
+                )
                 )
             Spacer(modifier = Modifier.size(16.dp))
 

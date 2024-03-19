@@ -148,7 +148,10 @@ fun LoginScreen(navController: NavController) {
                                     text = "Alamat Email",
                                     style = Type.authenticationText()
                                 )
-                            }
+                            },
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Email
+                            )
                         )
                     }
 

@@ -14,11 +14,13 @@ import com.ahargunyllib.internraion.features.presentation.screen.coming_soon.Com
 import com.ahargunyllib.internraion.features.presentation.screen.home.HomeScreen
 import com.ahargunyllib.internraion.features.presentation.screen.location_picker.LocationPickerScreen
 import com.ahargunyllib.internraion.features.presentation.screen.maps.MapsScreen
+import com.ahargunyllib.internraion.features.presentation.screen.notification.NotificationScreen
 import com.ahargunyllib.internraion.features.presentation.screen.privacy_policy.PrivacyPolicyScreen
 import com.ahargunyllib.internraion.features.presentation.screen.profile.ProfileScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report.ReportScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report_detail.ReportDetailScreen
 import com.ahargunyllib.internraion.features.presentation.screen.splash.SplashScreen
+import com.ahargunyllib.internraion.features.presentation.screen.status.StatusScreen
 import com.ahargunyllib.internraion.features.presentation.screen.success_sign_up.SuccessSignUpScreen
 import com.ahargunyllib.internraion.features.presentation.screen.welcome.WelcomeScreen
 import com.ahargunyllib.internraion.utils.Routes
@@ -26,7 +28,7 @@ import com.ahargunyllib.internraion.utils.Routes
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Routes.SPLASH_SCREEN) {
+    NavHost(navController = navController, startDestination = Routes.HOME) {
 
         composable(Routes.SPLASH_SCREEN){
             SplashScreen(navController = navController)
@@ -110,6 +112,14 @@ fun Navigation() {
 
         composable(Routes.CHAT_LIST) {
             ChatListScreen(navController = navController)
+        }
+
+        composable(Routes.NOTIFICATION){
+            NotificationScreen(navController = navController)
+        }
+        
+        composable(Routes.STATUS){
+            StatusScreen(navController = navController)
         }
     }
 }

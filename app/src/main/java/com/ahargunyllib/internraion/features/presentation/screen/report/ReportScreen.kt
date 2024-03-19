@@ -12,9 +12,11 @@ import androidx.compose.foundation.gestures.ScrollableState
 import androidx.compose.foundation.gestures.rememberScrollableState
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -102,9 +104,11 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
                         .clickable { navController.popBackStack() },
                     tint = Green
                 )
-                Text(text = "LAPOR", style = Type.textMedium(), modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f), textAlign = TextAlign.Center)
+                Text(
+                    text = "LAPOR", style = Type.textMedium(), modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f), textAlign = TextAlign.Center
+                )
 
             }
         },
@@ -112,11 +116,12 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(64.dp))
             AsyncImage(
                 modifier = Modifier
                     .width(288.dp)
@@ -126,166 +131,140 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
                 contentDescription = null
             )
 
-            Spacer(modifier = Modifier.size(30.dp))
+            Spacer(modifier = Modifier.size(16.dp))
 
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 item {
-                    AsyncImage(
-                        model = viewModel.selectedImageUriState.value,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(width = 340.dp, height = 200.dp)
-                            .background(Yellow)
-                            .clickable {
-                                singlePhotoPickerLauncher.launch(
-                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                    Box {
+                        AsyncImage(
+                            modifier = Modifier
+                                .height(200.dp)
+                                .background(Yellow, shape = RoundedCornerShape(16.dp))
+                                .border(
+                                    width = 1.dp,
+                                    color = Color(0xFF6C6C6C),
+                                    shape = RoundedCornerShape(size = 16.dp)
                                 )
-                            },
-                        contentScale = ContentScale.Crop
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.size(15.dp))
-
-            // Lokasi
-            Row(
-                modifier = Modifier
-                    .clip(shape = RoundedCornerShape(50))
-                    .border(width = 3.dp, color = Green)
-                    .background(Yellow)
-                    .size(width = 340.dp, height = 50.dp)
-                    .padding(start = 15.dp, end = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Lokasi:",
-                    style = Type.reportSystem()
-                )
-                TextButton(onClick = { navController.navigate(Routes.LOCATION_PICKER) }) {
-                    AsyncImage(
-                        modifier = Modifier
-                            .padding(start = 20.dp, end = 3.dp)
-                            .size(20.dp),
-                        model = R.drawable.ic_report_iconlocation,
-                        contentDescription = null
-                    )
-                    Text(text = "Masukkan lokasinya", style = Type.reportDetail())
-                }
-            }
-            Spacer(modifier = Modifier.size(8.dp))
-
-            // Nama Barang
-            Row(
-                modifier = Modifier
-                    .clip(shape = RoundedCornerShape(50))
-                    .border(width = 3.dp, color = Green)
-                    .background(Yellow)
-                    .size(width = 340.dp, height = 50.dp)
-                    .padding(start = 15.dp, end = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Nama Barang:",
-                    style = Type.reportSystem()
-                )
-                TextField(
-                    value = viewModel.nameState.value,
-                    onValueChange = { viewModel.nameState.value = it },
-                    modifier = Modifier.background(Color.Transparent),
-                    colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent)
-                )
-            }
-            Spacer(modifier = Modifier.size(8.dp))
-
-            // Bayaran
-            Row(
-                modifier = Modifier
-                    .clip(shape = RoundedCornerShape(50))
-                    .border(width = 3.dp, color = Green)
-                    .background(Yellow)
-                    .size(width = 340.dp, height = 50.dp)
-                    .padding(start = 15.dp, end = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = "Bayaran:",
-                    style = Type.reportSystem()
-                )
-//                TextField(
-//                    value = viewModel.nameState.value,
-//                    onValueChange = { viewModel.nameState.value = it },
-//                    modifier = Modifier.background(Color.Transparent),
-//                    colors = TextFieldDefaults.textFieldColors(containerColor = Color.Transparent)
-//                )
-            }
-            Spacer(modifier = Modifier.size(8.dp))
-
-            // Note
-            Row(
-                modifier = Modifier
-                    .clip(shape = RoundedCornerShape(20.dp))
-                    .border(width = 3.dp, color = Green)
-                    .background(Yellow)
-                    .size(width = 340.dp, height = 150.dp)
-                    .padding(start = 15.dp, end = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Text(
-                        modifier = Modifier.padding(start = 10.dp, top = 15.dp),
-                        text = "Catatan:",
-                        style = Type.reportSystem()
-                    )
-                    TextField(
-                        value = viewModel.noteState.value,
-                        textStyle = Type.reportDetail(),
-                        onValueChange = { viewModel.noteState.value = it },
-                        modifier = Modifier
-                            .background(Color.Transparent)
-                            .padding(start = 10.dp),
-                        colors = TextFieldDefaults.textFieldColors(
-                            containerColor = Color.Transparent,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent,
-                            disabledIndicatorColor = Color.Transparent
+                                .clip(shape = RoundedCornerShape(16.dp))
+                                .fillMaxWidth()
+                                .clickable {
+                                    singlePhotoPickerLauncher.launch(
+                                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                    )
+                                },
+                            model = viewModel.selectedImageUriState.value,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop
                         )
-                    )
-
+                        if (viewModel.selectedImageUriState.value == null) {
+                            Column(
+                                modifier = Modifier
+                                    .height(200.dp)
+                                    .fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                Text(
+                                    "Masukkan Gambar",
+                                    color = Color.Black,
+                                    style = Type.reportSystem(),
+                                )
+                            }
+                        }
+                    }
                 }
             }
+            Spacer(modifier = Modifier.size(16.dp))
 
-            Spacer(modifier = Modifier.size(20.dp))
 
-            // Upload Button
+            TextField(value = if (latitude == 0.0 || longitude == 0.0) "Tentukan Lokasi" else "TBD", onValueChange = {}, modifier = Modifier.fillMaxWidth()
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFF6C6C6C),
+                    shape = RoundedCornerShape(size = 16.dp)
+                )
+                .clip(shape = RoundedCornerShape(16.dp)),
+                colors = TextFieldDefaults.textFieldColors(containerColor = Yellow),
+                leadingIcon = {
+                    Text("Lokasi: ", modifier= Modifier.padding(start = 16.dp), style = Type.reportSystem())
+                },
+                textStyle = Type.reportSystem(),
+                enabled = false,
+                trailingIcon= {
+                    IconButton(onClick = { navController.navigate(Routes.LOCATION_PICKER) }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_report_iconlocation),
+                            contentDescription = null,
+                        )
+                    }
+                }
+                )
+            Spacer(modifier = Modifier.size(8.dp))
+
+            TextField(value = viewModel.nameState.value, onValueChange = { viewModel.nameState.value = it }, modifier = Modifier.fillMaxWidth()
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFF6C6C6C),
+                    shape = RoundedCornerShape(size = 16.dp)
+                )
+                .clip(shape = RoundedCornerShape(16.dp)),
+                colors = TextFieldDefaults.textFieldColors(containerColor = Yellow),
+                leadingIcon = {
+                    Text("Nama Barang: ", modifier= Modifier.padding(start = 16.dp), style = Type.reportSystem())
+                },
+                textStyle = Type.reportSystem(),
+
+            )
+            Spacer(modifier = Modifier.size(8.dp))
+
+            TextField(value = viewModel.feeState.value, onValueChange = { viewModel.feeState.value = it }, modifier = Modifier.fillMaxWidth()
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFF6C6C6C),
+                    shape = RoundedCornerShape(size = 16.dp)
+                )
+                .clip(shape = RoundedCornerShape(16.dp)),
+                colors = TextFieldDefaults.textFieldColors(containerColor = Yellow),
+                leadingIcon = {
+                    Text("Bayaran: ", modifier= Modifier.padding(start = 16.dp), style = Type.reportSystem())
+                },
+                textStyle = Type.reportSystem(),
+
+                )
+            Spacer(modifier = Modifier.size(8.dp))
+
+            TextField(value = viewModel.noteState.value, onValueChange = { viewModel.noteState.value = it }, modifier = Modifier.fillMaxWidth()
+                .border(
+                    width = 1.dp,
+                    color = Color(0xFF6C6C6C),
+                    shape = RoundedCornerShape(size = 16.dp)
+                )
+                .clip(shape = RoundedCornerShape(16.dp)),
+                colors = TextFieldDefaults.textFieldColors(containerColor = Yellow),
+                leadingIcon = {
+                    Text("Deskripsi: ", modifier= Modifier.padding(start = 16.dp), style = Type.reportSystem())
+                },
+                textStyle = Type.reportSystem(),
+
+                )
+            Spacer(modifier = Modifier.size(16.dp))
+
             Button(
                 onClick = {
                     viewModel.createReport(context, latitude, longitude)
                     navController.navigate(Routes.HOME)
                 },
-                modifier = Modifier
-                    .width(245.dp)
-                    .height(54.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Green)
             ) {
                 Text(
                     text = "Upload",
-                    fontSize = 23.sp,
+                    fontSize = 24.sp,
                     style = Type.displayLarge()
                 )
             }
-
         }
     }
 }

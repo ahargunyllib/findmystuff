@@ -42,6 +42,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.ahargunyllib.internraion.R
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
+import com.ahargunyllib.internraion.features.data.repository.chat_list.ChatListRepository
 import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.features.data.utils.Response
 import com.ahargunyllib.internraion.features.presentation.navigation.BottomNavigationBar
@@ -54,6 +55,9 @@ import com.ahargunyllib.internraion.utils.Routes
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ChatListScreen(navController: NavController) {
+    val viewModel = ChatListViewModel(chatListRepository = ChatListRepository(supabaseClient = SupabaseClient))
+    val chatRoomsState = viewModel.chatRoomsState.collectAsState()
+
     Scaffold(
         topBar = {
             Row(
@@ -98,38 +102,43 @@ fun ChatListScreen(navController: NavController) {
                 .padding(start = 32.dp, top = 64.dp, bottom = 96.dp, end = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            items(5) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Row(
-                        horizontalArrangement = Arrangement.Start,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.clickable {
-                            navController.navigate("${Routes.CHAT_ROOM}/54")
-                        }
+            chatRoomsState.value.forEach { chatRoom ->
+                item {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
                     ) {
-                        AsyncImage(
-                            model = R.drawable.dummy_avatar,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(width = 64.dp, height = 64.dp)
-                                .clip(shape = RoundedCornerShape(100))
-                                .background(Color.Gray, shape = RoundedCornerShape(64.dp)),
-                            contentScale = ContentScale.Crop
-                        )
-                        Spacer(modifier = Modifier.size(width = 8.dp, height = 8.dp))
-                        Column {
-                            Text(text = "user.fullName", style = Type.textMedium())
-                            Text(text = "chat_room.recent_message_id.message", style = Type.textSmall())
+                        Row(
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.clickable {
+                                navController.navigate("${Routes.CHAT_ROOM}/${chatRoom.chatRoom.chatRoomId}")
+                            }
+                        ) {
+                            AsyncImage(
+                                model = R.drawable.dummy_avatar,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(width = 64.dp, height = 64.dp)
+                                    .clip(shape = RoundedCornerShape(100))
+                                    .background(Color.Gray, shape = RoundedCornerShape(64.dp)),
+                                contentScale = ContentScale.Crop
+                            )
+                            Spacer(modifier = Modifier.size(width = 8.dp, height = 8.dp))
+                            Column {
+                                Text(text = chatRoom.user.fullName, style = Type.textMedium())
+                                Text(text = "chat_room.recent_message_id.message", style = Type.textSmall())
+                            }
                         }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        HorizontalDivider()
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    HorizontalDivider()
+                    Spacer(modifier = Modifier.height(32.dp))
+
                 }
-                Spacer(modifier = Modifier.height(32.dp))
             }
+
+
         }
     }
 }

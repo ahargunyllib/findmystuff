@@ -41,6 +41,7 @@ import com.ahargunyllib.internraion.R
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.report_detail.ReportDetailRepository
 import com.ahargunyllib.internraion.features.data.utils.ReportResponse
+import com.ahargunyllib.internraion.features.data.utils.ReportsResponse
 import com.ahargunyllib.internraion.features.data.utils.Response
 import com.ahargunyllib.internraion.features.domain.model.Report
 import com.ahargunyllib.internraion.ui.theme.Green
@@ -56,7 +57,28 @@ fun ReportDetailScreen(navController: NavController, reportId: Int) {
         reportId = reportId
     )
     val state = viewModel.state.collectAsState()
+    val createChatRoomState = viewModel.createChatRoomState.collectAsState()
     val context = LocalContext.current
+
+    when (createChatRoomState.value){
+        is Response.Error -> {
+            val error = (createChatRoomState.value as Response.Error).message
+            Toast.makeText(
+                context,
+                (createChatRoomState.value as Response.Error).message,
+                Toast.LENGTH_SHORT
+            )
+                .show()
+            Log.i("RESPONSE ERROR", "ReportDetailScreen: $error")
+        }
+        is Response.Loading -> {
+            Log.i("RESPONSE LOADING", "ReportDetailScreen: LOADING")
+        }
+        is Response.Success -> {
+            navController.navigate("${Routes.CHAT_ROOM}/${(createChatRoomState.value as Response.Success).message}")
+            Log.i("RESPONSE SUCCESS", "ReportDetailScreen: SUCCESS")
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -104,7 +126,7 @@ fun ReportDetailScreen(navController: NavController, reportId: Int) {
                 } else {
                     Text("Rp0", style = Type.textLarge())
                 }
-                Button(onClick = { navController.navigate("${Routes.CHAT_ROOM}/$reportId") }, colors = ButtonDefaults.buttonColors(containerColor = Green)) {
+                Button(onClick = { viewModel.createChatRoom(reportId) }, colors = ButtonDefaults.buttonColors(containerColor = Green)) {
                     Text("Kembalikan")
                     Icon(
                         Icons.Filled.LocationOn,

@@ -146,6 +146,25 @@ object Type{
         color = Black,
     )
 
+    fun paymentTitle() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_bold)),
+        fontSize = 24.sp,
+        fontWeight = FontWeight(600),
+        color = White,
+    )
+    fun paymentChoose() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_bold)),
+        fontSize = 15.sp,
+        fontWeight = FontWeight(700),
+        color = Black,
+    )
+    fun paymentNote() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 14.sp,
+        fontWeight = FontWeight(500),
+        color = Black,
+        textAlign = TextAlign.Center
+    )
 
 
 }

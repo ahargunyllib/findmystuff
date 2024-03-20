@@ -14,26 +14,24 @@ import com.ahargunyllib.internraion.features.presentation.screen.auth.register.R
 import com.ahargunyllib.internraion.features.presentation.screen.auth.splash.SplashScreen
 import com.ahargunyllib.internraion.features.presentation.screen.chat_list.ChatListScreen
 import com.ahargunyllib.internraion.features.presentation.screen.chat_list.chat_room.ChatRoomScreen
-
 import com.ahargunyllib.internraion.features.presentation.screen.coming_soon.ComingSoonScreen
 import com.ahargunyllib.internraion.features.presentation.screen.home.HomeScreen
-
 import com.ahargunyllib.internraion.features.presentation.screen.maps.MapsScreen
 import com.ahargunyllib.internraion.features.presentation.screen.notification.NotificationScreen
-
+import com.ahargunyllib.internraion.features.presentation.screen.payment.ConfirmPaymentScreen
+import com.ahargunyllib.internraion.features.presentation.screen.payment.PaymentScreen
+import com.ahargunyllib.internraion.features.presentation.screen.payment.ReceiptScreen
 import com.ahargunyllib.internraion.features.presentation.screen.profile.ProfileScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report.ReportScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report.location_picker.LocationPickerScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report.report_detail.ReportDetailScreen
-
 import com.ahargunyllib.internraion.features.presentation.screen.status.StatusScreen
-
 import com.ahargunyllib.internraion.utils.Routes
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Routes.SPLASH_SCREEN) {
+    NavHost(navController = navController, startDestination = Routes.PAYMENT) {
 
         composable(Routes.SPLASH_SCREEN){
             SplashScreen(navController = navController)
@@ -125,6 +123,16 @@ fun Navigation() {
         
         composable(Routes.STATUS){
             StatusScreen(navController = navController)
+        }
+
+        composable(Routes.PAYMENT){
+            PaymentScreen(navController = navController)
+        }
+        composable(Routes.CONFIRM_PAYMENT){
+            ConfirmPaymentScreen(navController = navController)
+        }
+        composable(Routes.RECEIPT){
+            ReceiptScreen(navController = navController)
         }
     }
 }

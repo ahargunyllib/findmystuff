@@ -84,7 +84,9 @@ fun ChatRoomScreen(navController: NavController, chatRoomId: String) {
         chatRoomId
     )
     val userState = viewModel.userState.collectAsState()
-    val messagesState = viewModel.messagesState.collectAsState()
+    val messagesState by remember(viewModel.messagesState) {
+        viewModel.messagesState
+    }.collectAsState()
     
     LaunchedEffect(Unit) {
         viewModel.realtimeDB(this)
@@ -195,7 +197,7 @@ fun ChatRoomScreen(navController: NavController, chatRoomId: String) {
         Column(
             modifier = Modifier
                 .fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.Top
         ) {
             Spacer(modifier = Modifier.height(64.dp))
             Row(
@@ -229,16 +231,16 @@ fun ChatRoomScreen(navController: NavController, chatRoomId: String) {
                     .fillMaxWidth()
                     .padding(4.dp)
             ) {
-                messagesState.value.forEach { m ->
+                messagesState.forEach { m ->
                     item { BubbleChat(message = m.message!!, isMe = m.senderId != userState.value.userId)}
                 }
-                item { BubbleChat(message = "Hi", isMe = true) }
-                item { BubbleChat(message = "Hi juga", isMe = false) }
-                item { BubbleChat(message = "Kamu nemuinnya dimana dah", isMe = false) }
-                item { BubbleChat(message = "Aku nemuinnya di kamar mandi nih", isMe = true) }
-                items(10){
-                    BubbleChat(message = "Oke makasih", isMe = true)
-                }
+//                item { BubbleChat(message = "Hi", isMe = true) }
+//                item { BubbleChat(message = "Hi juga", isMe = false) }
+//                item { BubbleChat(message = "Kamu nemuinnya dimana dah", isMe = false) }
+//                item { BubbleChat(message = "Aku nemuinnya di kamar mandi nih", isMe = true) }
+//                items(10){
+//                    BubbleChat(message = "Oke makasih", isMe = true)
+//                }
                 item {Spacer(modifier = Modifier.height(96.dp))}
             }
         }

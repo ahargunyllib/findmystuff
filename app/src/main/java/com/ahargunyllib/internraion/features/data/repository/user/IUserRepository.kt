@@ -2,6 +2,7 @@ package com.ahargunyllib.internraion.features.data.repository.user
 
 import com.ahargunyllib.internraion.features.data.utils.ReportItemResponse
 import com.ahargunyllib.internraion.features.data.utils.Response
+import com.ahargunyllib.internraion.features.data.utils.UserResponse
 import io.github.jan.supabase.gotrue.user.UserInfo
 import io.github.jan.supabase.gotrue.user.UserSession
 import kotlinx.coroutines.flow.Flow
@@ -15,4 +16,6 @@ interface IUserRepository {
     suspend fun getAccessToken(): String
 
     suspend fun getReportItems(): Flow<ReportItemResponse>
+
+    suspend fun getCurrentUser(): Flow<UserResponse>
 }

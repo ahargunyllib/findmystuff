@@ -14,12 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,10 +22,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -38,8 +31,9 @@ import com.ahargunyllib.internraion.R
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.chat_list.ChatListRepository
 import com.ahargunyllib.internraion.features.presentation.navigation.BottomNavigationBar
+import com.ahargunyllib.internraion.ui.component.CustomLoading
+import com.ahargunyllib.internraion.ui.component.DoubleIconTopBar
 import com.ahargunyllib.internraion.ui.theme.Type
-import com.ahargunyllib.internraion.ui.theme.Yellow
 import com.ahargunyllib.internraion.utils.Routes
 
 @Composable
@@ -49,47 +43,13 @@ fun ChatListScreen(navController: NavController) {
     val chatRoomsState = viewModel.chatRoomsState.collectAsState()
 
     Scaffold(
-        topBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .shadow(elevation = 4.dp)
-                    .background(Color.White),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                IconButton(onClick = { navController.navigate(Routes.NOTIFICATION) }) {
-                    Icon(
-                        Icons.Default.Notifications,
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(36.dp),
-                        tint = Yellow
-                    )
-                }
-                Text(
-                    text = "PESAN", style = Type.textMedium(), modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f), textAlign = TextAlign.Center
-                )
-                IconButton(onClick = { navController.navigate(Routes.PROFILE) }) {
-                    Icon(
-                        Icons.Default.Person,
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(36.dp),
-                        tint = Yellow
-                    )
-                }
-
-            }
-        },
+        topBar = { DoubleIconTopBar(title = "PESAN", navController = navController) },
         bottomBar = { BottomNavigationBar(navController = navController) }
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 32.dp, top = 64.dp, bottom = 96.dp, end = 32.dp),
+                .padding(start = 32.dp, top = 72.dp, bottom = 96.dp, end = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             chatRoomsState.value.forEach { chatRoom ->
@@ -117,18 +77,15 @@ fun ChatListScreen(navController: NavController) {
                             Spacer(modifier = Modifier.size(width = 8.dp, height = 8.dp))
                             Column {
                                 Text(text = chatRoom.user.fullName, style = Type.textMedium())
-                                Text(text = "chat_room.recent_message_id.message", style = Type.textSmall())
+                                Text(text = "", style = Type.textSmall())
                             }
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                         HorizontalDivider()
                     }
                     Spacer(modifier = Modifier.height(32.dp))
-
                 }
             }
-
-
         }
     }
 }

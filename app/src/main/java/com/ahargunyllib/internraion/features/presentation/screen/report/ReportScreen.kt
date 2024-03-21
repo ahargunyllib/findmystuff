@@ -7,16 +7,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.ScrollableState
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,9 +22,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -37,13 +29,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -183,20 +173,27 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
             Spacer(modifier = Modifier.size(16.dp))
 
 
-            TextField(value = if (latitude == 0.0 || longitude == 0.0) "Tentukan Lokasi" else "TBD", onValueChange = {}, modifier = Modifier.fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = Color(0xFF6C6C6C),
-                    shape = RoundedCornerShape(size = 16.dp)
-                )
-                .clip(shape = RoundedCornerShape(16.dp)),
+            TextField(value = if (latitude == 0.0 || longitude == 0.0) "Tentukan Lokasi" else "TBD",
+                onValueChange = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(
+                        width = 1.dp,
+                        color = Color(0xFF6C6C6C),
+                        shape = RoundedCornerShape(size = 16.dp)
+                    )
+                    .clip(shape = RoundedCornerShape(16.dp)),
                 colors = TextFieldDefaults.textFieldColors(containerColor = Yellow),
                 leadingIcon = {
-                    Text("Lokasi: ", modifier= Modifier.padding(start = 16.dp), style = Type.reportSystem())
+                    Text(
+                        "Lokasi: ",
+                        modifier = Modifier.padding(start = 16.dp),
+                        style = Type.reportSystem()
+                    )
                 },
                 textStyle = Type.reportSystem(),
                 enabled = false,
-                trailingIcon= {
+                trailingIcon = {
                     IconButton(onClick = { navController.navigate(Routes.LOCATION_PICKER) }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_report_iconlocation),
@@ -204,19 +201,27 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
                         )
                     }
                 }
-                )
+            )
             Spacer(modifier = Modifier.size(8.dp))
 
-            TextField(value = viewModel.nameState.value, onValueChange = { viewModel.nameState.value = it }, modifier = Modifier.fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = Color(0xFF6C6C6C),
-                    shape = RoundedCornerShape(size = 16.dp)
-                )
-                .clip(shape = RoundedCornerShape(16.dp)),
+            TextField(
+                value = viewModel.nameState.value,
+                onValueChange = { viewModel.nameState.value = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(
+                        width = 1.dp,
+                        color = Color(0xFF6C6C6C),
+                        shape = RoundedCornerShape(size = 16.dp)
+                    )
+                    .clip(shape = RoundedCornerShape(16.dp)),
                 colors = TextFieldDefaults.textFieldColors(containerColor = Yellow),
                 leadingIcon = {
-                    Text("Nama Barang: ", modifier= Modifier.padding(start = 16.dp), style = Type.reportSystem())
+                    Text(
+                        "Nama Barang: ",
+                        modifier = Modifier.padding(start = 16.dp),
+                        style = Type.reportSystem()
+                    )
                 },
                 textStyle = Type.reportSystem(),
                 keyboardOptions = KeyboardOptions(
@@ -225,38 +230,54 @@ fun ReportScreen(navController: NavController, latitude: Double, longitude: Doub
             )
             Spacer(modifier = Modifier.size(8.dp))
 
-            TextField(value = viewModel.feeState.value, onValueChange = { viewModel.feeState.value = it }, modifier = Modifier.fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = Color(0xFF6C6C6C),
-                    shape = RoundedCornerShape(size = 16.dp)
-                )
-                .clip(shape = RoundedCornerShape(16.dp)),
+            TextField(
+                value = viewModel.feeState.value,
+                onValueChange = { viewModel.feeState.value = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(
+                        width = 1.dp,
+                        color = Color(0xFF6C6C6C),
+                        shape = RoundedCornerShape(size = 16.dp)
+                    )
+                    .clip(shape = RoundedCornerShape(16.dp)),
                 colors = TextFieldDefaults.textFieldColors(containerColor = Yellow),
                 leadingIcon = {
-                    Text("Bayaran: ", modifier= Modifier.padding(start = 16.dp), style = Type.reportSystem())
+                    Text(
+                        "Bayaran: ",
+                        modifier = Modifier.padding(start = 16.dp),
+                        style = Type.reportSystem()
+                    )
                 },
                 textStyle = Type.reportSystem(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-                )
+            )
             Spacer(modifier = Modifier.size(8.dp))
 
-            TextField(value = viewModel.noteState.value, onValueChange = { viewModel.noteState.value = it }, modifier = Modifier.fillMaxWidth()
-                .border(
-                    width = 1.dp,
-                    color = Color(0xFF6C6C6C),
-                    shape = RoundedCornerShape(size = 16.dp)
-                )
-                .clip(shape = RoundedCornerShape(16.dp)),
+            TextField(
+                value = viewModel.noteState.value,
+                onValueChange = { viewModel.noteState.value = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .border(
+                        width = 1.dp,
+                        color = Color(0xFF6C6C6C),
+                        shape = RoundedCornerShape(size = 16.dp)
+                    )
+                    .clip(shape = RoundedCornerShape(16.dp)),
                 colors = TextFieldDefaults.textFieldColors(containerColor = Yellow),
                 leadingIcon = {
-                    Text("Deskripsi: ", modifier= Modifier.padding(start = 16.dp), style = Type.reportSystem())
+                    Text(
+                        "Deskripsi: ",
+                        modifier = Modifier.padding(start = 16.dp),
+                        style = Type.reportSystem()
+                    )
                 },
                 textStyle = Type.reportSystem(),
                 keyboardOptions = KeyboardOptions(
                     capitalization = KeyboardCapitalization.Sentences
                 )
-                )
+            )
             Spacer(modifier = Modifier.size(16.dp))
 
             Button(

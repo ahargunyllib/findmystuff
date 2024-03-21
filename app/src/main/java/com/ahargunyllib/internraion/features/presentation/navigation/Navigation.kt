@@ -31,7 +31,7 @@ import com.ahargunyllib.internraion.utils.Routes
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Routes.RECEIPT) {
+    NavHost(navController = navController, startDestination = Routes.STATUS) {
 
         composable(Routes.SPLASH_SCREEN){
             SplashScreen(navController = navController)

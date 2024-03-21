@@ -239,6 +239,19 @@ object Type{
         color = Color(0xFF2176AE),
     )
 
+    fun statusTitle() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.inter_bold)),
+        fontSize = 20.sp,
+        fontWeight = FontWeight(700),
+        color = Black
+    )
+
+    fun statusButton() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 16.sp,
+        fontWeight = FontWeight(600),
+        color = White
+    )
 
 
 

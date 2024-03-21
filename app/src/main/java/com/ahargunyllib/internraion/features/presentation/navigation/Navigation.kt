@@ -9,7 +9,6 @@ import androidx.navigation.navArgument
 import com.ahargunyllib.internraion.features.presentation.screen.auth.SuccessSignUpScreen
 import com.ahargunyllib.internraion.features.presentation.screen.auth.WelcomeScreen
 import com.ahargunyllib.internraion.features.presentation.screen.auth.login.LoginScreen
-import com.ahargunyllib.internraion.features.presentation.screen.auth.privacy_policy.PrivacyPolicyScreen
 import com.ahargunyllib.internraion.features.presentation.screen.auth.register.RegisterScreen
 import com.ahargunyllib.internraion.features.presentation.screen.auth.splash.SplashScreen
 import com.ahargunyllib.internraion.features.presentation.screen.chat_list.ChatListScreen
@@ -31,7 +30,8 @@ import com.ahargunyllib.internraion.utils.Routes
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Routes.STATUS) {
+
+    NavHost(navController = navController, startDestination = Routes.SPLASH_SCREEN) {
 
         composable(Routes.SPLASH_SCREEN){
             SplashScreen(navController = navController)
@@ -49,10 +49,6 @@ fun Navigation() {
         }
         composable(Routes.LOGIN) {
             LoginScreen(navController = navController)
-        }
-
-        composable(Routes.PRIVACY_POLICY) {
-            PrivacyPolicyScreen(navController = navController)
         }
 
         composable(Routes.MAPS) {

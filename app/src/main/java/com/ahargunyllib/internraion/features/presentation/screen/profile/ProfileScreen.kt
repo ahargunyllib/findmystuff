@@ -14,12 +14,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,10 +39,15 @@ import coil.compose.AsyncImage
 import com.ahargunyllib.internraion.R
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
+import com.ahargunyllib.internraion.features.data.utils.UserResponse
+import com.ahargunyllib.internraion.features.domain.model.User
 import com.ahargunyllib.internraion.features.presentation.navigation.BottomNavigationBar
+import com.ahargunyllib.internraion.ui.component.CustomLoading
+import com.ahargunyllib.internraion.ui.component.SingleIconTopBar
 import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.ui.theme.White
+import com.ahargunyllib.internraion.ui.theme.Yellow
 import com.ahargunyllib.internraion.utils.Routes
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -49,85 +56,33 @@ fun ProfileScreen(navController: NavController) {
     val viewModel =
         ProfileViewModel(userRepository = UserRepository(supabaseClient = SupabaseClient))
     val context = LocalContext.current
+    val state = viewModel.state.collectAsState()
 
     Scaffold(
-        topBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(57.dp)
-                    .shadow(elevation = 4.dp)
-                    .background(Color.White),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_back_button),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(30.dp)
-                        .padding(start = 5.dp, top = 5.dp)
-                        .clickable { navController.popBackStack() },
-                    tint = Green
-                )
-                Text(
-                    text = "PROFIL SAYA",
-                    style = Type.textMedium(),
-                    fontSize = 17.sp,
-                    fontWeight = FontWeight(600),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                )
-
-            }
-        },
+        topBar = { SingleIconTopBar(title = "PROFILE SAYA", navController = navController) },
         bottomBar = { BottomNavigationBar(navController = navController) }
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 64.dp, bottom = 80.dp),
         ) {
-            items(1) {
-                Spacer(modifier = Modifier.size(53.dp))
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(
-                        start = 24.dp,
-                        end = 9.dp,
-                        top = 5.dp,
-                        bottom = 5.dp
-                    )
-                ) {
-                    AsyncImage(
-                        model = R.drawable.dummy_avatar,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(width = 55.dp, height = 55.dp)
-                            .clip(shape = RoundedCornerShape(100))
-                            .background(Color.Gray, shape = RoundedCornerShape(64.dp)),
-                        contentScale = ContentScale.Crop
-                    )
-                    Spacer(modifier = Modifier.size(15.dp))
-                    Column {
-                        Text(
-                            text = "Username.FullName",
-                            style = Type.profileName()
-                        )
-                        Text(text = "username@gmail.com", style = Type.notifSecond())
-                        Text(text = "Malang, Jawa Timur, Indonesia", style = Type.notifSecond())
+            item {
+                Spacer(modifier = Modifier.size(64.dp))
+
+                when (state.value) {
+                    is UserResponse.Error -> {}
+                    is UserResponse.Loading -> { CustomLoading() }
+                    is UserResponse.Success -> {
+                        UserDescription(user = (state.value as UserResponse.Success).user)
                     }
                 }
 
-                Spacer(modifier = Modifier.size(59.dp))
+                Spacer(modifier = Modifier.size(64.dp))
 
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 26.dp, end = 24.dp),
+                        .padding(horizontal = 16.dp),
                 ) {
                     Text(
                         text = "AKUN",
@@ -136,97 +91,16 @@ fun ProfileScreen(navController: NavController) {
                         fontWeight = FontWeight(1000),
                     )
                     HorizontalDivider()
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 5.dp, top = 5.dp)
-                            .clickable { },
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        AsyncImage(
-                            model = R.drawable.ic_profile_wallet,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(50.dp)
-                                .padding(end = 13.dp)
-                        )
-                        Text(text = "SAMBUNGKAN E-WALLET", style = Type.profilOption())
-                    }
-
+                    ProfileItem(model = R.drawable.ic_profile_wallet, text = "SAMBUNGKAN E-WALLET")
                     HorizontalDivider()
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 5.dp, top = 5.dp)
-                            .clickable { },
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        AsyncImage(
-                            model = R.drawable.ic_profile_akun,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(50.dp)
-                                .padding(end = 24.dp, start = 8.dp)
-                        )
-                        Text(text = "AKUN SAYA", style = Type.profilOption())
-                    }
-
+                    ProfileItem(model = R.drawable.ic_profile_akun, text = "AKUN SAYA")
                     HorizontalDivider()
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 5.dp, top = 5.dp)
-                            .clickable { },
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        AsyncImage(
-                            model = R.drawable.ic_profile_setting,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(50.dp)
-                                .padding(end = 24.dp, start = 8.dp)
-                        )
-                        Text(text = "PENGATURAN", style = Type.profilOption())
-                    }
-
+                    ProfileItem(R.drawable.ic_profile_setting, "PENGATURAN")
                     HorizontalDivider()
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 5.dp, top = 5.dp)
-                            .clickable { },
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        AsyncImage(
-                            model = R.drawable.ic_profile_laporan,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(50.dp)
-                                .padding(end = 24.dp, start = 8.dp)
-                        )
-                        Text(text = "LAPORAN", style = Type.profilOption())
-                    }
-
+                    ProfileItem(R.drawable.ic_profile_laporan, "LAPORAN")
                     HorizontalDivider()
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 5.dp, top = 5.dp)
-                            .clickable { },
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        AsyncImage(
-                            model = R.drawable.ic_profile_question,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(50.dp)
-                                .padding(end = 24.dp, start = 8.dp)
-                        )
-                        Text(text = "BANTUAN", style = Type.profilOption())
-                    }
-
+                    ProfileItem(R.drawable.ic_profile_question, "BANTUAN")
                     HorizontalDivider()
-
                     OutlinedButton(
                         onClick = {
                             viewModel.signOutUser(context = context)
@@ -245,11 +119,58 @@ fun ProfileScreen(navController: NavController) {
                     }
 
                 }
-
-
             }
-
-
         }
+    }
+}
+
+@Composable
+fun UserDescription(user: User) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(color = Yellow)
+            .padding(vertical = 16.dp, horizontal = 8.dp),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        AsyncImage(
+            model = R.drawable.dummy_avatar,
+            contentDescription = null,
+            modifier = Modifier
+                .size(width = 64.dp, height = 64.dp)
+                .clip(shape = RoundedCornerShape(100))
+                .background(
+                    Color.Gray, shape = RoundedCornerShape(64.dp)
+                ),
+            contentScale = ContentScale.Crop
+        )
+        Spacer(modifier = Modifier.size(width = 8.dp, height = 8.dp))
+        Column {
+            Text(text = user.fullName, style = Type.textMedium())
+            Text(text = user.email, style = Type.textSmall())
+            Text(text = "Lokasi TBD", style = Type.textSmall())
+        }
+    }
+}
+
+@Composable
+fun ProfileItem(model: Any?, text: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .clickable { },
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        AsyncImage(
+            model = model,
+            contentDescription = null,
+            modifier = Modifier
+                .size(16.dp)
+        )
+        Spacer(modifier = Modifier.size(8.dp))
+        Text(text = text, style = Type.profilOption())
     }
 }

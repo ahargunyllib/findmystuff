@@ -2,7 +2,6 @@ package com.ahargunyllib.internraion.features.presentation.screen.chat_list
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,16 +17,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,7 +30,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -43,17 +37,13 @@ import coil.compose.AsyncImage
 import com.ahargunyllib.internraion.R
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.chat_list.ChatListRepository
-import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
-import com.ahargunyllib.internraion.features.data.utils.Response
 import com.ahargunyllib.internraion.features.presentation.navigation.BottomNavigationBar
-import com.ahargunyllib.internraion.features.presentation.screen.home.HomeViewModel
-import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.ui.theme.Yellow
 import com.ahargunyllib.internraion.utils.Routes
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun ChatListScreen(navController: NavController) {
     val viewModel = ChatListViewModel(chatListRepository = ChatListRepository(supabaseClient = SupabaseClient))
     val chatRoomsState = viewModel.chatRoomsState.collectAsState()

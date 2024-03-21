@@ -31,4 +31,8 @@ object Routes {
     const val NOTIFICATION = "notification"
 
     const val STATUS = "status"
+
+    const val PAYMENT = "payment"
+    const val CONFIRM_PAYMENT = "confirm_payment"
+    const val RECEIPT = "receipt"
 }

@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -35,6 +37,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.ahargunyllib.internraion.R
@@ -43,6 +46,7 @@ import com.ahargunyllib.internraion.ui.theme.LightGreen
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.ui.theme.White
 import com.ahargunyllib.internraion.ui.theme.Yellow
+import com.ahargunyllib.internraion.utils.Routes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -160,7 +164,7 @@ fun PaymentScreen(navController: NavController) {
                 Text(
                     "Note: ",
                     modifier = Modifier.padding(start = 26.dp, bottom = 5.dp),
-                    style = Type.paymentNote()
+                    style = Type.paymentNoteStart()
                 )
                 TextField(
                     value = "Terima kasih sudah menemukan barang saya!",
@@ -179,7 +183,7 @@ fun PaymentScreen(navController: NavController) {
                     ),
                     leadingIcon = {
                     },
-                    textStyle = Type.paymentNote(),
+                    textStyle = Type.paymentNoteCenter(),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text
                     )
@@ -191,22 +195,107 @@ fun PaymentScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 15.dp, end = 15.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                TextField(
+                    prefix = {
+                        Text(
+                            text = "Amount Transfer",
+                            style = Type.paymentNoteStart(),
+                            modifier = Modifier.align(
+                                Alignment.Start
+                            )
+                        )
+                    },
+                    value = "Rp. 125.000",
+                    textStyle = Type.paymentNoteEnd(),
+                    onValueChange = { },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(
+                            Alignment.End
+                        ),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                )
+                TextField(
+                    prefix = {
+                        Text(
+                            text = "Transaction Fee",
+                            style = Type.paymentNoteStart(),
+                            modifier = Modifier.align(
+                                Alignment.Start
+                            )
+                        )
+                    },
+                    value = "Rp. 6.500",
+                    textStyle = Type.paymentNoteEnd(),
+                    onValueChange = { },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(
+                            Alignment.End
+                        ),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                )
+                TextField(
+                    prefix = {
+                        Text(
+                            text = "Total",
+                            style = Type.paymentNoteStart(),
+                            modifier = Modifier.align(
+                                Alignment.Start
+                            )
+                        )
+                    },
+                    value = "Rp. 131.500",
+                    textStyle = Type.paymentTotal(),
+                    onValueChange = { },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(
+                            Alignment.End
+                        ),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                )
+                
+                Spacer(modifier = Modifier.size(50.dp))
+
+                Button(
+                    onClick = {
+                        navController.navigate(Routes.CONFIRM_PAYMENT)
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Green)
+                ) {
+                    Text(
+                        text = "Lanjut",
+                        fontSize = 20.sp,
+                        style = Type.displayLarge(),
+                        modifier = Modifier.padding(
+                            start = 40.dp,
+                            end = 40.dp,
+                            bottom = 5.dp,
+                            top = 5.dp
+                        )
+                    )
+                }
 
             }
-            TextField(
-                prefix = { Text(text = "Amount Transfer", style = Type.paymentNote()) },
-                value = "Rp. 125.000",
-                textStyle = Type.paymentNote(),
-                onValueChange = { },
-                modifier = Modifier.fillMaxWidth(),
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent
-                ),
-            )
 
 
         }

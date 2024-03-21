@@ -1,5 +1,6 @@
 package com.ahargunyllib.internraion.ui.theme
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -158,13 +159,87 @@ object Type{
         fontWeight = FontWeight(700),
         color = Black,
     )
-    fun paymentNote() = TextStyle(
+    fun paymentNoteStart() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 14.sp,
+        fontWeight = FontWeight(500),
+        color = Black,
+        textAlign = TextAlign.Start
+    )
+
+    fun paymentNoteCenter() = TextStyle(
         fontFamily = FontFamily(Font(R.font.poppins_medium)),
         fontSize = 14.sp,
         fontWeight = FontWeight(500),
         color = Black,
         textAlign = TextAlign.Center
     )
+
+    fun paymentNoteEnd() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 14.sp,
+        fontWeight = FontWeight(500),
+        color = Black,
+        textAlign = TextAlign.End
+    )
+
+    fun paymentTotal() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 24.sp,
+        fontWeight = FontWeight(700),
+        color = Black,
+        textAlign = TextAlign.End
+    )
+
+    fun confirmInfo() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 16.sp,
+        fontWeight = FontWeight(500),
+        color = Black,
+    )
+
+    fun confirmInfoBold() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_bold)),
+        fontSize = 16.sp,
+        fontWeight = FontWeight(600),
+        color = Black,
+    )
+    fun receiptSuccess() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+        fontSize = 20.sp,
+        fontWeight = FontWeight(600),
+        color = Black,
+    )
+    fun receiptTime() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_regular)),
+        fontSize = 12.sp,
+        fontWeight = FontWeight(500),
+        color = Grey,
+    )
+
+    fun receiptTotal() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 24.sp,
+        fontWeight = FontWeight(700),
+        color = Black,
+        textAlign = TextAlign.Center
+    )
+
+    fun receiptShare() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 14.sp,
+        fontWeight = FontWeight(700),
+        color = Color(0xFF2176AE),
+    )
+
+    fun receiptInfo() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 14.sp,
+        fontWeight = FontWeight(500),
+        color = Color(0xFF2176AE),
+    )
+
+
 
 
 }

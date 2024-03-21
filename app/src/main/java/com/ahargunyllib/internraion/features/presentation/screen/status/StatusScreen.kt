@@ -40,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ahargunyllib.internraion.features.presentation.navigation.BottomNavigationBar
+import com.ahargunyllib.internraion.ui.component.DoubleIconTopBar
 import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Orange
 import com.ahargunyllib.internraion.ui.theme.Type
@@ -50,7 +51,7 @@ import com.ahargunyllib.internraion.utils.Routes
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun StatusScreen(navController: NavController) {
+fun NewStatusScreen(navController: NavController) {
     var selectedTabIndex by remember {
         mutableIntStateOf(0)
     }
@@ -132,49 +133,15 @@ fun BelumAdaScreen() {
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun OldStatusScreen(navController: NavController) {
+fun StatusScreen(navController: NavController) {
     Scaffold(
-        topBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .shadow(elevation = 4.dp)
-                    .background(Color.White),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                IconButton(onClick = { navController.navigate(Routes.NOTIFICATION) }) {
-                    Icon(
-                        Icons.Default.Notifications,
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(36.dp),
-                        tint = Yellow
-                    )
-                }
-                Text(
-                    text = "STATUS", style = Type.textMedium(), modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f), textAlign = TextAlign.Center
-                )
-                IconButton(onClick = { navController.navigate(Routes.PROFILE) }) {
-                    Icon(
-                        Icons.Default.Person,
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(36.dp),
-                        tint = Yellow
-                    )
-                }
-
-            }
-        },
+        topBar = { DoubleIconTopBar(title = "STATUS", navController = navController) },
         bottomBar = { BottomNavigationBar(navController = navController) }
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 50.dp, bottom = 80.dp),
+                .padding(top = 72.dp, bottom = 80.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             items(2) {

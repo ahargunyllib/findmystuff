@@ -17,9 +17,9 @@ import com.ahargunyllib.internraion.features.presentation.screen.coming_soon.Com
 import com.ahargunyllib.internraion.features.presentation.screen.home.HomeScreen
 import com.ahargunyllib.internraion.features.presentation.screen.maps.MapsScreen
 import com.ahargunyllib.internraion.features.presentation.screen.notification.NotificationScreen
-import com.ahargunyllib.internraion.features.presentation.screen.payment.ConfirmPaymentScreen
-import com.ahargunyllib.internraion.features.presentation.screen.payment.PaymentScreen
-import com.ahargunyllib.internraion.features.presentation.screen.payment.ReceiptScreen
+import com.ahargunyllib.internraion.features.presentation.screen.chat_list.chat_room.payment.ConfirmPaymentScreen
+import com.ahargunyllib.internraion.features.presentation.screen.chat_list.chat_room.payment.PaymentScreen
+import com.ahargunyllib.internraion.features.presentation.screen.chat_list.chat_room.payment.ReceiptScreen
 import com.ahargunyllib.internraion.features.presentation.screen.profile.ProfileScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report.ReportScreen
 import com.ahargunyllib.internraion.features.presentation.screen.report.location_picker.LocationPickerScreen

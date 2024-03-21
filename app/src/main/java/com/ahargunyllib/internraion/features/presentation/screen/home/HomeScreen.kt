@@ -76,7 +76,7 @@ fun HomeScreen(navController: NavController) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 32.dp, top = 64.dp, bottom = 96.dp, end = 32.dp),
+                .padding(start = 32.dp, top = 72.dp, bottom = 96.dp, end = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             reportItemsState.value.forEach { reportItem ->

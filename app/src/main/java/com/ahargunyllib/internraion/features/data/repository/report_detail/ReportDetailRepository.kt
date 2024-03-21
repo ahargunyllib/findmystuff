@@ -62,7 +62,7 @@ class ReportDetailRepository(private val supabaseClient: SupabaseClient): IRepor
             }
 
             // Cek apakah udah pernah buat chat room di report id tersebut
-            val chatRoomExists = supabaseClient.client.postgrest.from("chat_room").select {
+            val chatRoomExists = supabaseClient.client.postgrest.from("chat_rooms").select {
                 filter {
                     eq("report_id", reportId)
                     eq("founder_id", currentUser.userId!!)

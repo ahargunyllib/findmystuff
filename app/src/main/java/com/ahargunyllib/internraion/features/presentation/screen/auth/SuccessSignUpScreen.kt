@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -32,17 +33,19 @@ fun SuccessSignUpScreen(navController: NavController) {
             Text(
                 text = "SELAMAT!",
                 style = Type.successSigningText(),
+                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
                 text = "Akun Anda telah berhasil dibuat.",
                 style = Type.successSigningText(),
+                textAlign = TextAlign.Center,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
         }
 
-        PrimaryButton(text = "Lanjut", onClick = { navController.navigate(Routes.HOME) })
+        PrimaryButton(text = "Lanjut", onClick = { navController.navigate(Routes.LOGIN) })
     }
 }

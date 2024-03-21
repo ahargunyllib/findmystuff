@@ -46,6 +46,7 @@ import com.ahargunyllib.internraion.features.domain.model.User
 import com.ahargunyllib.internraion.ui.component.DoubleIconTopBar
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.ui.theme.Yellow
+import com.ahargunyllib.internraion.utils.Routes
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -65,7 +66,7 @@ fun ChatRoomScreen(navController: NavController, chatRoomId: String) {
         modifier = Modifier
             .fillMaxSize(),
         topBar = { DoubleIconTopBar(title = "PESAN", navController = navController) },
-        bottomBar = { ChatBar(viewModel = viewModel) }
+        bottomBar = { ChatBar(viewModel = viewModel, navController = navController) }
     ) {
         Column(
             modifier = Modifier
@@ -146,7 +147,7 @@ fun BubbleChat(message: String, isMe: Boolean) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChatBar(viewModel: ChatRoomViewModel) {
+fun ChatBar(viewModel: ChatRoomViewModel, navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -162,7 +163,16 @@ fun ChatBar(viewModel: ChatRoomViewModel) {
                 .align(Alignment.CenterVertically)
                 .background(color = Yellow, shape = RoundedCornerShape(64.dp))
         ) {
-            Icon(Icons.Filled.Add, contentDescription = "")
+            Icon(Icons.Filled.Add, contentDescription = "Upload")
+        }
+        Spacer(modifier = Modifier.width(8.dp))
+        IconButton(
+            onClick = { navController.navigate(Routes.PAYMENT) },
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .background(color = Yellow, shape = RoundedCornerShape(64.dp))
+        ) {
+            Icon(Icons.Filled.AddCard, contentDescription = "Payment")
         }
         Spacer(modifier = Modifier.width(8.dp))
         IconButton(
@@ -171,16 +181,7 @@ fun ChatBar(viewModel: ChatRoomViewModel) {
                 .align(Alignment.CenterVertically)
                 .background(color = Yellow, shape = RoundedCornerShape(64.dp))
         ) {
-            Icon(Icons.Filled.AddCard, contentDescription = "Send")
-        }
-        Spacer(modifier = Modifier.width(8.dp))
-        IconButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier
-                .align(Alignment.CenterVertically)
-                .background(color = Yellow, shape = RoundedCornerShape(64.dp))
-        ) {
-            Icon(Icons.Filled.Call, contentDescription = "Send")
+            Icon(Icons.Filled.Call, contentDescription = "Call")
         }
         Spacer(modifier = Modifier.width(8.dp))
         TextField(

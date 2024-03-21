@@ -30,6 +30,7 @@ import com.ahargunyllib.internraion.utils.Routes
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
+
     NavHost(navController = navController, startDestination = Routes.SPLASH_SCREEN) {
 
         composable(Routes.SPLASH_SCREEN){

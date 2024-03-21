@@ -8,6 +8,7 @@ import com.ahargunyllib.internraion.utils.SharedPreferenceHelper
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val userRepository: UserRepository): ViewModel() {
+
     fun signOutUser(context: Context){
         viewModelScope.launch {
             userRepository.signOutUser()

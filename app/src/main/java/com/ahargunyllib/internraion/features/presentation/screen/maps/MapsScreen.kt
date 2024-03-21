@@ -4,14 +4,8 @@ import android.annotation.SuppressLint
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ToggleOff
-import androidx.compose.material.icons.filled.ToggleOn
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -19,12 +13,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.maps.MapsRepository
-import com.ahargunyllib.internraion.features.data.utils.ReportResponse
 import com.ahargunyllib.internraion.features.data.utils.ReportsResponse
-import com.ahargunyllib.internraion.features.domain.model.Report
 import com.ahargunyllib.internraion.features.presentation.navigation.BottomNavigationBar
 import com.ahargunyllib.internraion.utils.Routes
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState

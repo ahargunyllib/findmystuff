@@ -52,14 +52,15 @@ fun NotificationScreen(navController: NavController) {
             SingleIconTopBar(
                 title = "NOTIFIKASI",
                 icon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_back_button),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .size(30.dp)
-                            .clickable { navController.popBackStack() },
-                        tint = Green
-                    )
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_back_button),
+                            contentDescription = "",
+                            modifier = Modifier
+                                .size(32.dp),
+                            tint = Green
+                        )
+                    }
                 }
             )
         },

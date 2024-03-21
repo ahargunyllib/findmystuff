@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -55,7 +56,10 @@ import com.ahargunyllib.internraion.R
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.features.data.utils.Response
+import com.ahargunyllib.internraion.ui.component.AuthLayout
+import com.ahargunyllib.internraion.ui.component.PrimaryButton
 import com.ahargunyllib.internraion.ui.theme.Green
+import com.ahargunyllib.internraion.ui.theme.Grey
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.ui.theme.White
 import com.ahargunyllib.internraion.ui.theme.Yellow
@@ -84,210 +88,119 @@ fun LoginScreen(navController: NavController) {
         }
     }
 
-    Box(
-        modifier = Modifier.fillMaxSize()
+    AuthLayout(
+        accentColor = Yellow,
+        primaryColor = Green,
+        navController = navController
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Yellow),
+        Card(
+            elevation = CardDefaults.cardElevation(4.dp)
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_back_button),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(45.dp)
-                    .padding(start = 10.dp, top = 15.dp)
-                    .clickable { navController.navigate(Routes.WELCOME) },
-                tint = Green
+            TextField(
+                modifier = Modifier.fillMaxWidth(),
+
+                value = viewModel.emailState.value,
+                onValueChange = {
+                    viewModel.emailState.value = it
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = White,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
+                ),
+                label = {
+                    Text(
+                        text = "Alamat Email",
+                        style = Type.authenticationText()
+                    )
+                },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email
+                )
             )
+        }
 
-            Card(
-                modifier = Modifier
-                    .padding(bottom = 50.dp, start = 30.dp, end = 30.dp, top = 30.dp)
-                    .fillMaxWidth()
-                    .background(Color.Red, shape = RoundedCornerShape(15.dp)),
-                elevation = CardDefaults.cardElevation(10.dp)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(White, shape = RoundedCornerShape(15.dp))
-                        .verticalScroll(rememberScrollState()),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Spacer(modifier = Modifier.size(40.dp))
+        Spacer(modifier = Modifier.size(8.dp))
 
-                    Image(
-                        painter = painterResource(id = R.drawable.iv_logo_register),
-                        contentDescription = "register logo",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .width(320.dp)
-                            .height(140.dp)
-                    )
+        Card(
+            elevation = CardDefaults.cardElevation(4.dp)
+        ) {
+            TextField(
+                modifier = Modifier.fillMaxWidth(),
 
-                    Spacer(modifier = Modifier.size(12.dp))
-
-                    Card(
-                        elevation = CardDefaults.cardElevation(15.dp)
-                    ) {
-                        TextField(
-                            value = viewModel.emailState.value,
-                            onValueChange = {
-                                viewModel.emailState.value = it
-                            },
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = White,
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                disabledIndicatorColor = Color.Transparent
-                            ),
-                            label = {
-                                Text(
-                                    text = "Alamat Email",
-                                    style = Type.authenticationText()
-                                )
-                            },
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Email
-                            )
-                        )
-                    }
-
-
-                    Spacer(modifier = Modifier.size(10.dp))
-
-                    Card(
-                        elevation = CardDefaults.cardElevation(15.dp)
-                    ) {
-                        TextField(
-                            value = viewModel.passwordState.value,
-                            onValueChange = {
-                                viewModel.passwordState.value = it
-                            },
-                            colors = TextFieldDefaults.textFieldColors(
-                                containerColor = White,
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                disabledIndicatorColor = Color.Transparent
-                            ),
-                            label = {
-                                Text(
-                                    text = "Kata Sandi",
-                                    style = Type.authenticationText()
-                                )
-                            },
-                            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Password
-                            ),
-                            trailingIcon = {
-                                val image = if (passwordVisible)
-                                    Icons.Filled.Visibility
-                                else Icons.Filled.VisibilityOff
-
-                                // Localized description for accessibility services
-                                val description =
-                                    if (passwordVisible) "Hide password" else "Show password"
-
-                                // Toggle button to hide or display password
-                                IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                                    Icon(imageVector = image, description)
-                                }
-                            }
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.size(4.dp))
-
+                value = viewModel.passwordState.value,
+                onValueChange = {
+                    viewModel.passwordState.value = it
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = White,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent
+                ),
+                label = {
                     Text(
-                        text = "Lupa kata sandi?",
-                        style = Type.textMedium(),
-                        modifier = Modifier.padding(end = 175.dp),
-                        textAlign = TextAlign.Left
+                        text = "Kata Sandi",
+                        style = Type.authenticationText()
                     )
+                },
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password
+                ),
+                trailingIcon = {
+                    val image = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
 
-                    Spacer(modifier = Modifier.size(80.dp))
+                    val description = if (passwordVisible) "Hide password" else "Show password"
 
-
-                    Button(
-                        onClick = {
-                            viewModel.signInUser(context = context)
-                        },
-                        modifier = Modifier
-                            .width(245.dp)
-                            .height(54.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Green)
-                    ) {
-                        Text(
-                            text = "Masuk",
-                            fontSize = 23.sp,
-                            style = Type.displayLarge()
-                        )
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(imageVector = image, description)
                     }
-
-                    Spacer(modifier = Modifier.size(12.dp))
-
-                    Text(
-                        text = "Sign up dengan",
-                        style = Type.textMedium(),
-                        color = Color(0xFFBABABA)
-                    )
-
-                    Spacer(modifier = Modifier.size(15.dp))
-
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_google_logo),
-                        contentDescription = "google logo",
-                        modifier = Modifier.size(50.dp)
-                    )
-
-                    Spacer(modifier = Modifier.size(15.dp))
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(text = "Tidak punya akun?", style = Type.textMedium())
-                        TextButton(onClick = { navController.navigate(Routes.REGISTER) }) {
-                            Text(text = "Sign up", style = Type.textMedium(), color = Yellow)
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.size(20.dp))
-
-
                 }
+            )
+        }
+
+        Spacer(modifier = Modifier.size(8.dp))
+
+        Text(
+            text = "Lupa kata sandi?",
+            style = Type.textMedium(),
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.size(32.dp))
+
+        PrimaryButton(text = "Masuk", onClick = { viewModel.signInUser(context = context) })
+
+        Spacer(modifier = Modifier.size(8.dp))
+
+        Text(
+            text = "Sign up dengan",
+            style = Type.textMedium(),
+            color = Grey
+        )
+
+        Spacer(modifier = Modifier.size(8.dp))
+
+        Image(
+            painter = painterResource(id = R.drawable.ic_google_logo),
+            contentDescription = "google logo",
+            modifier = Modifier.size(48.dp)
+        )
+
+        Spacer(modifier = Modifier.size(8.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(text = "Tidak punya akun?", style = Type.textMedium())
+            TextButton(onClick = { navController.navigate(Routes.REGISTER) }) {
+                Text(text = "Sign up", style = Type.textMedium(), color = Yellow)
             }
         }
     }
 }
-
-
-//    Surface(modifier = Modifier.fillMaxSize()) {
-//        Column(
-//            modifier = Modifier.fillMaxSize()
-//        ) {
-//            Button(onClick = { navController.popBackStack() }) {
-//                Text("Back")
-//            }
-//            Text(text = "Login")
-//
-//            Column {
-//
-//            }
-//            Spacer(modifier = Modifier.size(12.dp))
-//
-//            Column {
-//
-//            }
-//
-//
-//
-//
-//
-//
-//        }
-//    }
-//
-//}

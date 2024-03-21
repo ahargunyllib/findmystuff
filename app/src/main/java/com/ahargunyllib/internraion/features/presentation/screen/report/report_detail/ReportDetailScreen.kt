@@ -44,6 +44,7 @@ import com.ahargunyllib.internraion.features.data.utils.ReportResponse
 import com.ahargunyllib.internraion.features.data.utils.ReportsResponse
 import com.ahargunyllib.internraion.features.data.utils.Response
 import com.ahargunyllib.internraion.features.domain.model.Report
+import com.ahargunyllib.internraion.ui.component.CustomLoading
 import com.ahargunyllib.internraion.ui.component.SingleIconTopBar
 import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Type
@@ -73,6 +74,7 @@ fun ReportDetailScreen(navController: NavController, reportId: Int) {
             Log.i("RESPONSE ERROR", "ReportDetailScreen: $error")
         }
         is Response.Loading -> {
+            CustomLoading()
             Log.i("RESPONSE LOADING", "ReportDetailScreen: LOADING")
         }
         is Response.Success -> {
@@ -117,6 +119,7 @@ fun ReportDetailScreen(navController: NavController, reportId: Int) {
     ) {
         when (state.value) {
             is ReportResponse.Loading -> {
+                CustomLoading()
                 Log.i("REPORT RESPONSE LOADING", "ReportDetailScreen: LOADING")
             }
 

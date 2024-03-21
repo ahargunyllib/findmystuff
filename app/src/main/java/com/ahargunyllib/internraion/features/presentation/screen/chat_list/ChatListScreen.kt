@@ -31,6 +31,7 @@ import com.ahargunyllib.internraion.R
 import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.chat_list.ChatListRepository
 import com.ahargunyllib.internraion.features.presentation.navigation.BottomNavigationBar
+import com.ahargunyllib.internraion.ui.component.CustomLoading
 import com.ahargunyllib.internraion.ui.component.DoubleIconTopBar
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.utils.Routes
@@ -48,7 +49,7 @@ fun ChatListScreen(navController: NavController) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 32.dp, top = 64.dp, bottom = 96.dp, end = 32.dp),
+                .padding(start = 32.dp, top = 72.dp, bottom = 96.dp, end = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             chatRoomsState.value.forEach { chatRoom ->

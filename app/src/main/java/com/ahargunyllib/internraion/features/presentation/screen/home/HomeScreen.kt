@@ -38,6 +38,7 @@ import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.features.data.utils.Response
 import com.ahargunyllib.internraion.features.presentation.navigation.BottomNavigationBar
+import com.ahargunyllib.internraion.ui.component.CustomLoading
 import com.ahargunyllib.internraion.ui.component.DoubleIconTopBar
 import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Type
@@ -58,7 +59,7 @@ fun HomeScreen(navController: NavController) {
 
 
     when (state.value) {
-        is Response.Loading -> {}
+        is Response.Loading -> { CustomLoading() }
 
         is Response.Success -> {}
 

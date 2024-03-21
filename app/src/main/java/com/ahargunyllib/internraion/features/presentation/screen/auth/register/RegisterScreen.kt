@@ -43,6 +43,7 @@ import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.features.data.utils.Response
 import com.ahargunyllib.internraion.ui.component.AccentButton
 import com.ahargunyllib.internraion.ui.component.AuthLayout
+import com.ahargunyllib.internraion.ui.component.CustomLoading
 import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Grey
 import com.ahargunyllib.internraion.ui.theme.Type
@@ -63,7 +64,7 @@ fun RegisterScreen(navController: NavController) {
     val state = viewModel.state.collectAsState()
 
     when (state.value) {
-        is Response.Loading -> {}
+        is Response.Loading -> { CustomLoading() }
 
         is Response.Success -> {
             navController.navigate(Routes.SUCCESS_SIGN_UP) {

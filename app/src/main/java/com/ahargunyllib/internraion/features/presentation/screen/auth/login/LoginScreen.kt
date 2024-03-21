@@ -57,6 +57,7 @@ import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.user.UserRepository
 import com.ahargunyllib.internraion.features.data.utils.Response
 import com.ahargunyllib.internraion.ui.component.AuthLayout
+import com.ahargunyllib.internraion.ui.component.CustomLoading
 import com.ahargunyllib.internraion.ui.component.PrimaryButton
 import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Grey
@@ -74,7 +75,7 @@ fun LoginScreen(navController: NavController) {
     val state = viewModel.state.collectAsState()
 
     when (state.value) {
-        is Response.Loading -> {}
+        is Response.Loading -> { CustomLoading() }
 
         is Response.Success -> {
             navController.navigate(Routes.HOME) {

@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.features.presentation.screen.location_picker
+package com.ahargunyllib.internraion.features.presentation.screen.report.location_picker
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel

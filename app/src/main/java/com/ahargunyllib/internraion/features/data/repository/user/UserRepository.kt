@@ -6,6 +6,7 @@ import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.utils.ReportItemResponse
 import com.ahargunyllib.internraion.features.data.utils.ReportsResponse
 import com.ahargunyllib.internraion.features.data.utils.Response
+import com.ahargunyllib.internraion.features.data.utils.UserResponse
 import com.ahargunyllib.internraion.features.domain.model.Report
 import com.ahargunyllib.internraion.features.domain.model.User
 import com.ahargunyllib.internraion.utils.SharedPreferenceHelper
@@ -101,6 +102,27 @@ class UserRepository(
             emit(ReportItemResponse.Success(reportItems))
         } catch (e: Exception) {
             emit(ReportItemResponse.Error(e.message ?: ""))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getCurrentUser(): Flow<UserResponse> = flow {
+        emit(UserResponse.Loading)
+        try {
+            val currentUser = supabaseClient.client.auth.currentSessionOrNull()
+
+            if (currentUser == null){
+                emit(UserResponse.Error("GADA?"))
+            } else {
+                val user = supabaseClient.client.postgrest.from("users").select {
+                    filter {
+                        eq("email", currentUser.user?.email!!)
+                    }
+                }.decodeSingle<User>()
+
+                emit(UserResponse.Success(user))
+            }
+        }catch (e: Exception) {
+            emit(UserResponse.Error(e.message ?: ""))
         }
     }.flowOn(Dispatchers.IO)
 }

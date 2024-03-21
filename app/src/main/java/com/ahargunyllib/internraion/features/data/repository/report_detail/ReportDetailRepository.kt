@@ -55,15 +55,21 @@ class ReportDetailRepository(private val supabaseClient: SupabaseClient): IRepor
                 }
             }.decodeSingle<Report>()
 
+            // Cek apakah ngechat sendiri atau ngga wkwkwk
+            if (currentUser.userId == report.userId){
+                emit(Response.Error("Gak bisa chat sendiri!"))
+                return@flow
+            }
+
             // Cek apakah udah pernah buat chat room di report id tersebut
-            val chatRoomExists = supabaseClient.client.postgrest.from("chat_room").select {
+            val chatRoomExists = supabaseClient.client.postgrest.from("chat_rooms").select {
                 filter {
                     eq("report_id", reportId)
                     eq("founder_id", currentUser.userId!!)
                 }
             }.decodeSingleOrNull<ChatRoom>()
             if (chatRoomExists != null){
-                emit(Response.Error("Udah pernah buat chat room nih! ${chatRoomExists.chatRoomId}"))
+                emit(Response.Error("Udah pernah buat chat room nih!"))
                 return@flow
             }
 

@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.features.presentation.screen.report_detail
+package com.ahargunyllib.internraion.features.presentation.screen.report.report_detail
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -44,6 +44,8 @@ import com.ahargunyllib.internraion.features.data.utils.ReportResponse
 import com.ahargunyllib.internraion.features.data.utils.ReportsResponse
 import com.ahargunyllib.internraion.features.data.utils.Response
 import com.ahargunyllib.internraion.features.domain.model.Report
+import com.ahargunyllib.internraion.ui.component.CustomLoading
+import com.ahargunyllib.internraion.ui.component.SingleIconTopBar
 import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.ui.theme.Yellow
@@ -72,6 +74,7 @@ fun ReportDetailScreen(navController: NavController, reportId: Int) {
             Log.i("RESPONSE ERROR", "ReportDetailScreen: $error")
         }
         is Response.Loading -> {
+            CustomLoading()
             Log.i("RESPONSE LOADING", "ReportDetailScreen: LOADING")
         }
         is Response.Success -> {
@@ -82,31 +85,7 @@ fun ReportDetailScreen(navController: NavController, reportId: Int) {
 
     Scaffold(
         topBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp)
-                    .shadow(elevation = 4.dp)
-                    .background(Color.White)
-                    .padding(horizontal = 8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_back_button),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clickable { navController.popBackStack() },
-                    tint = Green
-                )
-                Text(
-                    text = "POSTINGAN", style = Type.textMedium(), modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f), textAlign = TextAlign.Center
-                )
-
-            }
+            SingleIconTopBar(title = "POSTINGAN", navController = navController)
         },
         bottomBar = {
             Row(
@@ -140,6 +119,7 @@ fun ReportDetailScreen(navController: NavController, reportId: Int) {
     ) {
         when (state.value) {
             is ReportResponse.Loading -> {
+                CustomLoading()
                 Log.i("REPORT RESPONSE LOADING", "ReportDetailScreen: LOADING")
             }
 

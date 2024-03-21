@@ -1,4 +1,4 @@
-package com.ahargunyllib.internraion.features.presentation.screen.location_picker
+package com.ahargunyllib.internraion.features.presentation.screen.report.location_picker
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -30,6 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.ahargunyllib.internraion.R
+import com.ahargunyllib.internraion.ui.component.PrimaryButton
+import com.ahargunyllib.internraion.ui.component.SingleIconTopBar
 import com.ahargunyllib.internraion.ui.theme.Green
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.utils.Routes
@@ -43,38 +45,14 @@ fun LocationPickerScreen(navController: NavController) {
 
     Scaffold(
         topBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp)
-                    .shadow(elevation = 4.dp)
-                    .background(Color.White)
-                    .padding(horizontal = 8.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_back_button),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clickable { navController.popBackStack() },
-                    tint = Green
-                )
-                Text(text = "PILIH LOKASI", style = Type.textMedium(), modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f), textAlign = TextAlign.Center)
-
-            }
+            SingleIconTopBar(title = "PILIH LOKASI", navController = navController)
         },
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            GoogleMap(
-                cameraPositionState = viewModel.cameraPositionState.value
-            ) {
+            GoogleMap(cameraPositionState = viewModel.cameraPositionState.value) {
                 Marker(
                     position = viewModel.cameraPositionState.value.position.target
                 )
@@ -87,22 +65,11 @@ fun LocationPickerScreen(navController: NavController) {
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                Button(
-                    onClick = {
-                        navController.navigate("${Routes.REPORT}/${viewModel.cameraPositionState.value.position.target.latitude}/${viewModel.cameraPositionState.value.position.target.longitude}") {
-                            popUpTo(0)
-                        }
-                    },
-                    modifier = Modifier
-                        .height(64.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Green)
-                ) {
-                    Text(
-                        text = "Konfirmasi",
-                        fontSize = 24.sp,
-                        style = Type.displayLarge()
-                    )
-                }
+                PrimaryButton(text = "Konfirmasi", onClick = {
+                    navController.navigate("${Routes.REPORT}/${viewModel.cameraPositionState.value.position.target.latitude}/${viewModel.cameraPositionState.value.position.target.longitude}") {
+                        popUpTo(0)
+                    }
+                })
             }
         }
     }

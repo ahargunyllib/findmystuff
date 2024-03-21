@@ -5,8 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,11 +18,20 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SecondaryTabRow
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -36,9 +47,92 @@ import com.ahargunyllib.internraion.ui.theme.White
 import com.ahargunyllib.internraion.ui.theme.Yellow
 import com.ahargunyllib.internraion.utils.Routes
 
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun StatusScreen(navController: NavController) {
+    var selectedTabIndex by remember {
+        mutableIntStateOf(0)
+    }
+    Scaffold(
+        topBar = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .shadow(elevation = 4.dp)
+                    .background(Color.White),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                IconButton(onClick = { navController.navigate(Routes.NOTIFICATION) }) {
+                    Icon(
+                        Icons.Default.Notifications,
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(36.dp),
+                        tint = Yellow
+                    )
+                }
+                Text(
+                    text = "STATUS", style = Type.textMedium(), modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f), textAlign = TextAlign.Center
+                )
+                IconButton(onClick = { navController.navigate(Routes.PROFILE) }) {
+                    Icon(
+                        Icons.Default.Person,
+                        contentDescription = "",
+                        modifier = Modifier
+                            .size(36.dp),
+                        tint = Yellow
+                    )
+                }
+
+            }
+        },
+        bottomBar = { BottomNavigationBar(navController = navController) }
+    ) {
+        Column{
+            Spacer(modifier = Modifier.height(48.dp))
+            SecondaryTabRow(selectedTabIndex = selectedTabIndex, modifier = Modifier.fillMaxWidth()) {
+                Tab(text = { Text("PROSES") }, selected = selectedTabIndex == 0, onClick = { selectedTabIndex = 0 })
+                Tab(text = { Text("DITERIMA") }, selected = selectedTabIndex == 1, onClick = { selectedTabIndex = 1 })
+                Tab(text = { Text("BELUM ADA") }, selected = selectedTabIndex == 2, onClick = { selectedTabIndex = 2 })
+            }
+
+            when(selectedTabIndex){
+                0 -> ProsesScreen()
+                1 -> DiterimaScreen()
+                2 -> BelumAdaScreen()
+            }
+        }
+    }
+}
+
+@Composable
+fun ProsesScreen() {
+    Column{
+        Text("Proses Konten")
+    }
+}
+
+@Composable
+fun DiterimaScreen() {
+    Column{
+        Text("Diterima Konten")
+    }
+}
+
+@Composable
+fun BelumAdaScreen() {
+    Column{
+        Text("Belum Ada Konten")
+    }
+}
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@Composable
+fun OldStatusScreen(navController: NavController) {
     Scaffold(
         topBar = {
             Row(

@@ -30,3 +30,5 @@ Dalam upaya untuk meningkatkan kenyamanan dan efisiensi di lingkungan kampus, se
 4. Berlian Ishma Zhafira Sujana - UI/UX Designer
 5. Nugraha Billy Viandy - Programmer Apps
 6. Ghufron Bagaskara - Programmer Apps
+
+![Desktop - 2](https://github.com/ahargunyllib/ubfound/assets/75426625/98e1e638-f257-464c-b7c8-da288874fc4f)

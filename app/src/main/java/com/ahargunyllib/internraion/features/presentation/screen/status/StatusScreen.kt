@@ -100,32 +100,41 @@ fun StatusScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(48.dp))
             SecondaryTabRow(
                 selectedTabIndex = selectedTabIndex,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+//                indicator = { tabPositions ->
+//                    TabRowDefaults.Indicator(
+//                        color = Green
+//                    )(tabPositions[selectedTabIndex])
+//                }
             ) {
                 Tab(
-                    text = { Text("PROSES") },
+                    selectedContentColor = Green,
+                    modifier = Modifier
+                        .clip(shape = RoundedCornerShape(50))
+                        .border(shape = RoundedCornerShape(50), width = 3.dp, color = Green)
+                        .width(110.dp),
+                    text = { Text("PROSES", style = Type.statusTab()) },
                     selected = selectedTabIndex == 0,
                     onClick = { selectedTabIndex = 0 },
-                    modifier = Modifier
-                        .width(110.dp)
-                        .clip(shape = RoundedCornerShape(10.dp))
-                        .border(shape = RoundedCornerShape(10.dp), width = 1.dp, color = Green )
-                )
+
+                    )
                 Tab(
-                    text = { Text("DITERIMA") },
+                    selectedContentColor = Green,
+                    modifier = Modifier
+                        .clip(shape = RoundedCornerShape(50))
+                        .border(shape = RoundedCornerShape(50), width = 3.dp, color = Green)
+                        .width(110.dp),
+                    text = { Text("DITERIMA", style = Type.statusTab()) },
                     selected = selectedTabIndex == 1,
                     onClick = { selectedTabIndex = 1 },
-                    modifier = Modifier
-                        .width(110.dp)
-                        .clip(shape = RoundedCornerShape(10.dp))
-                        .border(shape = RoundedCornerShape(10.dp), width = 1.dp, color = Green )
                 )
                 Tab(
+                    selectedContentColor = Green,
                     modifier = Modifier
-                        .width(110.dp)
-                        .clip(shape = RoundedCornerShape(10.dp))
-                        .border(shape = RoundedCornerShape(10.dp), width = 1.dp, color = Green ),
-                    text = { Text("BELUM ADA") },
+                        .clip(shape = RoundedCornerShape(50))
+                        .border(shape = RoundedCornerShape(50), width = 3.dp, color = Green)
+                        .width(110.dp),
+                    text = { Text(text = "BELUM ADA", style = Type.statusTab()) },
                     selected = selectedTabIndex == 2,
                     onClick = { selectedTabIndex = 2 },
                 )

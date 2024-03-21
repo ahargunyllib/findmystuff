@@ -253,6 +253,13 @@ object Type{
         color = White
     )
 
+    fun statusTab() = TextStyle(
+        fontFamily = FontFamily(Font(R.font.poppins_medium)),
+        fontSize = 15.sp,
+        fontWeight = FontWeight(500),
+        color = Black
+    )
+
 
 
 }

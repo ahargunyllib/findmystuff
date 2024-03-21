@@ -34,12 +34,38 @@ class ChatListRepository(
             val chatRooms = supabaseClient.client.postgrest.from("chat_rooms").select {
                 filter {
                     eq("founder_id", currentUser.userId!!)
-                    eq("victim_id", currentUser.userId)
+                    eq("isPayed", false)
+                }
+            }.decodeList<ChatRoom>()
+
+            val otherChatRooms = supabaseClient.client.postgrest.from("chat_rooms").select {
+                filter {
+                    eq("victim_id", currentUser.userId!!)
                     eq("isPayed", false)
                 }
             }.decodeList<ChatRoom>()
 
             chatRooms.forEach {chatRoom ->
+                var user = User()
+                if (chatRoom.victimId == currentUser.userId){
+                    user = supabaseClient.client.postgrest.from("users").select {
+                        filter {
+                            eq("user_id", chatRoom.founderId!!)
+                        }
+                    }.decodeSingle<User>()
+                } else if (chatRoom.founderId == currentUser.userId){
+                    user = supabaseClient.client.postgrest.from("users").select {
+                        filter {
+                            eq("user_id", chatRoom.victimId!!)
+                        }
+                    }.decodeSingle<User>()
+                }
+
+                val chatRoomItem = ChatRoomItemModelResponse(chatRoom, user)
+                chatRoomsItems.add(chatRoomItem)
+            }
+
+            otherChatRooms.forEach {chatRoom ->
                 var user = User()
                 if (chatRoom.victimId == currentUser.userId){
                     user = supabaseClient.client.postgrest.from("users").select {

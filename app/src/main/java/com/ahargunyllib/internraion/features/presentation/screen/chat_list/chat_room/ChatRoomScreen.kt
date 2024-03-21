@@ -44,6 +44,7 @@ import com.ahargunyllib.internraion.features.data.network.SupabaseClient
 import com.ahargunyllib.internraion.features.data.repository.chat_list.ChatListRepository
 import com.ahargunyllib.internraion.features.domain.model.User
 import com.ahargunyllib.internraion.ui.component.DoubleIconTopBar
+import com.ahargunyllib.internraion.ui.component.SingleIconTopBar
 import com.ahargunyllib.internraion.ui.theme.Type
 import com.ahargunyllib.internraion.ui.theme.Yellow
 import com.ahargunyllib.internraion.utils.Routes
@@ -65,7 +66,7 @@ fun ChatRoomScreen(navController: NavController, chatRoomId: String) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        topBar = { DoubleIconTopBar(title = "PESAN", navController = navController) },
+        topBar = { SingleIconTopBar(title = "PESAN", navController = navController) },
         bottomBar = { ChatBar(viewModel = viewModel, navController = navController) }
     ) {
         Column(

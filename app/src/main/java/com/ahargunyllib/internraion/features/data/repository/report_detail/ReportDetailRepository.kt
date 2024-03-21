@@ -77,9 +77,9 @@ class ReportDetailRepository(private val supabaseClient: SupabaseClient): IRepor
             val victimId = report.userId
 
             val chatRoom = ChatRoom(reportId = reportId, founderId = currentUser.userId, victimId = victimId)
-            supabaseClient.client.postgrest.from("chat_room").insert(chatRoom)
+            supabaseClient.client.postgrest.from("chat_rooms").insert(chatRoom)
 
-            val chatRoomId = supabaseClient.client.postgrest.from("chat_room").select {
+            val chatRoomId = supabaseClient.client.postgrest.from("chat_rooms").select {
                 filter {
                     eq("report_id", reportId)
                     eq("founder_id", currentUser.userId!!)

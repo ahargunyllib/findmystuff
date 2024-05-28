@@ -8,7 +8,7 @@ Dalam upaya untuk meningkatkan kenyamanan dan efisiensi di lingkungan kampus, se
 
     1. Import or clone this project in Android Studio.
     2. Wait for gradle sync to complete.
-    3. Run Stuntion via emulator or real device.
+    3. Run UBFound via emulator or real device.
     
 ## Tech Stack
 
